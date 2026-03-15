@@ -23,12 +23,12 @@
         }
 
         body, html {
-            margin: 0; padding: 0; height: 100%;
+            margin: 0; padding: 0; height: 100%; width: 100%;
             background: var(--bg-gradiente);
             background-attachment: fixed;
             color: var(--color-texto);
             font-family: 'Segoe UI', sans-serif;
-            transition: 0.3s;
+            transition: background 0.3s, color 0.3s;
             overflow: hidden;
         }
 
@@ -70,13 +70,14 @@
 
         /* --- PANTALLA DE JUEGO --- */
         #pantalla-juego {
-            display: none; flex-direction: column; height: 100vh; width: 100%;
+            display: none; flex-direction: column; height: 100vh; width: 100vw;
             background-color: #000;
         }
 
         .barra-juego {
             display: flex; justify-content: space-between; padding: 10px 20px;
             background: #1a1a1a; align-items: center; border-bottom: 1px solid #333;
+            height: 60px; box-sizing: border-box;
         }
 
         .btn-accion {
@@ -87,12 +88,13 @@
         .azul { background-color: #1DA1F2; }
         .btn-accion:hover { opacity: 0.8; }
 
+        /* Contenedor corregido para que el Slope quede centrado */
         .contenedor-iframe {
-            flex-grow: 1; display: flex; justify-content: center; align-items: center;
-            background-color: #000;
+            flex-grow: 1; width: 100%; height: calc(100vh - 60px);
+            display: block; background-color: #000;
         }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        iframe { width: 100%; height: 100%; border: none; display: block; margin: 0; padding: 0; }
 
         .btn-compartir-menu {
             margin-top: 30px; background-color: #1DA1F2; color: white;
@@ -115,7 +117,9 @@
             <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">Slope</div>
             <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
             <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">Chrome Dino</div>
-            <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html')">Pac-Man</div>
+            
+            <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">Pac-Man</div>
+            
             <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
         </div>
 
@@ -133,10 +137,15 @@
     </div>
 
     <script>
-        function abrirJuego(url) {
-            document.getElementById('pantalla-menu').style.display = 'none';
-            document.getElementById('pantalla-juego').style.display = 'flex';
-            document.getElementById('iframe-juego').src = url;
+        // Nueva función mejorada para detectar si el juego necesita abrirse en otra pestaña
+        function abrirJuego(url, nuevaPestana = false) {
+            if (nuevaPestana) {
+                window.open(url, '_blank');
+            } else {
+                document.getElementById('pantalla-menu').style.display = 'none';
+                document.getElementById('pantalla-juego').style.display = 'flex';
+                document.getElementById('iframe-juego').src = url;
+            }
         }
 
         function cerrarJuego() {
@@ -150,7 +159,6 @@
         }
 
         function compartirWeb() {
-            // Copia la URL actual al portapapeles
             const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
                 alert('¡Enlace de Classroom copiado!');
