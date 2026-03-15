@@ -88,7 +88,6 @@
         .azul { background-color: #1DA1F2; }
         .btn-accion:hover { opacity: 0.8; }
 
-        /* Contenedor corregido para que el Slope quede centrado */
         .contenedor-iframe {
             flex-grow: 1; width: 100%; height: calc(100vh - 60px);
             display: block; background-color: #000;
@@ -117,8 +116,10 @@
             <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">Slope</div>
             <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
             <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">Chrome Dino</div>
-            
             <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">Pac-Man</div>
+            
+            <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">Tap Goal</div>
+            <div class="btn-juego" onclick="abrirJuego('https://skibiditoilet.io/', true)">Skibidi Toilet</div>
             
             <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
         </div>
@@ -137,7 +138,6 @@
     </div>
 
     <script>
-        // Nueva función mejorada para detectar si el juego necesita abrirse en otra pestaña
         function abrirJuego(url, nuevaPestana = false) {
             if (nuevaPestana) {
                 window.open(url, '_blank');
