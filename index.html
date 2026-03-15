@@ -7,7 +7,7 @@
     
     <style>
         :root {
-            --bg-gradiente: linear-gradient(135deg, #2c3e50, #000000);
+            --bg-gradiente: linear-gradient(135deg, #1a1a1a, #000000);
             --color-texto: white;
             --color-borde: #444;
             --bg-btn: rgba(255, 255, 255, 0.05);
@@ -59,13 +59,14 @@
             display: flex; align-items: center; justify-content: center;
             color: var(--color-texto); font-size: 1.2rem; font-weight: bold;
             cursor: pointer; transition: all 0.3s ease;
-            text-align: center; padding: 5px;
+            text-align: center;
         }
 
         .btn-juego:hover {
             transform: translateY(-3px);
             border-color: var(--brillo-hover);
             box-shadow: 0 0 15px var(--brillo-hover);
+            color: #4CAF50;
         }
 
         #pantalla-juego {
@@ -76,7 +77,7 @@
         .barra-juego {
             display: flex; justify-content: space-between; padding: 10px 20px;
             background: #1a1a1a; align-items: center; border-bottom: 1px solid #333;
-            height: 60px; box-sizing: border-box;
+            height: 60px;
         }
 
         .btn-accion {
@@ -114,10 +115,11 @@
             <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
             <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">Chrome Dino</div>
             <div class="btn-juego" onclick="abrirJuego('https://macek.github.io/google_pacman/')">Pac-Man</div>
-            
             <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">Tentrix</div>
-            <div class="btn-juego" onclick="abrirJuego('https://html5.gamedistribution.com/f2746401066d412891392652615456f9/')">Tap Goal</div>
-            <div class="btn-juego" onclick="abrirJuego('https://games.gamepix.com/play/43110?embed=1')">Skibidi Toilet</div>
+            
+            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal')">Tap Goal</div>
+            
+            <div class="btn-juego" onclick="abrirJuego('https://skibiditoilet.io/', true)">Skibidi Toilet</div>
             
             <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
         </div>
@@ -136,10 +138,14 @@
     </div>
 
     <script>
-        function abrirJuego(url) {
-            document.getElementById('pantalla-menu').style.display = 'none';
-            document.getElementById('pantalla-juego').style.display = 'flex';
-            document.getElementById('iframe-juego').src = url;
+        function abrirJuego(url, nuevaPestana = false) {
+            if (nuevaPestana) {
+                window.open(url, '_blank');
+            } else {
+                document.getElementById('pantalla-menu').style.display = 'none';
+                document.getElementById('pantalla-juego').style.display = 'flex';
+                document.getElementById('iframe-juego').src = url;
+            }
         }
 
         function cerrarJuego() {
