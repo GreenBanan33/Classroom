@@ -63,17 +63,17 @@
             max-width: 700px; width: 90%;
         }
 
-        /* Diseño de los botones con imagen */
+        /* Diseño de los botones con imagen REAL */
         .btn-juego {
             border: 2px solid var(--borde-boton); 
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            height: 150px; /* Altura del botón para que se vea la imagen */
+            height: 150px; 
             border-radius: 12px; transition: all 0.3s ease;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; overflow: hidden;
             background-size: cover; background-position: center;
             color: white; font-size: 1.8rem; font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9); /* Sombra al texto para que lea bien */
+            text-shadow: 2px 2px 6px rgba(0,0,0,1); /* Sombra fuerte para leer bien el texto sobre la imagen */
         }
 
         .btn-juego:hover {
@@ -82,12 +82,12 @@
             box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
         }
 
-        /* Fondos de imágenes reales para cada juego */
-        .bg-retro { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=600&q=80'); }
-        .bg-slope { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600&q=80'); }
-        .bg-tetris { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1615967733481-9b1d8d3f18e9?w=600&q=80'); }
-        .bg-icedodo { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1518131346399-5285741f23ee?w=600&q=80'); }
-        .bg-more { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&q=80'); }
+        /* Enlaces a las portadas REALES de los juegos con un pequeño filtro oscuro */
+        .bg-retro { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://play-lh.googleusercontent.com/xOZNca9M3qHiaQZ0p8A2N1sLwV4L4Hq0UWeMh5qB7t_iR9oM4wNmsR6H_E6vE-L8Ew'); }
+        .bg-slope { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/b8782a22543d2c92e92552e693b84128.png'); }
+        .bg-tetris { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.igdb.com/igdb/image/upload/t_cover_big/co1yeo.jpg'); }
+        .bg-1v1 { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/877bf40049d1bb8cb18d0afcae55c3c0.png'); }
+        .bg-more { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=80'); }
 
         /* --- PANTALLA JUEGO --- */
         #pantalla-juego {
@@ -128,7 +128,7 @@
             <div class="btn-juego bg-retro" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">Retro Bowl</div>
             <div class="btn-juego bg-slope" onclick="abrirJuego('https://y8.com/embed/slope')">Slope</div>
             <div class="btn-juego bg-tetris" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
-            <div class="btn-juego bg-icedodo" onclick="abrirJuego('https://classroom-6x.github.io/ice-dodo/')">Ice Dodo</div>
+            <div class="btn-juego bg-1v1" onclick="abrirJuego('https://1v1-lol-unblocked.github.io/')">1v1.lol</div>
             <div class="btn-juego bg-more" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
         </div>
         
