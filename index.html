@@ -7,7 +7,6 @@
     
     <style>
         :root {
-            /* Fondo gradient suave de color gris oscuro/pizarra */
             --bg-gradiente: linear-gradient(135deg, #4b5563, #1f2937);
             --color-texto: white;
             --color-borde: rgba(255, 255, 255, 0.2);
@@ -16,7 +15,6 @@
         }
 
         body.modo-claro {
-            /* Fondo gradient suave de color gris claro */
             --bg-gradiente: linear-gradient(135deg, #f3f4f6, #9ca3af);
             --color-texto: #121212;
             --color-borde: rgba(0, 0, 0, 0.2);
@@ -53,15 +51,16 @@
             width: 100%; max-width: 700px;
         }
 
+        /* Modificado para apilar el texto y el icono hacia abajo */
         .btn-juego {
             height: 90px; border-radius: 12px;
             border: 1px solid var(--color-borde);
             background-color: var(--bg-btn);
             backdrop-filter: blur(8px);
-            display: flex; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: var(--color-texto); font-size: 1.2rem; font-weight: bold;
             cursor: pointer; transition: all 0.3s ease;
-            text-align: center;
+            text-align: center; gap: 5px;
         }
 
         .btn-juego:hover {
@@ -69,6 +68,12 @@
             border-color: var(--brillo-hover);
             box-shadow: 0 0 15px var(--brillo-hover);
             color: #4CAF50;
+        }
+
+        /* Estilo para el icono de enlace */
+        .icono-enlace {
+            font-size: 0.8rem;
+            opacity: 0.6;
         }
 
         #pantalla-juego {
@@ -113,16 +118,38 @@
         </div>
 
         <div class="grid-juegos">
-            <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">Retro Bowl</div>
-            <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">Slope</div>
-            <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
-            <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">Chrome Dino</div>
-            <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">Tentrix</div>
-            <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
+            <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
+                <span>Retro Bowl</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
+                <span>Slope</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
+                <span>Tetris</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
+                <span>Chrome Dino</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
+                <span>Tentrix</span>
+            </div>
             
-            <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">Pac-Man Oficial</div>
-            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">Tap Goal</div>
-            <div class="btn-juego" onclick="abrirJuego('https://skibiditoilet.io/', true)">Skibidi Toilet</div>
+            <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
+                <span>Pac-Man Oficial</span>
+                <span class="icono-enlace">🔗 Pestaña nueva</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
+                <span>Tap Goal</span>
+                <span class="icono-enlace">🔗 Pestaña nueva</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
+                <span>Basket Random</span>
+                <span class="icono-enlace">🔗 Pestaña nueva</span>
+            </div>
+
+            <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
+                <span>More Games</span>
+            </div>
         </div>
 
         <button class="btn-compartir-menu" onclick="compartirWeb()">📲 Compartir Web</button>
@@ -141,15 +168,11 @@
     <script>
         function abrirJuego(url, requiereNuevaPestana = false) {
             if (requiereNuevaPestana) {
-                // Intenta abrir el juego en una pestaña nueva
                 let nuevaVentana = window.open(url, '_blank');
-                
-                // Si el navegador bloquea la pestaña, salta este aviso:
                 if (!nuevaVentana) {
                     alert("⚠️ Tu navegador ha bloqueado la ventana emergente.\n\nPor favor, mira en la barra de direcciones arriba a la derecha, haz clic en el icono de 'Pop-up bloqueado' y dale a 'Permitir'.");
                 }
             } else {
-                // Abre el juego dentro del camuflaje
                 document.getElementById('pantalla-menu').style.display = 'none';
                 document.getElementById('pantalla-juego').style.display = 'flex';
                 document.getElementById('iframe-juego').src = url;
