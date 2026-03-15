@@ -6,101 +6,107 @@
     <link rel="icon" type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png">
     
     <style>
-        /* Variables para Modo Claro / Oscuro */
         :root {
-            --bg-principal: #121212;
+            --bg-gradiente: linear-gradient(135deg, #2c3e50, #000000);
             --color-texto: white;
             --color-borde: #444;
-            --bg-btn: #1e1e1e;
-            --bg-barra: #1a1a1a;
+            --bg-btn: rgba(255, 255, 255, 0.05); /* Botones semi-transparentes */
+            --brillo-hover: rgba(255, 255, 255, 0.8);
         }
 
         body.modo-claro {
-            --bg-principal: #f0f0f0;
+            --bg-gradiente: linear-gradient(135deg, #e0e0e0, #ffffff);
             --color-texto: #121212;
             --color-borde: #ccc;
-            --bg-btn: #ffffff;
-            --bg-barra: #e0e0e0;
+            --bg-btn: rgba(0, 0, 0, 0.05);
+            --brillo-hover: rgba(0, 0, 0, 0.4);
         }
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-principal);
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            background: var(--bg-gradiente);
+            background-attachment: fixed;
             color: var(--color-texto);
             font-family: 'Segoe UI', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-            overflow-x: hidden;
+            transition: 0.3s;
         }
 
-        /* Contenedor del menú principal */
+        /* --- MENÚ --- */
         #pantalla-menu {
             display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; padding: 20px; box-sizing: border-box;
+            padding: 40px 20px; box-sizing: border-box; min-height: 100vh;
         }
 
-        /* Cabecera con Título y Botón Tema */
         .cabecera {
             display: flex; justify-content: space-between; align-items: center;
-            width: 100%; max-width: 600px; margin-bottom: 20px;
+            width: 100%; max-width: 700px; margin-bottom: 30px;
         }
 
         .cabecera h1 {
-            margin: 0; color: #4CAF50; font-size: 3.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 0; color: #4CAF50; font-size: 3rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        #btn-tema {
-            background: none; border: none; font-size: 2rem;
-            cursor: pointer; transition: transform 0.2s;
-        }
-        #btn-tema:hover { transform: scale(1.1); }
+        #btn-tema { background: none; border: none; font-size: 2rem; cursor: pointer; }
 
-        /* Rejilla de Juegos (2 Columnas) */
+        /* Rejilla de Juegos */
         .grid-juegos {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
-            width: 100%; max-width: 600px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+            width: 100%; max-width: 700px;
         }
 
-        /* Estilo de los Botones de Juego (Solo Texto) */
+        /* Botones con efecto de iluminación */
         .btn-juego {
-            height: 130px; border-radius: 12px;
-            border: 2px solid var(--color-borde);
+            height: 120px; border-radius: 15px;
+            border: 1px solid var(--color-borde);
             background-color: var(--bg-btn);
+            backdrop-filter: blur(5px); /* Efecto cristalizado */
             display: flex; align-items: center; justify-content: center;
-            color: var(--color-texto); font-size: 1.5rem; font-weight: bold;
-            cursor: pointer; transition: transform 0.2s, border-color 0.2s, color 0.2s;
+            color: var(--color-texto); font-size: 1.4rem; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease;
+            text-align: center;
         }
+
         .btn-juego:hover {
-            transform: scale(1.03); border-color: #4CAF50; color: #4CAF50;
+            transform: translateY(-5px);
+            border-color: var(--brillo-hover);
+            box-shadow: 0 0 20px var(--brillo-hover);
+            color: #4CAF50;
         }
 
-        /* Botón Compartir */
-        .btn-compartir {
-            margin-top: 30px; background-color: #1DA1F2; color: white;
-            border: none; padding: 12px 24px; font-size: 1.1rem; font-weight: bold;
-            border-radius: 8px; cursor: pointer; transition: background-color 0.2s;
-        }
-        .btn-compartir:hover { background-color: #0c85d0; }
-
-        /* Pantalla del Juego (Iframe) */
+        /* --- PANTALLA JUEGO CENTRADA --- */
         #pantalla-juego {
             display: none; flex-direction: column; height: 100vh; width: 100%;
+            background-color: #000;
         }
 
         .barra-juego {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 20px; background-color: var(--bg-barra);
-            border-bottom: 2px solid var(--color-borde);
+            display: flex; justify-content: space-between; padding: 10px 20px;
+            background: #1a1a1a; align-items: center;
         }
 
-        .btn-pequeno {
+        .btn-volver {
             background-color: #e53935; color: white; border: none;
-            padding: 10px 15px; font-weight: bold; border-radius: 6px; cursor: pointer;
+            padding: 10px 20px; font-weight: bold; border-radius: 8px; cursor: pointer;
         }
-        .btn-pequeno:hover { background-color: #c62828; }
+
+        /* Contenedor para centrar el Slope y otros juegos */
+        .contenedor-iframe {
+            flex-grow: 1;
+            display: flex; justify-content: center; align-items: center;
+            background-color: #000;
+        }
 
         iframe {
-            flex-grow: 1; width: 100%; border: none; background-color: black;
+            width: 100%; height: 100%; border: none;
+            max-width: 1000px; /* Evita que se estire demasiado en pantallas gigantes */
+            max-height: 80vh; 
+        }
+
+        .btn-compartir {
+            margin-top: 40px; background-color: #1DA1F2; color: white;
+            border: none; padding: 12px 30px; border-radius: 50px;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
         }
     </style>
 </head>
@@ -109,25 +115,28 @@
     <div id="pantalla-menu">
         <div class="cabecera">
             <h1>Classroom</h1>
-            <button id="btn-tema" onclick="cambiarTema()" title="Cambiar Tema">🌗</button>
+            <button id="btn-tema" onclick="cambiarTema()">🌗</button>
         </div>
 
         <div class="grid-juegos">
             <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">Retro Bowl</div>
             <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">Slope</div>
             <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
-            <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
+            <div class="btn-juego" onclick="abrirJuego('https://poki.com/en/g/google-feud')">Google Feud</div> <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">Chrome Dino</div>
+            <div class="btn-juego" onclick="abrirJuego('https://macek.github.io/google_pacman/')">Pac-Man</div>
         </div>
 
-        <button class="btn-compartir" onclick="compartirWeb()">📲 Compartir Web</button>
+        <button class="btn-compartir" onclick="compartirWeb()">📲 Compartir Classroom</button>
     </div>
 
     <div id="pantalla-juego">
         <div class="barra-juego">
-            <button class="btn-pequeno" onclick="cerrarJuego()">⬅ Volver al Menú</button>
-            <button class="btn-pequeno" style="background-color: #1DA1F2;" onclick="compartirWeb()">📲 Compartir</button>
+            <button class="btn-volver" onclick="cerrarJuego()">⬅ Volver al Menú</button>
+            <span id="titulo-juego" style="color: white; font-weight: bold;">Cargando...</span>
         </div>
-        <iframe id="iframe-juego" src=""></iframe>
+        <div class="contenedor-iframe">
+            <iframe id="iframe-juego" src="" allowfullscreen></iframe>
+        </div>
     </div>
 
     <script>
@@ -135,6 +144,7 @@
             document.getElementById('pantalla-menu').style.display = 'none';
             document.getElementById('pantalla-juego').style.display = 'flex';
             document.getElementById('iframe-juego').src = url;
+            document.getElementById('titulo-juego').innerText = "Modo Concentración";
         }
 
         function cerrarJuego() {
@@ -148,15 +158,9 @@
         }
 
         function compartirWeb() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Classroom',
-                    url: window.location.href
-                }).catch(console.error);
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('¡Enlace copiado al portapapeles!');
-            }
+            const url = window.location.href;
+            navigator.clipboard.writeText(url);
+            alert('¡Enlace copiado! Pásalo a tus amigos.');
         }
     </script>
 </body>
