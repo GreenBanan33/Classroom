@@ -7,17 +7,19 @@
     
     <style>
         :root {
-            --bg-gradiente: linear-gradient(135deg, #1a1a1a, #000000);
+            /* Fondo gradient suave de color gris oscuro/pizarra */
+            --bg-gradiente: linear-gradient(135deg, #4b5563, #1f2937);
             --color-texto: white;
-            --color-borde: #444;
-            --bg-btn: rgba(255, 255, 255, 0.05);
-            --brillo-hover: rgba(255, 255, 255, 0.8);
+            --color-borde: rgba(255, 255, 255, 0.2);
+            --bg-btn: rgba(255, 255, 255, 0.1);
+            --brillo-hover: rgba(255, 255, 255, 0.7);
         }
 
         body.modo-claro {
-            --bg-gradiente: linear-gradient(135deg, #e0e0e0, #ffffff);
+            /* Fondo gradient suave de color gris claro */
+            --bg-gradiente: linear-gradient(135deg, #f3f4f6, #9ca3af);
             --color-texto: #121212;
-            --color-borde: #ccc;
+            --color-borde: rgba(0, 0, 0, 0.2);
             --bg-btn: rgba(0, 0, 0, 0.05);
             --brillo-hover: rgba(0, 0, 0, 0.4);
         }
@@ -28,7 +30,7 @@
             background-attachment: fixed;
             color: var(--color-texto);
             font-family: 'Segoe UI', sans-serif;
-            transition: 0.3s;
+            transition: background 0.4s ease, color 0.4s ease;
             overflow: hidden;
         }
 
@@ -43,7 +45,7 @@
             width: 100%; max-width: 700px; margin-bottom: 30px;
         }
 
-        .cabecera h1 { margin: 0; color: #4CAF50; font-size: 3rem; }
+        .cabecera h1 { margin: 0; color: #4CAF50; font-size: 3rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
         #btn-tema { background: none; border: none; font-size: 2rem; cursor: pointer; }
 
         .grid-juegos {
@@ -52,10 +54,10 @@
         }
 
         .btn-juego {
-            height: 90px; border-radius: 15px;
+            height: 90px; border-radius: 12px;
             border: 1px solid var(--color-borde);
             background-color: var(--bg-btn);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
             display: flex; align-items: center; justify-content: center;
             color: var(--color-texto); font-size: 1.2rem; font-weight: bold;
             cursor: pointer; transition: all 0.3s ease;
@@ -63,7 +65,7 @@
         }
 
         .btn-juego:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             border-color: var(--brillo-hover);
             box-shadow: 0 0 15px var(--brillo-hover);
             color: #4CAF50;
@@ -77,7 +79,7 @@
         .barra-juego {
             display: flex; justify-content: space-between; padding: 10px 20px;
             background: #1a1a1a; align-items: center; border-bottom: 1px solid #333;
-            height: 60px;
+            height: 60px; box-sizing: border-box;
         }
 
         .btn-accion {
@@ -97,8 +99,9 @@
         .btn-compartir-menu {
             margin-top: 25px; background-color: #1DA1F2; color: white;
             border: none; padding: 12px 30px; border-radius: 50px;
-            font-weight: bold; cursor: pointer;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
         }
+        .btn-compartir-menu:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -106,7 +109,7 @@
     <div id="pantalla-menu">
         <div class="cabecera">
             <h1>Classroom</h1>
-            <button id="btn-tema" onclick="cambiarTema()">🌗</button>
+            <button id="btn-tema" onclick="cambiarTema()" title="Cambiar Tema">🌗</button>
         </div>
 
         <div class="grid-juegos">
@@ -114,14 +117,12 @@
             <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">Slope</div>
             <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">Tetris</div>
             <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">Chrome Dino</div>
-            <div class="btn-juego" onclick="abrirJuego('https://macek.github.io/google_pacman/')">Pac-Man</div>
             <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">Tentrix</div>
-            
-            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal')">Tap Goal</div>
-            
-            <div class="btn-juego" onclick="abrirJuego('https://skibiditoilet.io/', true)">Skibidi Toilet</div>
-            
             <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">More Games</div>
+            
+            <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">Pac-Man Oficial</div>
+            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">Tap Goal</div>
+            <div class="btn-juego" onclick="abrirJuego('https://skibiditoilet.io/', true)">Skibidi Toilet</div>
         </div>
 
         <button class="btn-compartir-menu" onclick="compartirWeb()">📲 Compartir Web</button>
@@ -138,10 +139,17 @@
     </div>
 
     <script>
-        function abrirJuego(url, nuevaPestana = false) {
-            if (nuevaPestana) {
-                window.open(url, '_blank');
+        function abrirJuego(url, requiereNuevaPestana = false) {
+            if (requiereNuevaPestana) {
+                // Intenta abrir el juego en una pestaña nueva
+                let nuevaVentana = window.open(url, '_blank');
+                
+                // Si el navegador bloquea la pestaña, salta este aviso:
+                if (!nuevaVentana) {
+                    alert("⚠️ Tu navegador ha bloqueado la ventana emergente.\n\nPor favor, mira en la barra de direcciones arriba a la derecha, haz clic en el icono de 'Pop-up bloqueado' y dale a 'Permitir'.");
+                }
             } else {
+                // Abre el juego dentro del camuflaje
                 document.getElementById('pantalla-menu').style.display = 'none';
                 document.getElementById('pantalla-juego').style.display = 'flex';
                 document.getElementById('iframe-juego').src = url;
