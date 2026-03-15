@@ -32,10 +32,17 @@
             overflow: hidden;
         }
 
+        #pantalla-menu, #pantalla-juego, #pantalla-chat {
+            height: 100vh; width: 100vw; box-sizing: border-box;
+        }
+
         #pantalla-menu {
             display: flex; flex-direction: column; align-items: center;
-            padding: 40px 20px; box-sizing: border-box; height: 100vh;
-            overflow-y: auto;
+            padding: 40px 20px; overflow-y: auto;
+        }
+
+        #pantalla-juego, #pantalla-chat {
+            display: none; flex-direction: column; background-color: #000;
         }
 
         .cabecera {
@@ -51,7 +58,6 @@
             width: 100%; max-width: 700px;
         }
 
-        /* Modificado para apilar el texto y el icono hacia abajo */
         .btn-juego {
             height: 90px; border-radius: 12px;
             border: 1px solid var(--color-borde);
@@ -70,18 +76,21 @@
             color: #4CAF50;
         }
 
-        /* Estilo para el icono de enlace */
-        .icono-enlace {
-            font-size: 0.8rem;
-            opacity: 0.6;
+        .icono-enlace { font-size: 0.8rem; opacity: 0.6; }
+
+        .botones-inferiores {
+            display: flex; gap: 15px; margin-top: 25px;
         }
 
-        #pantalla-juego {
-            display: none; flex-direction: column; height: 100vh; width: 100vw;
-            background-color: #000;
+        .btn-accion-menu {
+            background-color: #1DA1F2; color: white; border: none; 
+            padding: 12px 30px; border-radius: 50px; font-weight: bold; 
+            cursor: pointer; transition: 0.3s; font-size: 1.1rem;
         }
+        .btn-accion-menu.chat { background-color: #4CAF50; }
+        .btn-accion-menu:hover { opacity: 0.8; transform: scale(1.05); }
 
-        .barra-juego {
+        .barra-superior {
             display: flex; justify-content: space-between; padding: 10px 20px;
             background: #1a1a1a; align-items: center; border-bottom: 1px solid #333;
             height: 60px; box-sizing: border-box;
@@ -94,19 +103,9 @@
         .rojo { background-color: #e53935; }
         .azul { background-color: #1DA1F2; }
 
-        .contenedor-iframe {
-            flex-grow: 1; width: 100%; height: calc(100vh - 60px);
-            background-color: #000;
-        }
+        .contenedor-iframe { flex-grow: 1; width: 100%; background-color: #000; }
+        iframe { width: 100%; height: 100%; border: none; display: block; }
 
-        iframe { width: 100%; height: 100%; border: none; }
-
-        .btn-compartir-menu {
-            margin-top: 25px; background-color: #1DA1F2; color: white;
-            border: none; padding: 12px 30px; border-radius: 50px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .btn-compartir-menu:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -133,7 +132,6 @@
             <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
                 <span>Tentrix</span>
             </div>
-            
             <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
                 <span>Pac-Man Oficial</span>
                 <span class="icono-enlace">🔗 Pestaña nueva</span>
@@ -146,18 +144,20 @@
                 <span>Basket Random</span>
                 <span class="icono-enlace">🔗 Pestaña nueva</span>
             </div>
-
             <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
                 <span>More Games</span>
             </div>
         </div>
 
-        <button class="btn-compartir-menu" onclick="compartirWeb()">📲 Compartir Web</button>
+        <div class="botones-inferiores">
+            <button class="btn-accion-menu" onclick="compartirWeb()">📲 Compartir Web</button>
+            <button class="btn-accion-menu chat" onclick="abrirChat()">💬 Abrir Chat</button>
+        </div>
     </div>
 
     <div id="pantalla-juego">
-        <div class="barra-juego">
-            <button class="btn-accion rojo" onclick="cerrarJuego()">⬅ Volver</button>
+        <div class="barra-superior">
+            <button class="btn-accion rojo" onclick="volverAlMenu('pantalla-juego')">⬅ Volver</button>
             <button class="btn-accion azul" onclick="compartirWeb()">📲 Compartir</button>
         </div>
         <div class="contenedor-iframe">
@@ -165,34 +165,10 @@
         </div>
     </div>
 
-    <script>
-        function abrirJuego(url, requiereNuevaPestana = false) {
-            if (requiereNuevaPestana) {
-                let nuevaVentana = window.open(url, '_blank');
-                if (!nuevaVentana) {
-                    alert("⚠️ Tu navegador ha bloqueado la ventana emergente.\n\nPor favor, mira en la barra de direcciones arriba a la derecha, haz clic en el icono de 'Pop-up bloqueado' y dale a 'Permitir'.");
-                }
-            } else {
-                document.getElementById('pantalla-menu').style.display = 'none';
-                document.getElementById('pantalla-juego').style.display = 'flex';
-                document.getElementById('iframe-juego').src = url;
-            }
-        }
-
-        function cerrarJuego() {
-            document.getElementById('pantalla-juego').style.display = 'none';
-            document.getElementById('pantalla-menu').style.display = 'flex';
-            document.getElementById('iframe-juego').src = '';
-        }
-
-        function cambiarTema() {
-            document.body.classList.toggle('modo-claro');
-        }
-
-        function compartirWeb() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('¡Enlace copiado!');
-        }
-    </script>
-</body>
-</html>
+    <div id="pantalla-chat">
+        <div class="barra-superior">
+            <button class="btn-accion rojo" onclick="volverAlMenu('pantalla-chat')">⬅ Volver</button>
+            <span style="color: white; font-weight: bold; font-size: 1.2rem;">Sala de Chat Privada</span>
+            <div style="width: 70px;"></div>
+        </div>
+        <div class="contenedor-iframe">
