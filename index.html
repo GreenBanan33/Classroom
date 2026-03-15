@@ -35,6 +35,16 @@
             transform: translateY(-2px); box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
         }
         
+        .btn-compartir {
+            background-color: #1DA1F2; /* Color azul para destacar que es de compartir */
+            border-color: #1DA1F2;
+        }
+
+        .btn-compartir:hover {
+            background-color: #0c85d0;
+            box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
+        }
+        
         iframe { 
             width: 100%; height: calc(100vh - 65px); 
             border: none; display: block; background-color: #000;
@@ -48,6 +58,7 @@
         <button onclick="cambiarJuego('https://y8.com/embed/slope')">🎳 Slope</button>
         <button onclick="cambiarJuego('https://tetris.com/play-tetris')">🧱 Tetris</button>
         <button onclick="cambiarJuego('https://sz-games.github.io/Ice-Dodo/')">🎮 Más Juegos</button>
+        <button class="btn-compartir" onclick="compartirWeb()">📲 Compartir</button>
     </div>
 
     <iframe id="pantallaJuego" src="https://retro-bowl-unblocked1.github.io/" allowfullscreen></iframe>
@@ -55,6 +66,21 @@
     <script>
         function cambiarJuego(urlNuevo) {
             document.getElementById('pantallaJuego').src = urlNuevo;
+        }
+
+        // Nueva función para el botón de compartir
+        function compartirWeb() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Classroom - Portal Interactivo',
+                    text: '¡Mira esta página secreta con juegos clásicos!',
+                    url: 'https://greenbanan33.github.io/Classroom/'
+                }).catch(console.error);
+            } else {
+                // Si el navegador no soporta el menú de compartir, copia el link
+                navigator.clipboard.writeText('https://greenbanan33.github.io/Classroom/');
+                alert('¡Enlace copiado! Ya puedes pegarlo y enviárselo a tus amigos.');
+            }
         }
     </script>
 
@@ -73,5 +99,4 @@
     </noscript>
 
 </body>
-</html>
 </html>
