@@ -141,37 +141,45 @@
                 <span>Pac-Man</span>
                 <span class="icono-enlace">🔗 Nueva pestaña</span>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://dedragames.com/games/ovo/1.4.4/', true)">
-                <span>OvO</span>
+            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
+                <span>Tap Goal</span>
                 <span class="icono-enlace">🔗 Nueva pestaña</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
+                <span>Basket Random</span>
+                <span class="icono-enlace">🔗 Nueva pestaña</span>
+            </div>
+            <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
+                <span>More Games</span>
+                <span class="icono-enlace">🎮 Ice Dodo & Más</span>
             </div>
         </div>
 
-        <div class="seccion-titulo">Bibliotecas de Recursos</div>
+        <div class="seccion-titulo">Otros</div>
         <div class="grid-juegos">
             <div class="btn-juego" onclick="window.open('https://classroom-6x.site/', '_blank')">
                 <span>Lección 6x</span>
-                <span class="icono-enlace">🌐 Abrir Biblioteca</span>
+                <span class="icono-enlace">🌐 Principal</span>
             </div>
-            <div class="btn-juego" onclick="window.open('https://classroom-15x.github.io/', '_blank')">
-                <span>Lección 15x</span>
-                <span class="icono-enlace">🌐 Abrir Biblioteca</span>
+            <div class="btn-juego" onclick="window.open('https://classroom-3x.github.io/', '_blank')">
+                <span>Lección 3x</span>
+                <span class="icono-enlace">🌐 Mirror 1</span>
             </div>
-            <div class="btn-juego" onclick="window.open('https://sites.google.com/site/unblockedgames76/', '_blank')">
-                <span>Lección 76</span>
-                <span class="icono-enlace">🌐 Abrir Biblioteca</span>
+            <div class="btn-juego" onclick="window.open('https://classroom-911.github.io/', '_blank')">
+                <span>Lección 911</span>
+                <span class="icono-enlace">🌐 Emergencia</span>
             </div>
-            <div class="btn-juego" onclick="window.open('https://poki.com/', '_blank')">
-                <span>Recurso P</span>
-                <span class="icono-enlace">🌐 Abrir Poki</span>
+            <div class="btn-juego" onclick="window.open('https://classroom-51x.github.io/', '_blank')">
+                <span>Lección 51</span>
+                <span class="icono-enlace">🌐 Área 51</span>
             </div>
-            <div class="btn-juego" onclick="window.open('https://www.crazygames.com/', '_blank')">
-                <span>Recurso C</span>
-                <span class="icono-enlace">🌐 Abrir Crazy</span>
+            <div class="btn-juego" onclick="window.open('https://sites.google.com/site/unblockedgames66ez/', '_blank')">
+                <span>Lección 66</span>
+                <span class="icono-enlace">🌐 Versión EZ</span>
             </div>
-            <div class="btn-juego" onclick="window.open('https://1v1.lol/', '_blank')">
-                <span>Práctica 1v1</span>
-                <span class="icono-enlace">🌐 Abrir 1v1.LOL</span>
+            <div class="btn-juego" onclick="window.open('https://sites.google.com/view/classroom-6x/', '_blank')">
+                <span>Lección Google</span>
+                <span class="icono-enlace">🌐 Google Site</span>
             </div>
         </div>
 
@@ -236,10 +244,9 @@
 
         function compartirWeb() {
             navigator.clipboard.writeText(window.location.href);
-            alert('¡Enlace de la lección copiado!');
+            alert('¡Enlace copiado!');
         }
 
-        // --- BOTÓN DE PÁNICO (Tecla 0) ---
         document.addEventListener('keydown', function(e) {
             if (e.key === '0') {
                 window.location.replace("https://classroom.google.com");
