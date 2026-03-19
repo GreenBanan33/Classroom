@@ -1,58 +1,424 @@
-<div class="grid-juegos">
-            <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
-                <span>Retro Bowl</span>
-            </div>
-            <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
-                <span>Slope</span>
-            </div>
-            <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
-                <span>Tetris</span>
-            </div>
-            <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
-                <span>Chrome Dino</span>
-            </div>
-        </div>
+<!DOCTYPE html>
 
-        <h2 style="margin-top: 30px; color: #4CAF50; font-size: 1.5rem;">Bibliotecas de Recursos</h2>
-        <div class="grid-juegos">
-            <div class="btn-juego" onclick="window.open('https://classroom-6x.site/', '_blank')">
-                <span>Lección 6x</span>
-                <span class="icono-enlace">🌐 Classroom 6x</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://classroom-15x.github.io/', '_blank')">
-                <span>Lección 15x</span>
-                <span class="icono-enlace">🌐 Classroom 15x</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://sites.google.com/site/unblockedgames76/', '_blank')">
-                <span>Lección 76</span>
-                <span class="icono-enlace">🌐 UG 76</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://sites.google.com/site/unblockedgames66ez/', '_blank')">
-                <span>Lección 66 EZ</span>
-                <span class="icono-enlace">🌐 UG 66</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://poki.com/', '_blank')">
-                <span>Recurso P</span>
-                <span class="icono-enlace">🌐 Poki</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://www.crazygames.com/', '_blank')">
-                <span>Recurso C</span>
-                <span class="icono-enlace">🌐 CrazyGames</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://1v1.lol/', '_blank')">
-                <span>Práctica 1v1</span>
-                <span class="icono-enlace">🌐 1v1.LOL</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://armorgames.com/', '_blank')">
-                <span>Lección Armor</span>
-                <span class="icono-enlace">🌐 Armor Games</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://github.com/topics/game', '_blank')">
-                <span>Repositorio Pro</span>
-                <span class="icono-enlace">🌐 GitHub Games</span>
-            </div>
-            <div class="btn-juego" onclick="window.open('https://itch.io/games/free', '_blank')">
-                <span>Indie Lessons</span>
-                <span class="icono-enlace">🌐 Itch.io</span>
-            </div>
-        </div>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Classroom</title>
+
+<link rel="icon" type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png">
+
+
+<style>
+
+:root {
+
+--bg-gradiente: linear-gradient(135deg, #4b5563, #1f2937);
+
+--color-texto: white;
+
+--color-borde: rgba(255, 255, 255, 0.2);
+
+--bg-btn: rgba(255, 255, 255, 0.1);
+
+--brillo-hover: rgba(255, 255, 255, 0.7);
+
+}
+
+
+
+body.modo-claro {
+
+--bg-gradiente: linear-gradient(135deg, #f3f4f6, #9ca3af);
+
+--color-texto: #121212;
+
+--color-borde: rgba(0, 0, 0, 0.2);
+
+--bg-btn: rgba(0, 0, 0, 0.05);
+
+--brillo-hover: rgba(0, 0, 0, 0.4);
+
+}
+
+
+
+body, html {
+
+margin: 0; padding: 0; height: 100%; width: 100%;
+
+background: var(--bg-gradiente);
+
+background-attachment: fixed;
+
+color: var(--color-texto);
+
+font-family: 'Segoe UI', sans-serif;
+
+transition: background 0.4s ease, color 0.4s ease;
+
+overflow: hidden;
+
+}
+
+
+
+#pantalla-menu, #pantalla-juego, #pantalla-chat {
+
+height: 100vh; width: 100vw; box-sizing: border-box;
+
+display: none; /* Todos ocultos por defecto */
+
+}
+
+
+
+#pantalla-menu {
+
+display: flex; flex-direction: column; align-items: center;
+
+padding: 40px 20px; overflow-y: auto;
+
+}
+
+
+
+.cabecera {
+
+display: flex; justify-content: space-between; align-items: center;
+
+width: 100%; max-width: 700px; margin-bottom: 30px;
+
+}
+
+
+
+.cabecera h1 { margin: 0; color: #4CAF50; font-size: 3rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+
+#btn-tema { background: none; border: none; font-size: 2rem; cursor: pointer; }
+
+
+
+.grid-juegos {
+
+display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+
+width: 100%; max-width: 700px;
+
+}
+
+
+
+.btn-juego {
+
+height: 90px; border-radius: 12px;
+
+border: 1px solid var(--color-borde);
+
+background-color: var(--bg-btn);
+
+backdrop-filter: blur(8px);
+
+display: flex; flex-direction: column; align-items: center; justify-content: center;
+
+color: var(--color-texto); font-size: 1.2rem; font-weight: bold;
+
+cursor: pointer; transition: all 0.3s ease;
+
+text-align: center; gap: 5px;
+
+}
+
+
+
+.btn-juego:hover {
+
+transform: translateY(-4px);
+
+border-color: var(--brillo-hover);
+
+box-shadow: 0 0 15px var(--brillo-hover);
+
+color: #4CAF50;
+
+}
+
+
+
+.icono-enlace { font-size: 0.8rem; opacity: 0.6; }
+
+
+
+.botones-inferiores {
+
+display: flex; gap: 15px; margin-top: 25px;
+
+margin-bottom: 30px; /* Espacio extra abajo de los botones */
+
+}
+
+
+
+.btn-accion-menu {
+
+background-color: #1DA1F2; color: white; border: none;
+
+padding: 12px 30px; border-radius: 50px; font-weight: bold;
+
+cursor: pointer; transition: 0.3s; font-size: 1.1rem;
+
+}
+
+.btn-accion-menu.chat { background-color: #4CAF50; }
+
+.btn-accion-menu:hover { opacity: 0.8; transform: scale(1.05); }
+
+
+
+.barra-superior {
+
+display: flex; justify-content: space-between; padding: 10px 20px;
+
+background: #1a1a1a; align-items: center; border-bottom: 1px solid #333;
+
+height: 60px; box-sizing: border-box;
+
+}
+
+
+
+.btn-accion {
+
+padding: 8px 18px; border: none; border-radius: 6px;
+
+font-weight: bold; cursor: pointer; color: white;
+
+}
+
+.rojo { background-color: #e53935; }
+
+.azul { background-color: #1DA1F2; }
+
+
+
+.contenedor-iframe { flex-grow: 1; width: 100%; background-color: #000; height: calc(100vh - 60px); }
+
+iframe { width: 100%; height: 100%; border: none; display: block; }
+
+
+
+/* Estilo para el texto del botón del pánico */
+
+.texto-panico {
+
+margin-top: auto; /* Lo empuja hacia abajo del todo */
+
+padding-top: 20px;
+
+font-size: 0.9rem;
+
+opacity: 0.5; /* Lo hace un poco transparente para que no moleste */
+
+font-weight: bold;
+
+letter-spacing: 2px;
+
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<div id="pantalla-menu" style="display: flex;">
+
+<div class="cabecera">
+
+<h1>Classroom</h1>
+
+<button id="btn-tema" onclick="cambiarTema()" title="Cambiar Tema">🌗</button>
+
+</div>
+
+
+
+<div class="grid-juegos">
+
+<div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
+
+<span>Retro Bowl</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
+
+<span>Slope</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
+
+<span>Tetris</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
+
+<span>Chrome Dino</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
+
+<span>Tentrix</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
+
+<span>Pac-Man Oficial</span>
+
+<span class="icono-enlace">🔗 Pestaña nueva</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
+
+<span>Tap Goal</span>
+
+<span class="icono-enlace">🔗 Pestaña nueva</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
+
+<span>Basket Random</span>
+
+<span class="icono-enlace">🔗 Pestaña nueva</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
+
+<span>More Games</span>
+
+</div>
+
+<div class="btn-juego" onclick="abrirJuego('https://dedragames.com/games/ovo/1.4.4/', true)">
+
+<span>OvO</span>
+
+<span class="icono-enlace">🔗 Pestaña nueva</span>
+
+</div>
+
+</div>
+
+
+
+<div class="botones-inferiores">
+
+<button class="btn-accion-menu" onclick="compartirWeb()">📲 Compartir Web</button>
+
+<button class="btn-accion-menu chat" onclick="abrirChat()">💬 Abrir Chat</button>
+
+</div>
+
+
+
+<div class="texto-panico">BOTON DEL PANICO=0</div>
+
+</div>
+
+
+
+<div id="pantalla-juego">
+
+<div class="barra-superior">
+
+<button class="btn-accion rojo" onclick="volverAlMenu('pantalla-juego')">⬅ Volver</button>
+
+<button class="btn-accion azul" onclick="compartirWeb()">📲 Compartir</button>
+
+</div>
+
+<div class="contenedor-iframe">
+
+<iframe id="iframe-juego" src="" allowfullscreen></iframe>
+
+</div>
+
+</div>
+
+
+
+<div id="pantalla-chat">
+
+<div class="barra-superior">
+
+<button class="btn-accion rojo" onclick="volverAlMenu('pantalla-chat')">⬅ Volver</button>
+
+<span style="color: white; font-weight: bold; font-size: 1.2rem;">Sala de Chat</span>
+
+<div style="width: 70px;"></div>
+
+</div>
+
+<div class="contenedor-iframe">
+
+<iframe id="iframe-chat" src="" allowfullscreen></iframe>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+// URL de tu chat (la guardamos en una constante)
+
+const URL_CHAT = "https://organizations.minnit.chat/435303691368009/Main";
+
+
+
+function abrirJuego(url, requiereNuevaPestana = false) {
+
+if (requiereNuevaPestana) {
+
+let nuevaVentana = window.open(url, '_blank');
+
+if (!nuevaVentana) {
+
+alert("⚠️ Pop-up bloqueado. Por favor, permítelos en la barra de arriba.");
+
+}
+
+} else {
+
+document.getElementById('pantalla-menu').style.display = 'none';
+
+document.getElementById('pantalla-juego').style.display = 'flex';
+
+document.getElementById('iframe-juego').src = url;
+
+}
+
+}
+
+
+
+function abrirChat() {
+
+document.getElementById('pantalla-menu').style.display = 'none';
+
+document.getElementById('pantalla-chat').style.display = 'flex';
+
+document.getElementById('iframe-chat').src =
