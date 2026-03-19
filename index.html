@@ -61,8 +61,13 @@
             width: 100%; max-width: 700px;
         }
 
+        /* Nueva estructura para agrupar botón y like */
+        .tarjeta-juego {
+            display: flex; flex-direction: column; gap: 5px;
+        }
+
         .btn-juego {
-            height: 90px; border-radius: 12px;
+            height: 90px; border-radius: 12px; width: 100%; box-sizing: border-box;
             border: 1px solid var(--color-borde);
             background-color: var(--bg-btn);
             backdrop-filter: blur(8px);
@@ -80,6 +85,16 @@
         }
 
         .icono-enlace { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Estilos del sistema de Likes */
+        .contenedor-like {
+            display: flex; justify-content: flex-end; padding-right: 5px;
+        }
+        .btn-like {
+            background: transparent; border: none; font-size: 1.2rem; cursor: pointer;
+            transition: transform 0.2s ease; outline: none; padding: 0;
+        }
+        .btn-like:hover { transform: scale(1.2); }
 
         .botones-inferiores {
             display: flex; gap: 15px; margin-top: 40px; margin-bottom: 30px;
@@ -125,68 +140,134 @@
 
         <div class="seccion-titulo">Actividades Directas</div>
         <div class="grid-juegos">
-            <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
-                <span>Retro Bowl</span>
+            
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
+                    <span>Retro Bowl</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="retro" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
-                <span>Slope</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
+                    <span>Slope</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="slope" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
-                <span>Tetris</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
+                    <span>Tetris</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="tetris" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
-                <span>Chrome Dino</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
+                    <span>Chrome Dino</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="dino" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
-                <span>Tentrix</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
+                    <span>Tentrix</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="tentrix" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
-                <span>Pac-Man</span>
-                <span class="icono-enlace">🔗 Nueva pestaña</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
+                    <span>Pac-Man</span>
+                    <span class="icono-enlace">🔗 Nueva pestaña</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="pacman" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
-                <span>Tap Goal</span>
-                <span class="icono-enlace">🔗 Nueva pestaña</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
+                    <span>Tap Goal</span>
+                    <span class="icono-enlace">🔗 Nueva pestaña</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="tapgoal" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
-                <span>Basket Random</span>
-                <span class="icono-enlace">🔗 Nueva pestaña</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
+                    <span>Basket Random</span>
+                    <span class="icono-enlace">🔗 Nueva pestaña</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="basket" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
-                <span>More Games</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
+                    <span>More Games</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="moregames" onclick="toggleLike(this)">🤍</button></div>
             </div>
+
         </div>
 
         <div class="seccion-titulo">Otros</div>
         <div class="grid-juegos">
-            <div class="btn-juego" onclick="window.open('https://classroom-6x.site/', '_blank')">
-                <span>Lección 6x</span>
-                <span class="icono-enlace">🌐 Abrir</span>
+            
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://classroom-6x.site/', '_blank')">
+                    <span>Lección 6x</span>
+                    <span class="icono-enlace">🌐 Abrir</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="lec6x" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="window.open('https://sites.google.com/view/classroom-6x/', '_blank')">
-                <span>Lección Google</span>
-                <span class="icono-enlace">🌐 Abrir</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://sites.google.com/view/classroom-6x/', '_blank')">
+                    <span>Lección Google</span>
+                    <span class="icono-enlace">🌐 Abrir</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="lecgoogle" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="window.open('https://poki.com/', '_blank')">
-                <span>Poki</span>
-                <span class="icono-enlace">🌐 Abrir</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://poki.com/', '_blank')">
+                    <span>Poki</span>
+                    <span class="icono-enlace">🌐 Abrir</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="poki" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="window.open('https://www.1001juegos.com/', '_blank')">
-                <span>1001 Juegos</span>
-                <span class="icono-enlace">🌐 Abrir</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://www.1001juegos.com/', '_blank')">
+                    <span>1001 Juegos</span>
+                    <span class="icono-enlace">🌐 Abrir</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="1001juegos" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="window.open('https://glacierarcade.xyz/gxmes', '_blank')">
-                <span>Glacier</span>
-                <span class="icono-enlace">🌐 Arcade</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://glacierarcade.xyz/gxmes', '_blank')">
+                    <span>Glacier</span>
+                    <span class="icono-enlace">🌐 Arcade</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="glacier" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="window.open('https://www.xbox.com/play', '_blank')">
-                <span>Xbox Cloud</span>
-                <span class="icono-enlace">🎮 Streaming</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://www.xbox.com/play', '_blank')">
+                    <span>Xbox Cloud</span>
+                    <span class="icono-enlace">🎮 Streaming</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="xbox" onclick="toggleLike(this)">🤍</button></div>
             </div>
-            <div class="btn-juego" onclick="window.open('https://www.nvidia.com/es-es/geforce-now/', '_blank')">
-                <span>GeForce Now</span>
-                <span class="icono-enlace">🎮 Streaming</span>
+
+            <div class="tarjeta-juego">
+                <div class="btn-juego" onclick="window.open('https://www.nvidia.com/es-es/geforce-now/', '_blank')">
+                    <span>GeForce Now</span>
+                    <span class="icono-enlace">🎮 Streaming</span>
+                </div>
+                <div class="contenedor-like"><button class="btn-like" data-id="geforce" onclick="toggleLike(this)">🤍</button></div>
             </div>
+
         </div>
 
         <div class="botones-inferiores">
@@ -253,6 +334,39 @@
             alert('¡Enlace copiado!');
         }
 
+        // --- SISTEMA DE LIKES ---
+        function inicializarLikes() {
+            const botonesLike = document.querySelectorAll('.btn-like');
+            botonesLike.forEach(boton => {
+                const idJuego = boton.getAttribute('data-id');
+                // Si el navegador recuerda que le dio like, le pone el corazón rojo
+                if (localStorage.getItem('like_juego_' + idJuego) === 'true') {
+                    boton.innerHTML = '❤️';
+                } else {
+                    boton.innerHTML = '🤍';
+                }
+            });
+        }
+
+        function toggleLike(boton) {
+            const idJuego = boton.getAttribute('data-id');
+            const estadoActual = localStorage.getItem('like_juego_' + idJuego);
+
+            if (estadoActual === 'true') {
+                // Si ya le gustaba, se lo quitamos
+                localStorage.removeItem('like_juego_' + idJuego);
+                boton.innerHTML = '🤍';
+            } else {
+                // Si no le gustaba, le damos like
+                localStorage.setItem('like_juego_' + idJuego, 'true');
+                boton.innerHTML = '❤️';
+            }
+        }
+
+        // Ejecutar los likes cuando la página termine de cargar
+        document.addEventListener('DOMContentLoaded', inicializarLikes);
+
+        // --- BOTÓN DEL PÁNICO ---
         document.addEventListener('keydown', function(e) {
             if (e.key === '0') {
                 window.location.replace("https://classroom.google.com");
