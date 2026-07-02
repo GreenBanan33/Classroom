@@ -7,34 +7,36 @@
     
     <style>
         :root {
-            --bg-gradiente: linear-gradient(135deg, #4b5563, #1f2937);
-            --color-texto: white;
-            --color-borde: rgba(255, 255, 255, 0.2);
-            --bg-btn: rgba(255, 255, 255, 0.1);
-            --brillo-hover: rgba(255, 255, 255, 0.7);
+            --bg-principal: #0b0c10;       /* Fondo oscuro profundo estilo gaming */
+            --bg-tarjeta: #1f2833;         /* Gris oscuro para las tarjetas */
+            --color-texto: #ffffff;
+            --color-acento: #8a2be2;        /* Morado eléctrico de 1001juegos */
+            --color-borde: rgba(255, 255, 255, 0.05);
+            --brillo-hover: rgba(138, 43, 226, 0.6);
         }
 
         body.modo-claro {
-            --bg-gradiente: linear-gradient(135deg, #f3f4f6, #9ca3af);
-            --color-texto: #121212;
-            --color-borde: rgba(0, 0, 0, 0.2);
-            --bg-btn: rgba(0, 0, 0, 0.05);
-            --brillo-hover: rgba(0, 0, 0, 0.4);
+            --bg-principal: #f4f5f7;
+            --bg-tarjeta: #ffffff;
+            --color-texto: #0f172a;
+            --color-acento: #3b82f6;        /* Azul eléctrico para modo claro */
+            --color-borde: rgba(0, 0, 0, 0.08);
+            --brillo-hover: rgba(59, 130, 246, 0.4);
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
-            background: var(--bg-gradiente);
-            background-attachment: fixed;
+            background-color: var(--bg-principal);
             color: var(--color-texto);
-            font-family: 'Segoe UI', sans-serif;
-            transition: background 0.4s ease, color 0.4s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
         }
 
         #pantalla-menu {
             display: flex; flex-direction: column; align-items: center;
             padding: 40px 20px; overflow-y: auto; min-height: 100vh;
+            box-sizing: border-box;
         }
 
         #pantalla-juego, #pantalla-chat {
@@ -44,73 +46,133 @@
 
         .cabecera {
             display: flex; justify-content: space-between; align-items: center;
-            width: 100%; max-width: 700px; margin-bottom: 30px;
+            width: 100%; max-width: 900px; margin-bottom: 20px;
         }
 
-        .cabecera h1 { margin: 0; color: #4CAF50; font-size: 3rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        #btn-tema { background: none; border: none; font-size: 2rem; cursor: pointer; }
+        .cabecera h1 { 
+            margin: 0; 
+            color: var(--color-acento); 
+            font-size: 2.8rem; 
+            font-weight: 800;
+            text-shadow: 0 0 15px var(--brillo-hover); 
+        }
+        
+        #btn-tema { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid var(--color-borde); 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            padding: 8px 12px;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        #btn-tema:hover { transform: scale(1.1); }
 
         .seccion-titulo {
-            width: 100%; max-width: 700px; margin: 25px 0 15px 0;
-            color: #4CAF50; font-size: 1.4rem; border-bottom: 1px solid var(--color-borde);
-            padding-bottom: 5px;
+            width: 100%; max-width: 900px; margin: 30px 0 15px 0;
+            color: var(--color-texto); font-size: 1.3rem; font-weight: bold;
+            opacity: 0.9; position: relative; padding-bottom: 5px;
+        }
+        .seccion-titulo::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 50px; height: 3px; background-color: var(--color-acento);
+            border-radius: 2px;
         }
 
+        /* Cuadrícula auto-ajustable estilo 1001 Juegos */
         .grid-juegos {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
-            width: 100%; max-width: 700px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); 
+            gap: 15px;
+            width: 100%; max-width: 900px;
         }
 
-        /* Nueva estructura para agrupar botón y like */
+        /* Tarjeta compacta y completamente cuadrada */
         .tarjeta-juego {
-            display: flex; flex-direction: column; gap: 5px;
-        }
-
-        .btn-juego {
-            height: 90px; border-radius: 12px; width: 100%; box-sizing: border-box;
+            position: relative;
+            background: var(--bg-tarjeta);
+            border-radius: 12px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 12px;
+            box-sizing: border-box;
             border: 1px solid var(--color-borde);
-            background-color: var(--bg-btn);
-            backdrop-filter: blur(8px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--color-texto); font-size: 1.1rem; font-weight: bold;
-            cursor: pointer; transition: all 0.3s ease;
-            text-align: center; gap: 5px; padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, border-color 0.2s ease;
+            /* Efecto de sombra inferior para que el texto resalte si hubiera miniatura */
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%);
         }
 
-        .btn-juego:hover {
-            transform: translateY(-4px);
-            border-color: var(--brillo-hover);
-            box-shadow: 0 0 15px var(--brillo-hover);
-            color: #4CAF50;
+        .tarjeta-juego:hover {
+            transform: scale(1.06);
+            border-color: var(--color-acento);
+            box-shadow: 0 8px 25px var(--brillo-hover);
         }
 
-        .icono-enlace { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+        /* Nombre del juego en la esquina inferior */
+        .tarjeta-juego span.titulo-juego {
+            font-size: 0.95rem;
+            font-weight: 700;
+            z-index: 2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+            line-height: 1.2;
+        }
 
-        /* Estilos del sistema de Likes */
+        .icono-enlace { 
+            font-size: 0.65rem; 
+            opacity: 0.8; 
+            color: #38bdf8; 
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        /* Botón de Like flotante e integrado */
         .contenedor-like {
-            display: flex; justify-content: flex-end; padding-right: 5px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
         }
         .btn-like {
-            background: transparent; border: none; font-size: 1.2rem; cursor: pointer;
-            transition: transform 0.2s ease; outline: none; padding: 0;
+            background: rgba(0, 0, 0, 0.4); 
+            border: none; 
+            font-size: 1.1rem; 
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s ease, background 0.2s ease;
+            backdrop-filter: blur(4px);
+            padding: 0; outline: none;
         }
-        .btn-like:hover { transform: scale(1.2); }
+        .btn-like:hover { transform: scale(1.2); background: rgba(0, 0, 0, 0.6); }
 
+        /* Botones inferiores de acción */
         .botones-inferiores {
-            display: flex; gap: 15px; margin-top: 40px; margin-bottom: 30px;
+            display: flex; gap: 15px; margin-top: 40px; margin-bottom: 20px;
         }
 
         .btn-accion-menu {
             background-color: #1DA1F2; color: white; border: none; 
             padding: 12px 30px; border-radius: 50px; font-weight: bold; 
-            cursor: pointer; transition: 0.3s; font-size: 1.1rem;
+            cursor: pointer; transition: 0.3s ease; font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(29, 161, 242, 0.3);
         }
-        .btn-accion-menu.chat { background-color: #4CAF50; }
-        .btn-accion-menu:hover { opacity: 0.8; transform: scale(1.05); }
+        .btn-accion-menu.chat { 
+            background-color: var(--color-acento);
+            box-shadow: 0 4px 10px var(--brillo-hover);
+        }
+        .btn-accion-menu:hover { opacity: 0.9; transform: translateY(-2px); }
 
+        /* Configuración del Iframe para pantalla completa */
         .barra-superior {
             display: flex; justify-content: space-between; padding: 10px 20px;
-            background: #1a1a1a; align-items: center; border-bottom: 1px solid #333;
+            background: #0b0c10; align-items: center; border-bottom: 1px solid #1f2833;
             height: 60px; box-sizing: border-box;
         }
 
@@ -125,8 +187,8 @@
         iframe { width: 100%; height: 100%; border: none; display: block; }
 
         .texto-panico {
-            margin-top: 20px; padding: 20px; font-size: 0.8rem;
-            opacity: 0.4; font-weight: bold; letter-spacing: 2px;
+            margin-top: 20px; padding: 10px; font-size: 0.75rem;
+            opacity: 0.3; font-weight: bold; letter-spacing: 2px;
         }
     </style>
 </head>
@@ -141,131 +203,131 @@
         <div class="seccion-titulo">Actividades Directas</div>
         <div class="grid-juegos">
             
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
-                    <span>Retro Bowl</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="retro" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="retro" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Retro Bowl</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
-                    <span>Slope</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://y8.com/embed/slope')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="slope" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="slope" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Slope</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
-                    <span>Tetris</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://tetris.com/play-tetris')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="tetris" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="tetris" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Tetris</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
-                    <span>Chrome Dino</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://wayou.github.io/t-rex-runner/')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="dino" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="dino" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Chrome Dino</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
-                    <span>Tentrix</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://play.gamepix.com/tap-goal/embed')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="tentrix" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="tentrix" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Tentrix</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
-                    <span>Pac-Man</span>
-                    <span class="icono-enlace">🔗 Nueva pestaña</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://www.google.com/logos/2010/pacman10-i.html', true)">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="pacman" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="pacman" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Pac-Man</span>
+                <span class="icono-enlace">🔗 pestaña</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
-                    <span>Tap Goal</span>
-                    <span class="icono-enlace">🔗 Nueva pestaña</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/tap-goal', true)">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="tapgoal" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="tapgoal" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Tap Goal</span>
+                <span class="icono-enlace">🔗 pestaña</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
-                    <span>Basket Random</span>
-                    <span class="icono-enlace">🔗 Nueva pestaña</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://sites.google.com/site/populardoodlegames/basket-random', true)">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="basket" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="basket" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Basket Random</span>
+                <span class="icono-enlace">🔗 pestaña</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
-                    <span>More Games</span>
+            <div class="tarjeta-juego" onclick="abrirJuego('https://sz-games.github.io/Ice-Dodo/')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="moregames" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="moregames" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">More Games</span>
             </div>
 
         </div>
 
-        <div class="seccion-titulo">Otros</div>
+        <div class="seccion-titulo">Otros Sitios</div>
         <div class="grid-juegos">
             
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://classroom-6x.site/', '_blank')">
-                    <span>Lección 6x</span>
-                    <span class="icono-enlace">🌐 Abrir</span>
+            <div class="tarjeta-juego" onclick="window.open('https://classroom-6x.site/', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="lec6x" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="lec6x" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Lección 6x</span>
+                <span class="icono-enlace">🌐 Abrir</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://sites.google.com/view/classroom-6x/', '_blank')">
-                    <span>Lección Google</span>
-                    <span class="icono-enlace">🌐 Abrir</span>
+            <div class="tarjeta-juego" onclick="window.open('https://sites.google.com/view/classroom-6x/', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="lecgoogle" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="lecgoogle" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Lección Google</span>
+                <span class="icono-enlace">🌐 Abrir</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://poki.com/', '_blank')">
-                    <span>Poki</span>
-                    <span class="icono-enlace">🌐 Abrir</span>
+            <div class="tarjeta-juego" onclick="window.open('https://poki.com/', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="poki" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="poki" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Poki</span>
+                <span class="icono-enlace">🌐 Abrir</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://www.1001juegos.com/', '_blank')">
-                    <span>1001 Juegos</span>
-                    <span class="icono-enlace">🌐 Abrir</span>
+            <div class="tarjeta-juego" onclick="window.open('https://www.1001juegos.com/', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="1001juegos" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="1001juegos" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">1001 Juegos</span>
+                <span class="icono-enlace">🌐 Abrir</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://glacierarcade.xyz/gxmes', '_blank')">
-                    <span>Glacier</span>
-                    <span class="icono-enlace">🌐 Arcade</span>
+            <div class="tarjeta-juego" onclick="window.open('https://glacierarcade.xyz/gxmes', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="glacier" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="glacier" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Glacier</span>
+                <span class="icono-enlace">🌐 Arcade</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://www.xbox.com/play', '_blank')">
-                    <span>Xbox Cloud</span>
-                    <span class="icono-enlace">🎮 Streaming</span>
+            <div class="tarjeta-juego" onclick="window.open('https://www.xbox.com/play', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="xbox" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="xbox" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">Xbox Cloud</span>
+                <span class="icono-enlace">🎮 Stream</span>
             </div>
 
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="window.open('https://www.nvidia.com/es-es/geforce-now/', '_blank')">
-                    <span>GeForce Now</span>
-                    <span class="icono-enlace">🎮 Streaming</span>
+            <div class="tarjeta-juego" onclick="window.open('https://www.nvidia.com/es-es/geforce-now/', '_blank')">
+                <div class="contenedor-like">
+                    <button class="btn-like" data-id="geforce" onclick="event.stopPropagation(); toggleLike(this)">🤍</button>
                 </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="geforce" onclick="toggleLike(this)">🤍</button></div>
+                <span class="titulo-juego">GeForce Now</span>
+                <span class="icono-enlace">🎮 Stream</span>
             </div>
 
         </div>
@@ -339,7 +401,6 @@
             const botonesLike = document.querySelectorAll('.btn-like');
             botonesLike.forEach(boton => {
                 const idJuego = boton.getAttribute('data-id');
-                // Si el navegador recuerda que le dio like, le pone el corazón rojo
                 if (localStorage.getItem('like_juego_' + idJuego) === 'true') {
                     boton.innerHTML = '❤️';
                 } else {
@@ -353,17 +414,14 @@
             const estadoActual = localStorage.getItem('like_juego_' + idJuego);
 
             if (estadoActual === 'true') {
-                // Si ya le gustaba, se lo quitamos
                 localStorage.removeItem('like_juego_' + idJuego);
                 boton.innerHTML = '🤍';
             } else {
-                // Si no le gustaba, le damos like
                 localStorage.setItem('like_juego_' + idJuego, 'true');
                 boton.innerHTML = '❤️';
             }
         }
 
-        // Ejecutar los likes cuando la página termine de cargar
         document.addEventListener('DOMContentLoaded', inicializarLikes);
 
         // --- BOTÓN DEL PÁNICO ---
@@ -379,14 +437,7 @@
     var sc_invisible=1; 
     var sc_security="81904266"; 
     </script>
-    <script type="text/javascript"
-    src="https://www.statcounter.com/counter/counter.js"
-    async></script>
-    <noscript><div class="statcounter"><a title="Web Analytics"
-    href="https://statcounter.com/" target="_blank"><img
-    class="statcounter"
-    src="https://c.statcounter.com/13210634/0/81904266/1/"
-    alt="Web Analytics"
-    referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-    </body>
+    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+    <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/13210634/0/81904266/1/" alt="Web Analytics" referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+</body>
 </html>
