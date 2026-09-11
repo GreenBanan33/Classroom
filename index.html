@@ -61,6 +61,7 @@
             width: 100%; max-width: 700px;
         }
 
+        /* Nueva estructura para agrupar botón y like */
         .tarjeta-juego {
             display: flex; flex-direction: column; gap: 5px;
         }
@@ -85,6 +86,7 @@
 
         .icono-enlace { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* Estilos del sistema de Likes */
         .contenedor-like {
             display: flex; justify-content: flex-end; padding-right: 5px;
         }
@@ -139,13 +141,6 @@
         <div class="seccion-titulo">Actividades Directas</div>
         <div class="grid-juegos">
             
-            <div class="tarjeta-juego">
-                <div class="btn-juego" onclick="abrirJuego('http://hexgl.bkcore.com/play/')">
-                    <span>HexGL 3D</span>
-                </div>
-                <div class="contenedor-like"><button class="btn-like" data-id="hexgl" onclick="toggleLike(this)">🤍</button></div>
-            </div>
-
             <div class="tarjeta-juego">
                 <div class="btn-juego" onclick="abrirJuego('https://retro-bowl-unblocked1.github.io/')">
                     <span>Retro Bowl</span>
@@ -339,10 +334,12 @@
             alert('¡Enlace copiado!');
         }
 
+        // --- SISTEMA DE LIKES ---
         function inicializarLikes() {
             const botonesLike = document.querySelectorAll('.btn-like');
             botonesLike.forEach(boton => {
                 const idJuego = boton.getAttribute('data-id');
+                // Si el navegador recuerda que le dio like, le pone el corazón rojo
                 if (localStorage.getItem('like_juego_' + idJuego) === 'true') {
                     boton.innerHTML = '❤️';
                 } else {
@@ -356,16 +353,20 @@
             const estadoActual = localStorage.getItem('like_juego_' + idJuego);
 
             if (estadoActual === 'true') {
+                // Si ya le gustaba, se lo quitamos
                 localStorage.removeItem('like_juego_' + idJuego);
                 boton.innerHTML = '🤍';
             } else {
+                // Si no le gustaba, le damos like
                 localStorage.setItem('like_juego_' + idJuego, 'true');
                 boton.innerHTML = '❤️';
             }
         }
 
+        // Ejecutar los likes cuando la página termine de cargar
         document.addEventListener('DOMContentLoaded', inicializarLikes);
 
+        // --- BOTÓN DEL PÁNICO ---
         document.addEventListener('keydown', function(e) {
             if (e.key === '0') {
                 window.location.replace("https://classroom.google.com");
