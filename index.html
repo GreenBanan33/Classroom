@@ -1185,6 +1185,24 @@
                 gap: 5px;
             }
         }
+
+        /* Botón de pánico en las barras de juego */
+        .btn-panic {
+            background: #f59e0b;
+            color: #1e293b;
+        }
+
+        .btn-panic:hover {
+            background: #d97706;
+            transform: scale(1.04);
+        }
+
+        @media (max-width: 480px) {
+            .toolbar-left, .toolbar-right { gap: 8px; }
+            .btn-toolbar { padding: 9px 12px; font-size: 13px; }
+            .btn-panic .panic-label { display: none; }
+            .toolbar-title { font-size: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -1447,6 +1465,7 @@
         </div>
         <div class="toolbar-right">
             <button class="btn-toolbar btn-share" onclick="compartirWeb()">📲 Compartir</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
     <div class="iframe-container">
@@ -1468,7 +1487,9 @@
             <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-chat')">⬅ Volver</button>
             <span class="toolbar-title">Sala de Chat</span>
         </div>
-        <div style="width: 100px;"></div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
     </div>
     <div class="iframe-container">
         <iframe id="iframe-chat" src="" allowfullscreen></iframe>
@@ -1484,6 +1505,7 @@
         </div>
         <div class="toolbar-right">
             <button class="btn-toolbar btn-share" onclick="reiniciar2048()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
     <div class="local-game-wrap">
@@ -1505,6 +1527,7 @@
         </div>
         <div class="toolbar-right">
             <button class="btn-toolbar btn-share" onclick="reiniciarCookie()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
     <div class="local-game-wrap cookie-wrap">
@@ -1524,6 +1547,7 @@
         </div>
         <div class="toolbar-right">
             <button class="btn-toolbar btn-share" onclick="reiniciarFlappy()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
     <div class="local-game-wrap flappy-wrap">
@@ -2134,11 +2158,16 @@
         };
     }
 
+    function activarPanico() {
+        const cfg = obtenerConfigPanico();
+        window.location.replace(cfg.url);
+    }
+
     document.addEventListener('keydown', function(e) {
         if (capturandoTeclaPanico) return;
         const cfg = obtenerConfigPanico();
         if (e.key === cfg.tecla) {
-            window.location.replace(cfg.url);
+            activarPanico();
         }
     });
 
