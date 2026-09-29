@@ -232,7 +232,7 @@
             align-items: center;
         }
 
-        #pantalla-juego, #pantalla-chat, #pantalla-2048, #pantalla-cookie, #pantalla-flappy, #pantalla-config {
+        #pantalla-juego, #pantalla-chat, #pantalla-2048, #pantalla-cookie, #pantalla-flappy, #pantalla-config, #pantalla-snake, #pantalla-memory {
             display: none;
             flex-direction: column;
             height: 100vh;
@@ -1203,6 +1203,134 @@
             .btn-panic .panic-label { display: none; }
             .toolbar-title { font-size: 15px; }
         }
+
+        /* Bandejas plegables: Recientes / Puntuaciones */
+        .tray {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            flex-shrink: 0;
+        }
+
+        .tray-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .tray-chevron {
+            transition: transform 0.25s ease;
+            color: var(--text-secondary);
+        }
+
+        .tray.open .tray-chevron {
+            transform: rotate(180deg);
+        }
+
+        .tray-body {
+            display: none;
+        }
+
+        .tray.open .tray-body {
+            display: block;
+        }
+
+        .tray-row {
+            display: flex;
+            gap: 10px;
+            padding: 0 16px 16px;
+            overflow-x: auto;
+        }
+
+        .tray-empty {
+            color: var(--text-secondary);
+            font-size: 13px;
+            padding: 0 4px 16px;
+        }
+
+        .tray-chip {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface-strong);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tray-chip:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .tray-chip .chip-icon {
+            font-size: 20px;
+        }
+
+        .tray-chip .chip-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tray-chip .chip-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .tray-chip .chip-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Tablero de Memory */
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: min(90vw, 380px);
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: var(--surface-strong);
+            border: 1px solid var(--surface-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(20px, 6vw, 30px);
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.2s ease;
+            user-select: none;
+        }
+
+        .memory-card.flipped {
+            background: var(--accent-primary);
+        }
+
+        .memory-card.matched {
+            background: #10b981;
+            opacity: 0.65;
+            cursor: default;
+        }
     </style>
 </head>
 <body>
@@ -1251,7 +1379,7 @@
 
     <div class="stats-banner">
         <div class="stat-item">
-            <div class="stat-number" id="total-games">19</div>
+            <div class="stat-number" id="total-games">21</div>
             <div class="stat-label">Juegos</div>
         </div>
         <div class="stat-item">
@@ -1261,6 +1389,30 @@
         <div class="stat-item">
             <div class="stat-number" id="uptime">24/7</div>
             <div class="stat-label">Disponible</div>
+        </div>
+    </div>
+
+    <div class="tray" id="tray-recientes">
+        <button class="tray-header" onclick="toggleTray('tray-recientes')">
+            <span>🕓 Recientes</span>
+            <span class="tray-chevron">▾</span>
+        </button>
+        <div class="tray-body">
+            <div class="tray-row" id="recientes-row">
+                <p class="tray-empty">Aún no has abierto ningún juego.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tray" id="tray-puntuaciones">
+        <button class="tray-header" onclick="toggleTray('tray-puntuaciones')">
+            <span>🏆 Puntuaciones</span>
+            <span class="tray-chevron">▾</span>
+        </button>
+        <div class="tray-body">
+            <div class="tray-row" id="puntuaciones-row">
+                <p class="tray-empty">Juega para desbloquear puntuaciones.</p>
+            </div>
         </div>
     </div>
 
@@ -1373,6 +1525,24 @@
                 <button class="like-button" data-id="flappybird" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">Flappy Bird</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-snake')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(150,65%,38%) 0%, hsl(190,70%,26%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🐍</span></div></div>
+                <button class="like-button" data-id="snake" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Snake</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-memory')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(280,60%,42%) 0%, hsl(320,65%,30%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🧠</span></div></div>
+                <button class="like-button" data-id="memory" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Memory</div>
                     <div class="game-meta game-meta-local">⚡ Sin conexión</div>
                 </div>
             </div>
@@ -1557,6 +1727,45 @@
 </div>
 
 <!-- ===== CONFIGURACIÓN ===== -->
+<!-- ===== JUEGO LOCAL: SNAKE ===== -->
+<div id="pantalla-snake">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-snake')">⬅ Volver</button>
+            <span class="toolbar-title">Snake</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-share" onclick="reiniciarSnake()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div class="local-game-wrap flappy-wrap">
+        <canvas id="snake-canvas" width="360" height="360"></canvas>
+        <p class="local-game-hint">Usa las flechas o desliza para mover la serpiente.</p>
+    </div>
+</div>
+
+<!-- ===== JUEGO LOCAL: MEMORY ===== -->
+<div id="pantalla-memory">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-memory')">⬅ Volver</button>
+            <span class="toolbar-title">Memory</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-share" onclick="reiniciarMemory()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div class="local-game-wrap">
+        <div class="g2048-stats">
+            <div class="g2048-stat"><span>Movimientos</span><strong id="memory-moves">0</strong></div>
+            <div class="g2048-stat"><span>Mejor</span><strong id="memory-best">–</strong></div>
+        </div>
+        <div class="memory-board" id="memory-board"></div>
+    </div>
+</div>
+
 <div id="pantalla-config">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -1610,7 +1819,9 @@
         { id: 'geforce', name: 'GeForce Now' },
         { id: 'game2048', name: '2048' },
         { id: 'cookieclicker', name: 'Cookie Clicker' },
-        { id: 'flappybird', name: 'Flappy Bird' }
+        { id: 'flappybird', name: 'Flappy Bird' },
+        { id: 'snake', name: 'Snake' },
+        { id: 'memory', name: 'Memory' }
     ];
 
     function generarParticulas() {
@@ -1658,24 +1869,33 @@
     let urlJuegoActual = '';
 
     function abrirJuego(url, requiereNuevaPestana = false) {
+        const gameCard = event.currentTarget;
+        const gameName = gameCard.querySelector('.game-name')?.textContent || 'Juego';
+        const idJuego = gameCard.querySelector('.like-button')?.getAttribute('data-id') || gameName;
+        const emoji = gameCard.querySelector('.thumb-emoji')?.textContent || '🎮';
+
         if (requiereNuevaPestana) {
+            registrarReciente({ id: idJuego, name: gameName, icon: emoji, kind: 'tab', arg: url });
             window.open(url, '_blank');
         } else {
-            const gameCard = event.currentTarget;
-            const gameName = gameCard.querySelector('.game-name')?.textContent || 'Juego';
-            urlJuegoActual = url;
-            document.getElementById('game-title').textContent = gameName;
-            document.getElementById('pantalla-menu').style.display = 'none';
-            document.getElementById('pantalla-juego').style.display = 'flex';
-            const loading = document.getElementById('iframe-loading');
-            if (loading) loading.classList.remove('hidden');
-            document.getElementById('iframe-juego').src = url;
-
-            setTimeout(() => {
-                const l = document.getElementById('iframe-loading');
-                if (l && !l.classList.contains('hidden')) l.classList.add('hidden');
-            }, 6000);
+            registrarReciente({ id: idJuego, name: gameName, icon: emoji, kind: 'iframe', arg: url });
+            abrirJuegoDirecto(url, gameName);
         }
+    }
+
+    function abrirJuegoDirecto(url, gameName) {
+        urlJuegoActual = url;
+        document.getElementById('game-title').textContent = gameName;
+        document.getElementById('pantalla-menu').style.display = 'none';
+        document.getElementById('pantalla-juego').style.display = 'flex';
+        const loading = document.getElementById('iframe-loading');
+        if (loading) loading.classList.remove('hidden');
+        document.getElementById('iframe-juego').src = url;
+
+        setTimeout(() => {
+            const l = document.getElementById('iframe-loading');
+            if (l && !l.classList.contains('hidden')) l.classList.add('hidden');
+        }, 6000);
     }
 
     function ocultarCargaJuego() {
@@ -1699,6 +1919,8 @@
         document.getElementById('iframe-juego').src = '';
         document.getElementById('iframe-chat').src = '';
         if (pantallaActual === 'pantalla-flappy') pararFlappy();
+        if (pantallaActual === 'pantalla-snake') pararSnake();
+        renderPuntuaciones();
     }
 
     function abrirJuegoLocal(pantallaId) {
@@ -1707,7 +1929,12 @@
         if (pantallaId === 'pantalla-2048') iniciar2048();
         if (pantallaId === 'pantalla-cookie') iniciarCookie();
         if (pantallaId === 'pantalla-flappy') iniciarFlappy();
+        if (pantallaId === 'pantalla-snake') iniciarSnake();
+        if (pantallaId === 'pantalla-memory') iniciarMemory();
         if (pantallaId === 'pantalla-config') iniciarConfiguracion();
+
+        const info = LOCAL_GAME_INFO[pantallaId];
+        if (info) registrarReciente({ id: info.id, name: info.name, icon: info.icon, kind: 'local', arg: pantallaId });
     }
 
     /* === 2048 === */
@@ -1930,8 +2157,10 @@
 
     /* === FLAPPY BIRD === */
     let flappy = null;
+    let flappyRAF = null;
 
     function iniciarFlappy() {
+        if (flappyRAF) { cancelAnimationFrame(flappyRAF); flappyRAF = null; }
         const canvas = document.getElementById('flappy-canvas');
         const ctx = canvas.getContext('2d');
         const W = canvas.width, H = canvas.height;
@@ -1965,6 +2194,7 @@
 
     function pararFlappy() {
         if (flappy) flappy.corriendo = false;
+        if (flappyRAF) { cancelAnimationFrame(flappyRAF); flappyRAF = null; }
     }
 
     function bucleFlappy() {
@@ -2034,10 +2264,451 @@
         }
         ctx.textAlign = 'left';
 
-        requestAnimationFrame(bucleFlappy);
+        flappyRAF = requestAnimationFrame(bucleFlappy);
+    }
+
+    /* ==================================================
+       BANDEJAS PLEGABLES: RECIENTES Y PUNTUACIONES
+    ================================================== */
+    function toggleTray(id) {
+        document.getElementById(id).classList.toggle('open');
+    }
+
+    const LOCAL_GAME_INFO = {
+        'pantalla-2048': { id: 'game2048', name: '2048', icon: '🔢' },
+        'pantalla-cookie': { id: 'cookieclicker', name: 'Galleta Clicker', icon: '🍪' },
+        'pantalla-flappy': { id: 'flappybird', name: 'Flappy Bird', icon: '🐦' },
+        'pantalla-snake': { id: 'snake', name: 'Snake', icon: '🐍' },
+        'pantalla-memory': { id: 'memory', name: 'Memory', icon: '🧠' }
+    };
+
+    function registrarReciente(item) {
+        let lista = [];
+        try { lista = JSON.parse(localStorage.getItem('classroom-recientes') || '[]'); } catch (e) { lista = []; }
+        lista = lista.filter(g => g.id !== item.id);
+        lista.unshift(Object.assign({}, item, { ts: Date.now() }));
+        lista = lista.slice(0, 8);
+        localStorage.setItem('classroom-recientes', JSON.stringify(lista));
+        renderRecientes();
+    }
+
+    function tiempoRelativo(ts) {
+        const seg = Math.floor((Date.now() - ts) / 1000);
+        if (seg < 60) return 'Ahora mismo';
+        const min = Math.floor(seg / 60);
+        if (min < 60) return 'Hace ' + min + ' min';
+        const h = Math.floor(min / 60);
+        if (h < 24) return 'Hace ' + h + ' h';
+        return 'Hace ' + Math.floor(h / 24) + ' d';
+    }
+
+    function escaparHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function renderRecientes() {
+        const cont = document.getElementById('recientes-row');
+        if (!cont) return;
+        let lista = [];
+        try { lista = JSON.parse(localStorage.getItem('classroom-recientes') || '[]'); } catch (e) { lista = []; }
+        if (lista.length === 0) {
+            cont.innerHTML = '<p class="tray-empty">Aún no has abierto ningún juego.</p>';
+            return;
+        }
+        cont.innerHTML = lista.map((g, i) => (
+            '<div class="tray-chip" data-reciente-idx="' + i + '">' +
+                '<span class="chip-icon">' + (g.icon || '🎮') + '</span>' +
+                '<span class="chip-text">' +
+                    '<span class="chip-name">' + escaparHtml(g.name) + '</span>' +
+                    '<span class="chip-sub">' + tiempoRelativo(g.ts) + '</span>' +
+                '</span>' +
+            '</div>'
+        )).join('');
+        cont.querySelectorAll('.tray-chip').forEach(chip => {
+            chip.onclick = () => {
+                const idx = parseInt(chip.getAttribute('data-reciente-idx'), 10);
+                reabrirDesdeTray(lista[idx]);
+            };
+        });
+    }
+
+    function reabrirDesdeTray(g) {
+        if (g.kind === 'local') abrirJuegoLocal(g.arg);
+        else if (g.kind === 'tab') window.open(g.arg, '_blank');
+        else abrirJuegoDirecto(g.arg, g.name);
+    }
+
+    function renderPuntuaciones() {
+        const cont = document.getElementById('puntuaciones-row');
+        if (!cont) return;
+        const items = [];
+
+        const best2048 = parseInt(localStorage.getItem('g2048-best') || '0', 10);
+        if (best2048 > 0) items.push({ icon: '🔢', name: '2048', valor: 'Mejor: ' + best2048.toLocaleString('es-ES'), arg: 'pantalla-2048' });
+
+        let cookieTotal = 0;
+        try {
+            const data = JSON.parse(localStorage.getItem('cookie-clicker-save') || 'null');
+            if (data) cookieTotal = Math.floor(data.galletas || 0);
+        } catch (e) {}
+        if (cookieTotal > 0) items.push({ icon: '🍪', name: 'Galleta Clicker', valor: 'Total: ' + cookieTotal.toLocaleString('es-ES'), arg: 'pantalla-cookie' });
+
+        const bestFlappy = parseInt(localStorage.getItem('flappy-best') || '0', 10);
+        if (bestFlappy > 0) items.push({ icon: '🐦', name: 'Flappy Bird', valor: 'Mejor: ' + bestFlappy, arg: 'pantalla-flappy' });
+
+        const bestSnake = parseInt(localStorage.getItem('snake-best') || '0', 10);
+        if (bestSnake > 0) items.push({ icon: '🐍', name: 'Snake', valor: 'Mejor: ' + bestSnake, arg: 'pantalla-snake' });
+
+        const bestMemory = parseInt(localStorage.getItem('memory-best') || '0', 10);
+        if (bestMemory > 0) items.push({ icon: '🧠', name: 'Memory', valor: 'Mejor: ' + bestMemory + ' mov.', arg: 'pantalla-memory' });
+
+        if (items.length === 0) {
+            cont.innerHTML = '<p class="tray-empty">Juega para desbloquear puntuaciones.</p>';
+            return;
+        }
+
+        cont.innerHTML = items.map((it, i) => (
+            '<div class="tray-chip" data-punt-idx="' + i + '">' +
+                '<span class="chip-icon">' + it.icon + '</span>' +
+                '<span class="chip-text">' +
+                    '<span class="chip-name">' + it.name + '</span>' +
+                    '<span class="chip-sub">' + it.valor + '</span>' +
+                '</span>' +
+            '</div>'
+        )).join('');
+        cont.querySelectorAll('.tray-chip').forEach(chip => {
+            chip.onclick = () => {
+                const idx = parseInt(chip.getAttribute('data-punt-idx'), 10);
+                abrirJuegoLocal(items[idx].arg);
+            };
+        });
+    }
+
+    /* ==================================================
+       JUEGO LOCAL: SNAKE
+    ================================================== */
+    let snake = null;
+    let snakeRAF = null;
+
+    function iniciarSnake() {
+        if (snakeRAF) { cancelAnimationFrame(snakeRAF); snakeRAF = null; }
+        const canvas = document.getElementById('snake-canvas');
+        const ctx = canvas.getContext('2d');
+        const tam = 18;
+
+        snake = {
+            ctx, W: canvas.width, H: canvas.height, tam, cel: canvas.width / tam,
+            cuerpo: [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }],
+            dir: { x: 1, y: 0 }, siguienteDir: { x: 1, y: 0 },
+            comida: { x: 12, y: 9 },
+            puntos: 0, mejor: parseInt(localStorage.getItem('snake-best') || '0', 10),
+            vivo: true, corriendo: true, velocidad: 120, ultimoTs: null
+        };
+        colocarComidaSnake();
+
+        canvas.onclick = () => {
+            if (!snake.vivo) iniciarSnake();
+        };
+
+        requestAnimationFrame(bucleSnake);
+    }
+
+    function colocarComidaSnake() {
+        if (!snake) return;
+        let pos;
+        do {
+            pos = {
+                x: Math.floor(Math.random() * snake.cel),
+                y: Math.floor(Math.random() * snake.cel)
+            };
+        } while (snake.cuerpo.some(c => c.x === pos.x && c.y === pos.y));
+        snake.comida = pos;
+    }
+
+    function reiniciarSnake() { iniciarSnake(); }
+
+    function pararSnake() {
+        if (snake) snake.corriendo = false;
+        if (snakeRAF) { cancelAnimationFrame(snakeRAF); snakeRAF = null; }
+    }
+
+    function bucleSnake(timestamp) {
+        if (!snake || !snake.corriendo) return;
+        if (!snake.ultimoTs) snake.ultimoTs = timestamp;
+        const delta = timestamp - snake.ultimoTs;
+
+        if (delta > snake.velocidad) {
+            snake.ultimoTs = timestamp;
+            if (snake.vivo) {
+                snake.dir = snake.siguienteDir;
+                const cabeza = { x: snake.cuerpo[0].x + snake.dir.x, y: snake.cuerpo[0].y + snake.dir.y };
+
+                if (cabeza.x < 0 || cabeza.x >= snake.cel || cabeza.y < 0 || cabeza.y >= snake.cel) {
+                    snake.vivo = false;
+                } else if (snake.cuerpo.some(c => c.x === cabeza.x && c.y === cabeza.y)) {
+                    snake.vivo = false;
+                } else {
+                    snake.cuerpo.unshift(cabeza);
+                    if (cabeza.x === snake.comida.x && cabeza.y === snake.comida.y) {
+                        snake.puntos += 10;
+                        colocarComidaSnake();
+                        if (snake.puntos > snake.mejor) {
+                            snake.mejor = snake.puntos;
+                            localStorage.setItem('snake-best', snake.mejor);
+                        }
+                    } else {
+                        snake.cuerpo.pop();
+                    }
+                }
+            }
+        }
+
+        const { ctx, W, H, tam } = snake;
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(snake.comida.x * tam + 1, snake.comida.y * tam + 1, tam - 2, tam - 2);
+
+        snake.cuerpo.forEach((c, i) => {
+            ctx.fillStyle = i === 0 ? '#34d399' : '#10b981';
+            ctx.fillRect(c.x * tam + 1, c.y * tam + 1, tam - 2, tam - 2);
+        });
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('Puntos: ' + snake.puntos, 10, 25);
+
+        if (!snake.vivo) {
+            ctx.fillStyle = 'rgba(0,0,0,0.6)';
+            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('💀 Game Over', W / 2, H / 2 - 20);
+            ctx.font = '16px sans-serif';
+            ctx.fillText('Puntos: ' + snake.puntos + '  Mejor: ' + snake.mejor, W / 2, H / 2 + 10);
+            ctx.fillText('Toca o pulsa para reintentar', W / 2, H / 2 + 40);
+            ctx.textAlign = 'left';
+        }
+
+        snakeRAF = requestAnimationFrame(bucleSnake);
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById('pantalla-snake').style.display !== 'flex' || !snake) return;
+        const d = snake.dir;
+        if (e.key === 'ArrowUp' && d.y === 0) snake.siguienteDir = { x: 0, y: -1 };
+        if (e.key === 'ArrowDown' && d.y === 0) snake.siguienteDir = { x: 0, y: 1 };
+        if (e.key === 'ArrowLeft' && d.x === 0) snake.siguienteDir = { x: -1, y: 0 };
+        if (e.key === 'ArrowRight' && d.x === 0) snake.siguienteDir = { x: 1, y: 0 };
+    });
+
+    /* === JUEGO LOCAL: MEMORY === */
+    let memory = { cartas: [], volteadas: [], parejas: 0, movimientos: 0, mejor: 0, bloqueado: false };
+    const EMOJIS_MEMORY = ['🎮', '🕹️', '🎲', '🎯', '👾', '🚀', '⭐', '🏆'];
+
+    function iniciarMemory() {
+        memory.mejor = parseInt(localStorage.getItem('memory-best') || '0', 10);
+        memory.movimientos = 0;
+        memory.parejas = 0;
+        memory.volteadas = [];
+        memory.bloqueado = false;
+
+        document.getElementById('memory-moves').textContent = '0';
+        document.getElementById('memory-best').textContent = memory.mejor > 0 ? memory.mejor : '–';
+
+        const baraja = [...EMOJIS_MEMORY, ...EMOJIS_MEMORY].sort(() => Math.random() - 0.5);
+        memory.cartas = baraja.map((emoji, index) => ({ id: index, emoji, flipped: false, matched: false }));
+
+        renderMemory();
+    }
+
+    function reiniciarMemory() { iniciarMemory(); }
+
+    function renderMemory() {
+        const board = document.getElementById('memory-board');
+        if (!board) return;
+        board.innerHTML = '';
+        memory.cartas.forEach(carta => {
+            const el = document.createElement('div');
+            el.className = 'memory-card' + (carta.flipped ? ' flipped' : '') + (carta.matched ? ' matched' : '');
+            el.textContent = (carta.flipped || carta.matched) ? carta.emoji : '❓';
+            el.onclick = () => voltearCartaMemory(carta);
+            board.appendChild(el);
+        });
+    }
+
+    function voltearCartaMemory(carta) {
+        if (memory.bloqueado || carta.flipped || carta.matched) return;
+
+        carta.flipped = true;
+        memory.volteadas.push(carta);
+        renderMemory();
+
+        if (memory.volteadas.length === 2) {
+            memory.movimientos++;
+            document.getElementById('memory-moves').textContent = memory.movimientos;
+            memory.bloqueado = true;
+
+            const [c1, c2] = memory.volteadas;
+            if (c1.emoji === c2.emoji) {
+                c1.matched = true;
+                c2.matched = true;
+                memory.parejas++;
+                memory.volteadas = [];
+                memory.bloqueado = false;
+
+                if (memory.parejas === EMOJIS_MEMORY.length) {
+                    if (memory.mejor === 0 || memory.movimientos < memory.mejor) {
+                        memory.mejor = memory.movimientos;
+                        localStorage.setItem('memory-best', memory.mejor);
+                        document.getElementById('memory-best').textContent = memory.mejor;
+                    }
+                    setTimeout(() => mostrarToast('🎉 ¡Ganaste en ' + memory.movimientos + ' movimientos!'), 300);
+                }
+            } else {
+                setTimeout(() => {
+                    c1.flipped = false;
+                    c2.flipped = false;
+                    memory.volteadas = [];
+                    memory.bloqueado = false;
+                    renderMemory();
+                }, 800);
+            }
+        }
+    }
+
+    /* === CONFIGURACIÓN Y BOTÓN DE PÁNICO === */
+    let panicoConfig = {
+        tecla: localStorage.getItem('panico-tecla') || '0',
+        url: localStorage.getItem('panico-url') || 'https://classroom.google.com'
+    };
+    let capturandoTecla = false;
+
+    function iniciarConfiguracion() {
+        document.getElementById('panico-tecla-input').value = panicoConfig.tecla;
+        document.getElementById('panico-url-input').value = panicoConfig.url;
+    }
+
+    function iniciarCapturaTecla() {
+        const btn = document.getElementById('btn-capturar-tecla');
+        btn.textContent = '⌛ Presiona...';
+        capturandoTecla = true;
+
+        const handler = (e) => {
+            e.preventDefault();
+            panicoConfig.tecla = e.key;
+            document.getElementById('panico-tecla-input').value = e.key;
+            btn.textContent = '🎹 Pulsar tecla';
+            capturandoTecla = false;
+            window.removeEventListener('keydown', handler);
+        };
+        window.addEventListener('keydown', handler);
+    }
+
+    function guardarConfigPanico() {
+        const urlInput = document.getElementById('panico-url-input').value.trim();
+        panicoConfig.url = urlInput || 'https://classroom.google.com';
+        localStorage.setItem('panico-tecla', panicoConfig.tecla);
+        localStorage.setItem('panico-url', panicoConfig.url);
+        const note = document.getElementById('panic-note');
+        if (note) note.textContent = 'BOTÓN DE PÁNICO = TECLA ' + panicoConfig.tecla.toUpperCase();
+        mostrarToast('💾 Configuración guardada');
+    }
+
+    function restablecerConfigPanico() {
+        panicoConfig.tecla = '0';
+        panicoConfig.url = 'https://classroom.google.com';
+        localStorage.removeItem('panico-tecla');
+        localStorage.removeItem('panico-url');
+        document.getElementById('panico-tecla-input').value = '0';
+        document.getElementById('panico-url-input').value = panicoConfig.url;
+        const note = document.getElementById('panic-note');
+        if (note) note.textContent = 'BOTÓN DE PÁNICO = TECLA 0';
+        mostrarToast('↺ Configuración restablecida');
+    }
+
+    function activarPanico() {
+        window.location.href = panicoConfig.url;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (capturandoTecla) return;
+        if (e.key === panicoConfig.tecla || e.key.toLowerCase() === panicoConfig.tecla.toLowerCase()) {
+            activarPanico();
+        }
+    });
+
+    /* === LIKES / FAVORITOS === */
+    function cargarLikes() {
+        let likes = [];
+        try { likes = JSON.parse(localStorage.getItem('classroom-likes') || '[]'); } catch (e) { likes = []; }
+        document.querySelectorAll('.like-button').forEach(btn => {
+            const id = btn.getAttribute('data-id');
+            if (likes.includes(id)) {
+                btn.classList.add('liked');
+                btn.textContent = '❤️';
+            } else {
+                btn.classList.remove('liked');
+                btn.textContent = '🤍';
+            }
+        });
+        actualizarContadorFavoritos();
+    }
+
+    function toggleLike(e) {
+        const btn = e.currentTarget;
+        const id = btn.getAttribute('data-id');
+        let likes = [];
+        try { likes = JSON.parse(localStorage.getItem('classroom-likes') || '[]'); } catch (e) { likes = []; }
+
+        if (likes.includes(id)) {
+            likes = likes.filter(x => x !== id);
+            btn.classList.remove('liked');
+            btn.textContent = '🤍';
+        } else {
+            likes.push(id);
+            btn.classList.add('liked');
+            btn.textContent = '❤️';
+        }
+        localStorage.setItem('classroom-likes', JSON.stringify(likes));
+        actualizarContadorFavoritos();
+    }
+
+    function actualizarContadorFavoritos() {
+        let likes = [];
+        try { likes = JSON.parse(localStorage.getItem('classroom-likes') || '[]'); } catch (e) { likes = []; }
+        const el = document.getElementById('favorites-count');
+        if (el) el.textContent = likes.length;
+    }
+
+    /* === BUSCADOR DE JUEGOS === */
+    document.getElementById('search-input')?.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        document.querySelectorAll('.game-card').forEach(card => {
+            const name = card.querySelector('.game-name')?.textContent.toLowerCase() || '';
+            if (name.includes(query)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+
+    /* === UTILIDADES === */
+    function compartirWeb() {
+        if (navigator.share) {
+            navigator.share({ title: 'Classroom - Gaming Platform', url: window.location.href });
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            mostrarToast('📋 ¡Enlace copiado al portapapeles!');
+        }
     }
 
     function mostrarToast(mensaje) {
+        const previo = document.querySelector('.toast');
+        if (previo) previo.remove();
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.textContent = mensaje;
@@ -2045,225 +2716,20 @@
         setTimeout(() => toast.remove(), 3000);
     }
 
-    function reordenarTarjetas() {
-        document.querySelectorAll('.games-grid').forEach(grid => {
-            const cards = Array.from(grid.children);
-            cards.sort((a, b) => {
-                const idA = a.querySelector('.like-button')?.getAttribute('data-id');
-                const idB = b.querySelector('.like-button')?.getAttribute('data-id');
-                const likedA = idA && localStorage.getItem('like_juego_' + idA) === 'true';
-                const likedB = idB && localStorage.getItem('like_juego_' + idB) === 'true';
-                const fijarUltimoA = a.getAttribute('data-pin-last') === 'true' && !likedA;
-                const fijarUltimoB = b.getAttribute('data-pin-last') === 'true' && !likedB;
-
-                if (fijarUltimoA && !fijarUltimoB) return 1;
-                if (!fijarUltimoA && fijarUltimoB) return -1;
-                if (likedA && !likedB) return -1;
-                if (!likedA && likedB) return 1;
-                return 0;
-            });
-            cards.forEach(card => grid.appendChild(card));
-        });
-    }
-
-    function toggleLike(event) {
-        const button = event.target.closest('.like-button');
-        const idJuego = button.getAttribute('data-id');
-        const isLiked = localStorage.getItem('like_juego_' + idJuego) === 'true';
-
-        if (isLiked) {
-            localStorage.removeItem('like_juego_' + idJuego);
-            button.innerHTML = '🤍';
-            button.classList.remove('liked');
-        } else {
-            localStorage.setItem('like_juego_' + idJuego, 'true');
-            button.innerHTML = '❤️';
-            button.classList.add('liked');
-        }
-
-        actualizarContadorFavoritos();
-        reordenarTarjetas();
-    }
-
-    function inicializarLikes() {
-        document.querySelectorAll('.like-button').forEach(button => {
-            const idJuego = button.getAttribute('data-id');
-            if (localStorage.getItem('like_juego_' + idJuego) === 'true') {
-                button.innerHTML = '❤️';
-                button.classList.add('liked');
-            }
-        });
-        actualizarContadorFavoritos();
-    }
-
-    function actualizarContadorFavoritos() {
-        let count = 0;
-        GAMES.forEach(game => {
-            if (localStorage.getItem('like_juego_' + game.id) === 'true') {
-                count++;
-            }
-        });
-        document.getElementById('favorites-count').textContent = count;
-    }
-
-    function compartirWeb() {
-        const url = window.location.href;
-        if (navigator.share) {
-            navigator.share({
-                title: 'Classroom - Gaming Platform',
-                text: '¡Descubre nuestra plataforma de juegos!',
-                url: url
-            }).catch(() => {
-                copiarAlPortapapeles(url);
-            });
-        } else {
-            copiarAlPortapapeles(url);
-        }
-    }
-
-    function copiarAlPortapapeles(texto) {
-        navigator.clipboard.writeText(texto).then(() => {
-            mostrarToast('✓ Enlace copiado al portapapeles');
-        }).catch(() => {
-            mostrarToast('✗ No se pudo copiar el enlace');
-        });
-    }
-
-    document.getElementById('search-input').addEventListener('input', function(e) {
-        const termino = e.target.value.toLowerCase();
-        const cards = document.querySelectorAll('.game-card');
-        let visible = 0;
-
-        cards.forEach(card => {
-            const nombre = card.querySelector('.game-name').textContent.toLowerCase();
-            if (nombre.includes(termino)) {
-                card.style.display = '';
-                visible++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        if (visible === 0 && termino.length > 0) {
-            mostrarToast('No se encontraron resultados');
-        }
-    });
-
-    let capturandoTeclaPanico = false;
-
-    function obtenerConfigPanico() {
-        return {
-            tecla: localStorage.getItem('panico-tecla') || '0',
-            url: localStorage.getItem('panico-url') || 'https://classroom.google.com'
-        };
-    }
-
-    function activarPanico() {
-        const cfg = obtenerConfigPanico();
-        window.location.replace(cfg.url);
-    }
-
-    document.addEventListener('keydown', function(e) {
-        if (capturandoTeclaPanico) return;
-        const cfg = obtenerConfigPanico();
-        if (e.key === cfg.tecla) {
-            activarPanico();
-        }
-    });
-
-    function formatearTeclaPanico(tecla) {
-        if (tecla === ' ') return 'Espacio';
-        return tecla;
-    }
-
-    function iniciarConfiguracion() {
-        const cfg = obtenerConfigPanico();
-        document.getElementById('panico-tecla-input').value = formatearTeclaPanico(cfg.tecla);
-        document.getElementById('panico-tecla-input').setAttribute('data-tecla-real', cfg.tecla);
-        document.getElementById('panico-url-input').value = cfg.url;
-    }
-
-    function iniciarCapturaTecla() {
-        const boton = document.getElementById('btn-capturar-tecla');
-        const input = document.getElementById('panico-tecla-input');
-        input.value = '...';
-        boton.textContent = '⌨️ Pulsa una tecla...';
-        capturandoTeclaPanico = true;
-
-        const teclasIgnoradas = ['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock'];
-
-        const manejador = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (teclasIgnoradas.includes(e.key)) return;
-            input.value = formatearTeclaPanico(e.key);
-            input.setAttribute('data-tecla-real', e.key);
-            boton.textContent = '🎹 Pulsar tecla';
-            document.removeEventListener('keydown', manejador, true);
-            setTimeout(() => { capturandoTeclaPanico = false; }, 0);
-        };
-        document.addEventListener('keydown', manejador, true);
-    }
-
-    function actualizarNotaPanico() {
-        const cfg = obtenerConfigPanico();
-        const nota = document.getElementById('panic-note');
-        if (nota) nota.textContent = 'BOTÓN DE PÁNICO = TECLA ' + formatearTeclaPanico(cfg.tecla).toUpperCase();
-    }
-
-    function guardarConfigPanico() {
-        const input = document.getElementById('panico-tecla-input');
-        const tecla = input.getAttribute('data-tecla-real') || input.value || '0';
-        let url = document.getElementById('panico-url-input').value.trim();
-        if (!url) url = 'https://classroom.google.com';
-        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-        localStorage.setItem('panico-tecla', tecla);
-        localStorage.setItem('panico-url', url);
-        document.getElementById('panico-url-input').value = url;
-        actualizarNotaPanico();
-        mostrarToast('✅ Configuración guardada');
-    }
-
-    function restablecerConfigPanico() {
-        localStorage.removeItem('panico-tecla');
-        localStorage.removeItem('panico-url');
-        iniciarConfiguracion();
-        actualizarNotaPanico();
-        mostrarToast('↺ Restablecido por defecto');
-    }
-
-    const extraStyles = document.createElement('style');
-    extraStyles.textContent = `
-    @keyframes floatParticula {
-        0% { transform: translateY(0) translateX(0); opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
-    }
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-    `;
-    document.head.appendChild(extraStyles);
-
-    document.addEventListener('DOMContentLoaded', function() {
+    /* === INICIALIZACIÓN === */
+    window.addEventListener('DOMContentLoaded', () => {
         mostrarIntro();
         inicializarTema();
-        inicializarLikes();
-        reordenarTarjetas();
-        actualizarNotaPanico();
+        cargarLikes();
+        renderRecientes();
+        renderPuntuaciones();
+
+        const teclaGuardada = localStorage.getItem('panico-tecla');
+        if (teclaGuardada) {
+            const note = document.getElementById('panic-note');
+            if (note) note.textContent = 'BOTÓN DE PÁNICO = TECLA ' + teclaGuardada.toUpperCase();
+        }
     });
 </script>
-
-<!-- StatCounter Analytics -->
-<script type="text/javascript">
-var sc_project=13210634;
-var sc_invisible=1;
-var sc_security="81904266";
-</script>
-<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
-<noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/13210634/0/81904266/1/" alt="Análisis web" referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-
 </body>
 </html>
