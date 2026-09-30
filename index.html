@@ -232,7 +232,7 @@
             align-items: center;
         }
 
-        #pantalla-juego, #pantalla-chat, #pantalla-2048, #pantalla-cookie, #pantalla-flappy, #pantalla-config, #pantalla-snake, #pantalla-memory {
+        #pantalla-juego, #pantalla-chat, #pantalla-2048, #pantalla-cookie, #pantalla-flappy, #pantalla-dino, #pantalla-snake, #pantalla-minas, #pantalla-tetris, #pantalla-config {
             display: none;
             flex-direction: column;
             height: 100vh;
@@ -780,134 +780,178 @@
             text-align: center;
         }
 
-        /* --- 2048 --- */
-        .g2048-stats {
-            display: flex;
-            gap: 14px;
+        /* ============================================================
+           JUEGOS SIN CONEXIÓN — réplicas visuales de los originales
+           ============================================================ */
+        .lg-svgthumb { width: 44%; height: 44%; max-width: 64px; max-height: 64px; filter: drop-shadow(0 6px 16px rgba(0,0,0,.45)); transition: transform .4s cubic-bezier(.4,0,.2,1); }
+        .game-card:hover .lg-svgthumb { transform: scale(1.15) translateY(-4px); }
+
+        /* ---------------- 2048 ---------------- */
+        .g48-wrap { background: #faf8ef; color: #776e65; font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif; justify-content: flex-start; gap: 0; padding: 16px 10px 30px; --w: min(92vw, 500px, calc(100vh - 230px)); }
+        .g48-head { width: var(--w); display: flex; justify-content: space-between; align-items: center; }
+        .g48-title { font-size: calc(var(--w) * .16); font-weight: 700; margin: 0; line-height: 1; }
+        .g48-scores { display: flex; gap: calc(var(--w) * .01); }
+        .g48-box { position: relative; background: #bbada0; border-radius: 3px; text-align: center; color: #fff; padding: calc(var(--w) * .022) calc(var(--w) * .05); min-width: calc(var(--w) * .17); font-size: calc(var(--w) * .05); font-weight: 700; line-height: 1.2; }
+        .g48-box span { display: block; font-size: calc(var(--w) * .026); color: #eee4da; text-transform: uppercase; font-weight: 700; }
+        .g48-add { position: absolute; left: 0; right: 0; top: 0; color: rgba(119,110,101,.9); font-weight: 700; pointer-events: none; animation: g48up .6s ease-in forwards; }
+        @keyframes g48up { from { top: 8px; opacity: 1; } to { top: -40px; opacity: 0; } }
+        .g48-sub { width: var(--w); display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 14px 0 16px; font-size: calc(var(--w) * .04); line-height: 1.35; }
+        .g48-sub p { margin: 0; }
+        .g48-btn { background: #8f7a66; color: #f9f6f2; border: 0; border-radius: 3px; padding: 0 20px; height: 40px; font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .g48-btn:hover { background: #9c8672; }
+        .g48-board { position: relative; width: var(--w); height: var(--w); background: #bbada0; border-radius: 6px; touch-action: none; user-select: none; -webkit-user-select: none; }
+        .g48-cellbg { position: absolute; width: 21.25%; height: 21.25%; background: rgba(238,228,218,.35); border-radius: 3px; }
+        .g48-tile { position: absolute; width: 21.25%; height: 21.25%; transition: left 100ms ease-in-out, top 100ms ease-in-out; z-index: 2; }
+        .g48-in { width: 100%; height: 100%; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: calc(var(--w) * .11); line-height: 1; background: #eee4da; color: #776e65; }
+        .g48-new .g48-in { animation: g48appear 200ms ease 100ms backwards; }
+        .g48-mrg .g48-in { animation: g48pop 200ms ease 100ms backwards; z-index: 20; }
+        @keyframes g48appear { 0% { opacity: 0; transform: scale(0); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes g48pop { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        .g48-t2 .g48-in { background: #eee4da; }
+        .g48-t4 .g48-in { background: #ede0c8; }
+        .g48-t8 .g48-in { background: #f2b179; color: #f9f6f2; }
+        .g48-t16 .g48-in { background: #f59563; color: #f9f6f2; }
+        .g48-t32 .g48-in { background: #f67c5f; color: #f9f6f2; }
+        .g48-t64 .g48-in { background: #f65e3b; color: #f9f6f2; }
+        .g48-t128 .g48-in { background: #edcf72; color: #f9f6f2; box-shadow: 0 0 30px 10px rgba(243,215,116,.2381), inset 0 0 0 1px rgba(255,255,255,.14286); font-size: calc(var(--w) * .09); }
+        .g48-t256 .g48-in { background: #edcc61; color: #f9f6f2; box-shadow: 0 0 30px 10px rgba(243,215,116,.31746), inset 0 0 0 1px rgba(255,255,255,.19048); font-size: calc(var(--w) * .09); }
+        .g48-t512 .g48-in { background: #edc850; color: #f9f6f2; box-shadow: 0 0 30px 10px rgba(243,215,116,.39683), inset 0 0 0 1px rgba(255,255,255,.2381); font-size: calc(var(--w) * .09); }
+        .g48-t1024 .g48-in { background: #edc53f; color: #f9f6f2; box-shadow: 0 0 30px 10px rgba(243,215,116,.47619), inset 0 0 0 1px rgba(255,255,255,.28571); font-size: calc(var(--w) * .07); }
+        .g48-t2048 .g48-in { background: #edc22e; color: #f9f6f2; box-shadow: 0 0 30px 10px rgba(243,215,116,.55556), inset 0 0 0 1px rgba(255,255,255,.33333); font-size: calc(var(--w) * .07); }
+        .g48-tsuper .g48-in { background: #3c3a32; color: #f9f6f2; font-size: calc(var(--w) * .055); }
+        .g48-msg { position: absolute; inset: 0; z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 6px; background: rgba(238,228,218,.73); }
+        .g48-msg.show { display: flex; animation: g48fade 800ms ease 1200ms backwards; }
+        .g48-msg.win { background: rgba(237,194,46,.5); color: #f9f6f2; }
+        .g48-msg p { margin: 0 0 calc(var(--w) * .06); font-size: calc(var(--w) * .12); font-weight: 700; }
+        .g48-msgb { display: flex; gap: 10px; }
+        @keyframes g48fade { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ---------------- Galleta Clicker ---------------- */
+        .cc-screen { background: #1a0d05; }
+        .cc { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(250px, 32%) 1fr minmax(290px, 31%); font-family: Georgia, "Merriweather", "Times New Roman", serif; color: #fff; user-select: none; -webkit-user-select: none; }
+        .cc-left { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; background: radial-gradient(ellipse at 50% 35%, #4b86bd 0%, #2c5b8c 55%, #16324f 100%); box-shadow: inset -10px 0 22px rgba(0,0,0,.55); }
+        .cc-left::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.035) 0 6px, rgba(0,0,0,.035) 6px 12px); pointer-events: none; }
+        .cc-name { position: relative; z-index: 3; margin: 10px 10px 0; padding: 6px 16px; background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.25); border-radius: 8px; font-size: 17px; text-shadow: 0 1px 2px #000; cursor: pointer; max-width: 92%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .cc-counter { position: relative; z-index: 3; width: 100%; text-align: center; margin-top: 8px; padding: 8px 4px; background: rgba(0,0,0,.45); box-shadow: 0 0 20px rgba(0,0,0,.4); text-shadow: 0 2px 4px #000; }
+        .cc-count { font-size: 32px; font-weight: 700; line-height: 1.1; }
+        .cc-count small { display: block; font-size: 17px; font-weight: 400; }
+        .cc-cps { font-size: 13px; opacity: .9; margin-top: 2px; }
+        .cc-bigwrap { position: relative; z-index: 2; flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; }
+        .cc-bigcookie { width: min(72%, 300px); aspect-ratio: 1; background: none; border: 0; padding: 0; cursor: pointer; filter: drop-shadow(0 10px 14px rgba(0,0,0,.55)); transition: transform .06s ease; -webkit-tap-highlight-color: transparent; }
+        .cc-bigcookie:hover { transform: scale(1.03); }
+        .cc-bigcookie:active, .cc-bigcookie.press { transform: scale(.95); }
+        .cc-bigcookie svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+        .cc-milk { position: absolute; left: 0; right: 0; bottom: 0; height: 15%; z-index: 1; opacity: .8; pointer-events: none; }
+        .cc-float { position: absolute; z-index: 6; pointer-events: none; font-size: 22px; font-weight: 700; text-shadow: 0 2px 3px #000; animation: ccfloat 1.1s ease-out forwards; white-space: nowrap; }
+        @keyframes ccfloat { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -80px); opacity: 0; } }
+        .cc-rain { position: absolute; top: -50px; z-index: 1; width: 34px; height: 34px; pointer-events: none; opacity: .9; animation: ccrain 1.6s linear forwards; }
+        @keyframes ccrain { to { transform: translateY(115vh) rotate(180deg); } }
+        .cc-mid { display: flex; flex-direction: column; min-height: 0; background: repeating-linear-gradient(90deg, #4a2a14 0 3px, #452712 3px 9px), #4a2a14; box-shadow: inset 8px 0 18px rgba(0,0,0,.5), inset -8px 0 18px rgba(0,0,0,.5); }
+        .cc-news { margin: 8px; padding: 10px 12px; min-height: 44px; background: linear-gradient(#111, #000); border: 2px solid #6b4423; border-radius: 6px; font-size: 14px; line-height: 1.35; color: #f3e6c8; display: flex; align-items: center; }
+        .cc-news span { animation: g48fade .6s ease; }
+        .cc-menu { display: flex; gap: 6px; padding: 0 8px; }
+        .cc-menu div { flex: 1; text-align: center; padding: 7px 0; background: linear-gradient(#7c5330, #4d2f17); border: 1px solid #1c0d04; border-radius: 4px; font-size: 13px; color: #f3e6c8; }
+        .cc-stats { margin: 8px; padding: 12px; background: rgba(0,0,0,.35); border-radius: 6px; font-size: 14px; line-height: 1.7; color: #f3e6c8; overflow-y: auto; }
+        .cc-stats b { color: #fff; }
+        .cc-buff { margin: 0 8px 8px; padding: 8px 12px; border-radius: 6px; background: linear-gradient(#a0181d, #63090d); border: 1px solid #ffd45a; font-size: 14px; display: none; }
+        .cc-right { display: flex; flex-direction: column; min-height: 0; background: linear-gradient(#3a2312, #241308); box-shadow: inset 10px 0 18px rgba(0,0,0,.6); }
+        .cc-storehead { padding: 8px 12px; font-size: 20px; text-align: center; background: linear-gradient(#000, #1b0e06); border-bottom: 2px solid #6b4423; letter-spacing: .5px; }
+        .cc-ups { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px; min-height: 48px; background: #120802; border-bottom: 1px solid #000; }
+        .cc-up { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(#8a6034, #4a2e16); border: 2px solid #2b1608; border-radius: 6px; cursor: pointer; }
+        .cc-up.off { filter: grayscale(.85) brightness(.55); cursor: not-allowed; }
+        .cc-up:hover:not(.off) { border-color: #ffd45a; }
+        .cc-bl { flex: 1; overflow-y: auto; }
+        .cc-b { display: flex; align-items: center; gap: 10px; padding: 8px 10px; cursor: pointer; background: linear-gradient(#69431f, #3f2510); border-top: 1px solid rgba(255,255,255,.14); border-bottom: 1px solid rgba(0,0,0,.7); position: relative; }
+        .cc-b:hover { background: linear-gradient(#7c5129, #4d2f15); }
+        .cc-b.off .cc-bn, .cc-b.off .cc-bi { opacity: .55; }
+        .cc-b.lock { cursor: default; filter: brightness(.5); }
+        .cc-bi { width: 46px; height: 46px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 26px; background: radial-gradient(#5e4028, #21120a); border: 1px solid #000; border-radius: 8px; box-shadow: inset 0 0 8px rgba(0,0,0,.7); }
+        .cc-bt { flex: 1; min-width: 0; }
+        .cc-bn { font-size: 19px; font-weight: 700; text-shadow: 0 1px 2px #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cc-bp { font-size: 14px; color: #6f6; display: flex; align-items: center; gap: 4px; text-shadow: 0 1px 1px #000; }
+        .cc-bp.no { color: #f66; }
+        .cc-bp i { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e9b26a, #a56a2c); display: inline-block; }
+        .cc-bo { font-size: 34px; font-weight: 700; color: rgba(255,255,255,.28); text-shadow: 0 2px 2px rgba(0,0,0,.5); min-width: 30px; text-align: right; }
+        .cc-tip { position: fixed; z-index: 500; max-width: 260px; padding: 10px 12px; background: #0d0704; border: 2px solid #6b4423; border-radius: 8px; font-size: 13px; line-height: 1.4; color: #f3e6c8; pointer-events: none; display: none; box-shadow: 0 6px 18px rgba(0,0,0,.6); }
+        .cc-tip b { color: #fff; font-size: 15px; }
+        .cc-gold { position: fixed; z-index: 400; width: 76px; height: 76px; cursor: pointer; animation: ccgold 13s linear forwards; filter: drop-shadow(0 0 14px #ffd75a); }
+        .cc-gold svg { width: 100%; height: 100%; }
+        @keyframes ccgold { 0% { opacity: 0; transform: scale(.2) rotate(0); } 5% { opacity: 1; transform: scale(1) rotate(15deg); } 90% { opacity: 1; } 100% { opacity: 0; transform: scale(1.1) rotate(60deg); } }
+        @media (max-width: 800px) {
+            .cc { display: flex; flex-direction: column; overflow-y: auto; }
+            .cc-mid { display: none; }
+            .cc-left { min-height: 420px; flex: none; }
+            .cc-right { flex: none; min-height: 0; }
+            .cc-bl { overflow: visible; }
         }
 
-        .g2048-stat {
-            background: var(--surface-strong);
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            padding: 8px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 90px;
-        }
+        /* ---------------- Flappy Bird ---------------- */
+        .fb-wrap { background: #000; gap: 10px; }
+        #flappy-canvas { height: min(calc(100vh - 150px), 720px); aspect-ratio: 288 / 512; width: auto; max-width: 100%; image-rendering: pixelated; border: 0; border-radius: 0; touch-action: manipulation; cursor: pointer; background: #4ec0ca; }
 
-        .g2048-stat span {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-        }
+        /* ---------------- Dino (página sin conexión de Chrome) ---------------- */
+        .dn-wrap { background: #ffffff; color: #202124; justify-content: flex-start; align-items: center; padding: 6vh 20px 30px; gap: 0; font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; overflow-y: auto; }
+        body:not(.light-mode) .dn-wrap { background: #202124; color: #e8eaed; }
+        .dn-page { width: min(100%, 600px); }
+        #dino-canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; touch-action: manipulation; cursor: pointer; transition: filter .6s; }
+        body:not(.light-mode) .dn-h1, body:not(.light-mode) .dn-p { color: #e8eaed; }
+        .dn-h1 { font-size: 1.6em; font-weight: 500; margin: 26px 0 10px; color: #202124; }
+        .dn-p { font-size: 1em; line-height: 1.6; color: #5f6368; margin: 0; }
+        .dn-p ul { margin: 10px 0 0; padding-left: 22px; }
+        .dn-code { margin-top: 26px; font-size: .875em; color: #80868b; }
+        .dn-hint { margin-top: 6px; font-size: .875em; color: #80868b; }
 
-        .g2048-stat strong {
-            font-size: 20px;
-            color: var(--text-primary);
-        }
+        /* ---------------- Snake (móvil clásico) ---------------- */
+        .sk-wrap { gap: 14px; }
+        .sk-phone { width: min(94vw, 520px); background: linear-gradient(160deg, #3f77b3 0%, #2b5a8f 55%, #1f456f 100%); border-radius: 46px 46px 70px 70px / 40px 40px 60px 60px; padding: 24px 24px 26px; box-shadow: 0 20px 40px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.35), inset 0 -6px 12px rgba(0,0,0,.3); }
+        .sk-bezel { background: linear-gradient(#20272f, #151a20); border-radius: 18px 18px 18px 18px; padding: 14px; box-shadow: inset 0 3px 8px #000, 0 1px 0 rgba(255,255,255,.25); }
+        #snake-canvas { display: block; width: 100%; height: auto; background: #9db386; border-radius: 4px; box-shadow: inset 0 0 14px rgba(20,30,15,.45); touch-action: none; cursor: pointer; }
+        .sk-pad { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 62px); grid-template-rows: repeat(2, 46px); gap: 6px; justify-content: center; }
+        .sk-pad button, .tt-pad button { border: 0; border-radius: 12px; background: linear-gradient(#5b8fc7, #3a6ea5); color: #fff; font-size: 20px; box-shadow: 0 3px 0 #1c3f66, inset 0 1px 0 rgba(255,255,255,.4); touch-action: manipulation; }
+        .sk-pad button:active, .tt-pad button:active { transform: translateY(2px); box-shadow: 0 1px 0 #1c3f66; }
+        .sk-pad .u { grid-column: 2; grid-row: 1; } .sk-pad .l { grid-column: 1; grid-row: 2; } .sk-pad .d { grid-column: 2; grid-row: 2; } .sk-pad .r { grid-column: 3; grid-row: 2; }
 
-        .g2048-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            gap: 10px;
-            width: min(90vw, 420px);
-            height: min(90vw, 420px);
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            border-radius: 16px;
-            padding: 10px;
-            touch-action: none;
-            user-select: none;
-        }
+        /* ---------------- Buscaminas (Windows clásico) ---------------- */
+        .ms-wrap { background: #008080; justify-content: flex-start; padding-top: 30px; gap: 10px; }
+        .ms-win { background: #c0c0c0; border: 2px solid; border-color: #dfdfdf #404040 #404040 #dfdfdf; box-shadow: 1px 1px 0 #000, inset 1px 1px 0 #fff; padding: 2px; font-family: "MS Sans Serif", Tahoma, Geneva, Arial, sans-serif; font-size: 13px; color: #000; max-width: 100%; }
+        .ms-title { display: flex; align-items: center; gap: 4px; background: linear-gradient(90deg, #000080, #1084d0); color: #fff; font-weight: 700; padding: 2px 3px; height: 20px; }
+        .ms-title span { flex: 1; }
+        .ms-title i { width: 16px; height: 14px; background: #c0c0c0; border: 1px solid; border-color: #fff #404040 #404040 #fff; display: inline-block; position: relative; }
+        .ms-title i.x::after { content: '✕'; position: absolute; inset: 0; text-align: center; font-size: 9px; line-height: 12px; color: #000; font-style: normal; }
+        .ms-title i.m::after { content: ''; position: absolute; left: 3px; bottom: 2px; width: 6px; height: 2px; background: #000; }
+        .ms-title i.mx::after { content: ''; position: absolute; left: 3px; top: 2px; width: 6px; height: 7px; border: 1px solid #000; border-top-width: 2px; box-sizing: border-box; }
+        .ms-menu { display: flex; gap: 0; padding: 1px 0 2px; }
+        .ms-menu button { background: none; border: 1px solid transparent; font: inherit; padding: 1px 8px; color: #000; cursor: default; }
+        .ms-menu button:hover, .ms-menu button.on { border-color: #fff #808080 #808080 #fff; }
+        .ms-menu button.on { border-color: #808080 #fff #fff #808080; }
+        .ms-body { padding: 6px; border: 3px solid; border-color: #808080 #fff #fff #808080; }
+        .ms-top { display: flex; justify-content: space-between; align-items: center; padding: 4px 5px; margin-bottom: 6px; border: 2px solid; border-color: #808080 #fff #fff #808080; }
+        .ms-led { display: flex; background: #000; padding: 1px; border: 1px solid; border-color: #808080 #fff #fff #808080; }
+        .ms-led svg { display: block; width: 13px; height: 23px; margin-right: 1px; }
+        .ms-led svg:last-child { margin-right: 0; }
+        .ms-face { width: 26px; height: 26px; padding: 0; background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; outline: 1px solid #808080; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .ms-face:active { border-color: #808080; }
+        .ms-face svg { width: 20px; height: 20px; display: block; }
+        .ms-grid { --cs: 24px; display: grid; border: 3px solid; border-color: #808080 #fff #fff #808080; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+        .ms-c { width: var(--cs); height: var(--cs); background: #c0c0c0; border: 3px solid; border-color: #fff #808080 #808080 #fff; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font: 900 calc(var(--cs) * .68)/1 "Arial Black", Arial, sans-serif; cursor: default; }
+        .ms-c.o { border: 0; border-top: 1px solid #808080; border-left: 1px solid #808080; }
+        .ms-c.boom { background: #f00; }
+        .ms-c svg { width: 100%; height: 100%; display: block; }
+        .ms-n1 { color: #0000ff; } .ms-n2 { color: #008000; } .ms-n3 { color: #ff0000; } .ms-n4 { color: #000080; } .ms-n5 { color: #800000; } .ms-n6 { color: #008080; } .ms-n7 { color: #000; } .ms-n8 { color: #808080; }
+        .ms-tools { display: flex; gap: 8px; }
+        .ms-tools button { background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 6px 12px; font: 13px Tahoma, Arial, sans-serif; color: #000; cursor: pointer; }
+        .ms-tools button.on { border-color: #808080 #fff #fff #808080; background: #d8d8d8; }
+        .ms-scroll { max-width: 100%; overflow-x: auto; padding-bottom: 6px; }
 
-        .g2048-cell {
-            border-radius: 10px;
-            background: var(--surface-strong);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: clamp(16px, 5vw, 28px);
-            color: #fff;
-            transition: background 0.15s ease, transform 0.1s ease;
-        }
+        /* ---------------- Tetris (portátil clásico) ---------------- */
+        .tt-wrap { gap: 12px; }
+        .tt-body { width: min(94vw, 470px); background: linear-gradient(#d3d1c8, #bfbdb3); border-radius: 14px 14px 46px 14px; padding: 18px 20px 22px; box-shadow: 0 18px 36px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.6); }
+        .tt-bezel { background: #4f5163; border-radius: 10px 10px 30px 10px; padding: 16px 16px 20px; box-shadow: inset 0 2px 6px rgba(0,0,0,.5); }
+        #tetris-canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; background: #9bbc0f; touch-action: manipulation; box-shadow: inset 0 0 0 2px rgba(15,56,15,.3); cursor: pointer; }
+        .tt-pad { display: flex; gap: 8px; justify-content: center; margin-top: 4px; }
+        .tt-pad button { width: 60px; height: 46px; }
 
-        .g2048-cell[data-v="0"] { background: var(--surface); }
-        .g2048-cell[data-v="2"] { background: #94a3b8; }
-        .g2048-cell[data-v="4"] { background: #64748b; }
-        .g2048-cell[data-v="8"] { background: #475569; }
-        .g2048-cell[data-v="16"] { background: #3b82f6; }
-        .g2048-cell[data-v="32"] { background: #2563eb; }
-        .g2048-cell[data-v="64"] { background: #1d4ed8; }
-        .g2048-cell[data-v="128"] { background: #0ea5e9; box-shadow: 0 0 12px rgba(14,165,233,0.5); }
-        .g2048-cell[data-v="256"] { background: #06b6d4; box-shadow: 0 0 14px rgba(6,182,212,0.6); }
-        .g2048-cell[data-v="512"] { background: #22d3ee; box-shadow: 0 0 16px rgba(34,211,238,0.7); }
-        .g2048-cell[data-v="1024"] { background: #67e8f9; box-shadow: 0 0 18px rgba(103,232,249,0.8); }
-        .g2048-cell[data-v="2048"] { background: #a5f3fc; box-shadow: 0 0 22px rgba(165,243,252,0.9); }
-
-        /* --- Galleta Clicker --- */
-        .cookie-wrap { justify-content: flex-start; padding-top: 30px; }
-
-        .cookie-count { font-size: 26px; font-weight: 800; color: var(--text-primary); }
-        .cookie-count strong { background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .cookie-cps { font-size: 13px; color: var(--text-secondary); margin-top: -10px; }
-
-        .cookie-btn {
-            font-size: 110px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
-            transition: transform 0.08s ease;
-            line-height: 1;
-        }
-
-        .cookie-btn:active { transform: scale(0.88); }
-
-        .cookie-shop {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: min(90vw, 420px);
-        }
-
-        .cookie-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            padding: 12px 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .cookie-item:hover:not(.disabled) {
-            border-color: var(--accent-primary);
-            background: rgba(59, 130, 246,0.08);
-        }
-
-        .cookie-item.disabled { opacity: 0.4; cursor: not-allowed; }
-
-        .cookie-item-name { font-weight: 700; font-size: 14px; }
-        .cookie-item-desc { font-size: 11px; color: var(--text-secondary); }
-        .cookie-item-price { font-weight: 700; color: var(--accent-tertiary); font-size: 14px; white-space: nowrap; }
-
-        /* --- Flappy Bird --- */
-        .flappy-wrap { padding-top: 10px; }
-
-        #flappy-canvas {
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            max-width: 100%;
-            touch-action: manipulation;
-            cursor: pointer;
-        }
+        .cc-bigcookie span { display: block; width: 100%; height: 100%; }
 
         .game-meta-local {
             display: inline-flex;
@@ -1203,134 +1247,6 @@
             .btn-panic .panic-label { display: none; }
             .toolbar-title { font-size: 15px; }
         }
-
-        /* Bandejas plegables: Recientes / Puntuaciones */
-        .tray {
-            width: 100%;
-            max-width: 1200px;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            flex-shrink: 0;
-        }
-
-        .tray-header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-primary);
-            font-family: inherit;
-        }
-
-        .tray-chevron {
-            transition: transform 0.25s ease;
-            color: var(--text-secondary);
-        }
-
-        .tray.open .tray-chevron {
-            transform: rotate(180deg);
-        }
-
-        .tray-body {
-            display: none;
-        }
-
-        .tray.open .tray-body {
-            display: block;
-        }
-
-        .tray-row {
-            display: flex;
-            gap: 10px;
-            padding: 0 16px 16px;
-            overflow-x: auto;
-        }
-
-        .tray-empty {
-            color: var(--text-secondary);
-            font-size: 13px;
-            padding: 0 4px 16px;
-        }
-
-        .tray-chip {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--surface-strong);
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .tray-chip:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
-
-        .tray-chip .chip-icon {
-            font-size: 20px;
-        }
-
-        .tray-chip .chip-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tray-chip .chip-name {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .tray-chip .chip-sub {
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        /* Tablero de Memory */
-        .memory-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            width: min(90vw, 380px);
-        }
-
-        .memory-card {
-            aspect-ratio: 1;
-            background: var(--surface-strong);
-            border: 1px solid var(--surface-border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(20px, 6vw, 30px);
-            cursor: pointer;
-            transition: transform 0.15s ease, background 0.2s ease;
-            user-select: none;
-        }
-
-        .memory-card.flipped {
-            background: var(--accent-primary);
-        }
-
-        .memory-card.matched {
-            background: #10b981;
-            opacity: 0.65;
-            cursor: default;
-        }
     </style>
 </head>
 <body>
@@ -1379,7 +1295,7 @@
 
     <div class="stats-banner">
         <div class="stat-item">
-            <div class="stat-number" id="total-games">21</div>
+            <div class="stat-number" id="total-games">19</div>
             <div class="stat-label">Juegos</div>
         </div>
         <div class="stat-item">
@@ -1389,30 +1305,6 @@
         <div class="stat-item">
             <div class="stat-number" id="uptime">24/7</div>
             <div class="stat-label">Disponible</div>
-        </div>
-    </div>
-
-    <div class="tray" id="tray-recientes">
-        <button class="tray-header" onclick="toggleTray('tray-recientes')">
-            <span>🕓 Recientes</span>
-            <span class="tray-chevron">▾</span>
-        </button>
-        <div class="tray-body">
-            <div class="tray-row" id="recientes-row">
-                <p class="tray-empty">Aún no has abierto ningún juego.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="tray" id="tray-puntuaciones">
-        <button class="tray-header" onclick="toggleTray('tray-puntuaciones')">
-            <span>🏆 Puntuaciones</span>
-            <span class="tray-chevron">▾</span>
-        </button>
-        <div class="tray-body">
-            <div class="tray-row" id="puntuaciones-row">
-                <p class="tray-empty">Juega para desbloquear puntuaciones.</p>
-            </div>
         </div>
     </div>
 
@@ -1503,7 +1395,7 @@
             </div>
 
             <div class="game-card" onclick="abrirJuegoLocal('pantalla-2048')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(38,75%,45%) 0%, hsl(15,75%,32%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🔢</span></div></div>
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #f0a24b 0%, #b5502a 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><rect width="64" height="64" rx="6" fill="#bbada0"/><rect x="5" y="5" width="25" height="25" rx="3" fill="#eee4da"/><rect x="34" y="5" width="25" height="25" rx="3" fill="#f2b179"/><rect x="5" y="34" width="25" height="25" rx="3" fill="#f65e3b"/><rect x="34" y="34" width="25" height="25" rx="3" fill="#edc22e"/><g font-family="Arial" font-weight="700" font-size="13" text-anchor="middle"><text x="17.5" y="23" fill="#776e65">2</text><text x="46.5" y="23" fill="#fff">8</text><text x="17.5" y="52" fill="#fff">64</text><text x="46.5" y="52" fill="#fff" font-size="10">2048</text></g></svg></div></div>
                 <button class="like-button" data-id="game2048" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">2048</div>
@@ -1512,7 +1404,7 @@
             </div>
 
             <div class="game-card" onclick="abrirJuegoLocal('pantalla-cookie')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(28,70%,42%) 0%, hsl(350,70%,30%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🍪</span></div></div>
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #3d78ad 0%, #1b3a5c 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><defs><radialGradient id="tc" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0c27b"/><stop offset="1" stop-color="#a86a2a"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="url(#tc)" stroke="#7a4517" stroke-width="2"/><g fill="#3f2110"><ellipse cx="22" cy="20" rx="5" ry="4"/><ellipse cx="41" cy="18" rx="4" ry="3.2"/><ellipse cx="46" cy="33" rx="5" ry="4"/><ellipse cx="26" cy="38" rx="4.5" ry="3.6"/><ellipse cx="38" cy="47" rx="5" ry="4"/><ellipse cx="14" cy="42" rx="3.4" ry="2.8"/></g></svg></div></div>
                 <button class="like-button" data-id="cookieclicker" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">Galleta Clicker</div>
@@ -1521,7 +1413,7 @@
             </div>
 
             <div class="game-card" onclick="abrirJuegoLocal('pantalla-flappy')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(200,70%,45%) 0%, hsl(150,65%,30%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🐦</span></div></div>
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #5cc9d3 0%, #2f8a4d 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#4ec0ca"/><rect x="40" y="0" width="16" height="22" fill="#73bf2e" stroke="#543847" stroke-width="2"/><rect x="37" y="20" width="22" height="8" fill="#73bf2e" stroke="#543847" stroke-width="2"/><rect y="54" width="64" height="10" fill="#ded895" stroke="#543847" stroke-width="2"/><ellipse cx="24" cy="34" rx="14" ry="11" fill="#f8d030" stroke="#543847" stroke-width="2.5"/><ellipse cx="18" cy="37" rx="7" ry="4.5" fill="#fbf3c2" stroke="#543847" stroke-width="1.5"/><circle cx="31" cy="29" r="5" fill="#fff" stroke="#543847" stroke-width="1.5"/><circle cx="32.5" cy="29.5" r="2" fill="#000"/><rect x="33" y="34" width="13" height="4" fill="#fc9c1c" stroke="#543847" stroke-width="1.2"/><rect x="33" y="38" width="12" height="3.5" fill="#f85c1c" stroke="#543847" stroke-width="1.2"/></svg></div></div>
                 <button class="like-button" data-id="flappybird" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">Flappy Bird</div>
@@ -1529,20 +1421,38 @@
                 </div>
             </div>
 
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-dino')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #6a6d73 0%, #26282c 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 22 24" fill="#f7f7f7" shape-rendering="crispEdges"><rect x="10" y="0" width="1" height="1"/><rect x="11" y="0" width="1" height="1"/><rect x="12" y="0" width="1" height="1"/><rect x="13" y="0" width="1" height="1"/><rect x="14" y="0" width="1" height="1"/><rect x="15" y="0" width="1" height="1"/><rect x="16" y="0" width="1" height="1"/><rect x="17" y="0" width="1" height="1"/><rect x="18" y="0" width="1" height="1"/><rect x="19" y="0" width="1" height="1"/><rect x="20" y="0" width="1" height="1"/><rect x="21" y="0" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/><rect x="11" y="1" width="1" height="1"/><rect x="12" y="1" width="1" height="1"/><rect x="13" y="1" width="1" height="1"/><rect x="14" y="1" width="1" height="1"/><rect x="15" y="1" width="1" height="1"/><rect x="16" y="1" width="1" height="1"/><rect x="17" y="1" width="1" height="1"/><rect x="18" y="1" width="1" height="1"/><rect x="19" y="1" width="1" height="1"/><rect x="20" y="1" width="1" height="1"/><rect x="21" y="1" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="11" y="2" width="1" height="1"/><rect x="13" y="2" width="1" height="1"/><rect x="14" y="2" width="1" height="1"/><rect x="15" y="2" width="1" height="1"/><rect x="16" y="2" width="1" height="1"/><rect x="17" y="2" width="1" height="1"/><rect x="18" y="2" width="1" height="1"/><rect x="19" y="2" width="1" height="1"/><rect x="20" y="2" width="1" height="1"/><rect x="21" y="2" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="13" y="3" width="1" height="1"/><rect x="14" y="3" width="1" height="1"/><rect x="15" y="3" width="1" height="1"/><rect x="16" y="3" width="1" height="1"/><rect x="17" y="3" width="1" height="1"/><rect x="18" y="3" width="1" height="1"/><rect x="19" y="3" width="1" height="1"/><rect x="20" y="3" width="1" height="1"/><rect x="21" y="3" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="11" y="4" width="1" height="1"/><rect x="12" y="4" width="1" height="1"/><rect x="13" y="4" width="1" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="15" y="4" width="1" height="1"/><rect x="16" y="4" width="1" height="1"/><rect x="17" y="4" width="1" height="1"/><rect x="18" y="4" width="1" height="1"/><rect x="19" y="4" width="1" height="1"/><rect x="20" y="4" width="1" height="1"/><rect x="21" y="4" width="1" height="1"/><rect x="9" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="12" y="5" width="1" height="1"/><rect x="13" y="5" width="1" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="15" y="5" width="1" height="1"/><rect x="16" y="5" width="1" height="1"/><rect x="17" y="5" width="1" height="1"/><rect x="18" y="5" width="1" height="1"/><rect x="19" y="5" width="1" height="1"/><rect x="20" y="5" width="1" height="1"/><rect x="21" y="5" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="13" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="15" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="17" y="6" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/><rect x="19" y="6" width="1" height="1"/><rect x="20" y="6" width="1" height="1"/><rect x="21" y="6" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="12" y="7" width="1" height="1"/><rect x="13" y="7" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="12" y="8" width="1" height="1"/><rect x="13" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="12" y="9" width="1" height="1"/><rect x="13" y="9" width="1" height="1"/><rect x="14" y="9" width="1" height="1"/><rect x="15" y="9" width="1" height="1"/><rect x="16" y="9" width="1" height="1"/><rect x="17" y="9" width="1" height="1"/><rect x="0" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="11" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="13" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="15" y="10" width="1" height="1"/><rect x="0" y="11" width="1" height="1"/><rect x="8" y="11" width="1" height="1"/><rect x="9" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/><rect x="11" y="11" width="1" height="1"/><rect x="12" y="11" width="1" height="1"/><rect x="13" y="11" width="1" height="1"/><rect x="14" y="11" width="1" height="1"/><rect x="15" y="11" width="1" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="0" y="12" width="1" height="1"/><rect x="1" y="12" width="1" height="1"/><rect x="8" y="12" width="1" height="1"/><rect x="9" y="12" width="1" height="1"/><rect x="10" y="12" width="1" height="1"/><rect x="11" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="16" y="12" width="1" height="1"/><rect x="19" y="12" width="1" height="1"/><rect x="0" y="13" width="1" height="1"/><rect x="1" y="13" width="1" height="1"/><rect x="7" y="13" width="1" height="1"/><rect x="8" y="13" width="1" height="1"/><rect x="9" y="13" width="1" height="1"/><rect x="10" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="12" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="15" y="13" width="1" height="1"/><rect x="16" y="13" width="1" height="1"/><rect x="18" y="13" width="1" height="1"/><rect x="19" y="13" width="1" height="1"/><rect x="0" y="14" width="1" height="1"/><rect x="1" y="14" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/><rect x="7" y="14" width="1" height="1"/><rect x="8" y="14" width="1" height="1"/><rect x="9" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="11" y="14" width="1" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="13" y="14" width="1" height="1"/><rect x="14" y="14" width="1" height="1"/><rect x="15" y="14" width="1" height="1"/><rect x="16" y="14" width="1" height="1"/><rect x="18" y="14" width="1" height="1"/><rect x="0" y="15" width="1" height="1"/><rect x="1" y="15" width="1" height="1"/><rect x="2" y="15" width="1" height="1"/><rect x="3" y="15" width="1" height="1"/><rect x="6" y="15" width="1" height="1"/><rect x="7" y="15" width="1" height="1"/><rect x="8" y="15" width="1" height="1"/><rect x="9" y="15" width="1" height="1"/><rect x="10" y="15" width="1" height="1"/><rect x="11" y="15" width="1" height="1"/><rect x="12" y="15" width="1" height="1"/><rect x="13" y="15" width="1" height="1"/><rect x="14" y="15" width="1" height="1"/><rect x="15" y="15" width="1" height="1"/><rect x="16" y="15" width="1" height="1"/><rect x="1" y="16" width="1" height="1"/><rect x="2" y="16" width="1" height="1"/><rect x="3" y="16" width="1" height="1"/><rect x="4" y="16" width="1" height="1"/><rect x="5" y="16" width="1" height="1"/><rect x="6" y="16" width="1" height="1"/><rect x="7" y="16" width="1" height="1"/><rect x="8" y="16" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="11" y="16" width="1" height="1"/><rect x="12" y="16" width="1" height="1"/><rect x="13" y="16" width="1" height="1"/><rect x="14" y="16" width="1" height="1"/><rect x="15" y="16" width="1" height="1"/><rect x="2" y="17" width="1" height="1"/><rect x="3" y="17" width="1" height="1"/><rect x="4" y="17" width="1" height="1"/><rect x="5" y="17" width="1" height="1"/><rect x="6" y="17" width="1" height="1"/><rect x="7" y="17" width="1" height="1"/><rect x="8" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="10" y="17" width="1" height="1"/><rect x="11" y="17" width="1" height="1"/><rect x="12" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="14" y="17" width="1" height="1"/><rect x="15" y="17" width="1" height="1"/><rect x="3" y="18" width="1" height="1"/><rect x="4" y="18" width="1" height="1"/><rect x="5" y="18" width="1" height="1"/><rect x="6" y="18" width="1" height="1"/><rect x="7" y="18" width="1" height="1"/><rect x="8" y="18" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="10" y="18" width="1" height="1"/><rect x="11" y="18" width="1" height="1"/><rect x="12" y="18" width="1" height="1"/><rect x="13" y="18" width="1" height="1"/><rect x="14" y="18" width="1" height="1"/><rect x="15" y="18" width="1" height="1"/><rect x="4" y="19" width="1" height="1"/><rect x="5" y="19" width="1" height="1"/><rect x="6" y="19" width="1" height="1"/><rect x="7" y="19" width="1" height="1"/><rect x="8" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="10" y="19" width="1" height="1"/><rect x="11" y="19" width="1" height="1"/><rect x="12" y="19" width="1" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="14" y="19" width="1" height="1"/><rect x="15" y="19" width="1" height="1"/><rect x="5" y="20" width="1" height="1"/><rect x="6" y="20" width="1" height="1"/><rect x="7" y="20" width="1" height="1"/><rect x="8" y="20" width="1" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="11" y="20" width="1" height="1"/><rect x="12" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="14" y="20" width="1" height="1"/><rect x="12" y="2" width="1" height="1" fill="#535353"/><rect x="6" y="21" width="3" height="3"/><rect x="13" y="21" width="3" height="3"/></svg></div></div>
+                <button class="like-button" data-id="dinooffline" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Dino sin conexión</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
             <div class="game-card" onclick="abrirJuegoLocal('pantalla-snake')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(150,65%,38%) 0%, hsl(190,70%,26%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🐍</span></div></div>
-                <button class="like-button" data-id="snake" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #4a78b0 0%, #1f456f 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#9db386"/><g fill="#1e2a19"><rect x="8" y="30" width="30" height="6"/><rect x="32" y="18" width="6" height="18"/><rect x="32" y="18" width="20" height="6"/><rect x="46" y="18" width="6" height="8"/></g><path d="M50 42l4 4-4 4-4-4z" fill="none" stroke="#1e2a19" stroke-width="2"/></svg></div></div>
+                <button class="like-button" data-id="snakeoffline" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">Snake</div>
                     <div class="game-meta game-meta-local">⚡ Sin conexión</div>
                 </div>
             </div>
 
-            <div class="game-card" onclick="abrirJuegoLocal('pantalla-memory')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(280,60%,42%) 0%, hsl(320,65%,30%) 100%);"></div><div class="game-thumb-icon"><span class="thumb-emoji">🧠</span></div></div>
-                <button class="like-button" data-id="memory" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-minas')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #12a0a0 0%, #004d4d 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><rect width="64" height="64" fill="#c0c0c0"/><rect x="1" y="1" width="62" height="62" fill="none" stroke="#fff" stroke-width="3"/><path d="M63 1v62H1" fill="none" stroke="#808080" stroke-width="4"/><g transform="translate(14 14) scale(2.2)"><path d="M8 1v14M1 8h14M3 3l10 10M13 3L3 13" stroke="#000" stroke-width="1.4"/><circle cx="8" cy="8" r="4.6" fill="#000"/><rect x="5.5" y="5.5" width="2" height="2" fill="#fff"/></g></svg></div></div>
+                <button class="like-button" data-id="minasoffline" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
-                    <div class="game-name">Memory</div>
+                    <div class="game-name">Buscaminas</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-tetris')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #6e8a1a 0%, #24461f 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><rect width="64" height="64" rx="6" fill="#9bbc0f"/><g fill="#0f380f"><rect x="8" y="40" width="12" height="12"/><rect x="20" y="40" width="12" height="12"/><rect x="32" y="40" width="12" height="12"/><rect x="20" y="28" width="12" height="12"/><rect x="44" y="28" width="12" height="12"/><rect x="44" y="40" width="12" height="12"/><rect x="44" y="16" width="12" height="12"/></g><g fill="#8bac0f"><rect x="11" y="43" width="6" height="6"/><rect x="23" y="43" width="6" height="6"/><rect x="35" y="43" width="6" height="6"/><rect x="23" y="31" width="6" height="6"/><rect x="47" y="31" width="6" height="6"/><rect x="47" y="43" width="6" height="6"/><rect x="47" y="19" width="6" height="6"/></g></svg></div></div>
+                <button class="like-button" data-id="tetrisoffline" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Tetris clásico</div>
                     <div class="game-meta game-meta-local">⚡ Sin conexión</div>
                 </div>
             </div>
@@ -1666,7 +1576,7 @@
     </div>
 </div>
 
-<!-- ===== JUEGO LOCAL: 2048 ===== -->
+<!-- ===== JUEGOS SIN CONEXIÓN ===== -->
 <div id="pantalla-2048">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -1678,17 +1588,20 @@
             <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
-    <div class="local-game-wrap">
-        <div class="g2048-stats">
-            <div class="g2048-stat"><span>Puntos</span><strong id="g2048-score">0</strong></div>
-            <div class="g2048-stat"><span>Mejor</span><strong id="g2048-best">0</strong></div>
+    <div class="local-game-wrap g48-wrap">
+        <div class="g48-head">
+            <h2 class="g48-title">2048</h2>
+            <div class="g48-scores">
+                <div class="g48-box"><span>Puntos</span><b id="g48-score">0</b></div>
+                <div class="g48-box"><span>Mejor</span><b id="g48-best">0</b></div>
+            </div>
         </div>
-        <div class="g2048-board" id="g2048-board"></div>
-        <p class="local-game-hint">Usa las flechas del teclado o desliza para mover las fichas.</p>
+        <div class="g48-sub"><p>Une los números y llega a la <b>ficha 2048.</b></p><button class="g48-btn" onclick="reiniciar2048()">Nuevo juego</button></div>
+        <div class="g48-board" id="g48-board">
+            <div class="g48-msg" id="g48-msg"><p id="g48-msg-t"></p><div class="g48-msgb"><button class="g48-btn" id="g48-keep">Seguir jugando</button><button class="g48-btn" onclick="reiniciar2048()">Intentar de nuevo</button></div></div>
+        </div>
     </div>
 </div>
-
-<!-- ===== JUEGO LOCAL: GALLETA CLICKER ===== -->
 <div id="pantalla-cookie">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -1700,15 +1613,27 @@
             <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
-    <div class="local-game-wrap cookie-wrap">
-        <div class="cookie-count"><strong id="cookie-count">0</strong> galletas</div>
-        <div class="cookie-cps" id="cookie-cps">0 por segundo</div>
-        <button class="cookie-btn" id="cookie-btn">🍪</button>
-        <div class="cookie-shop" id="cookie-shop"></div>
+    <div class="cc">
+        <div class="cc-left" id="cc-left">
+            <div class="cc-name" id="cc-name" title="Toca para cambiar el nombre"></div>
+            <div class="cc-counter"><div class="cc-count" id="cc-count">0</div><div class="cc-cps" id="cc-cps"></div></div>
+            <div class="cc-bigwrap"><button class="cc-bigcookie" id="cc-bigbtn" aria-label="Galleta gigante"><span id="cc-big"></span></button></div>
+            <div class="cc-milk" id="cc-milk"></div>
+        </div>
+        <div class="cc-mid">
+            <div class="cc-news" id="cc-news"></div>
+            <div class="cc-buff" id="cc-buff"></div>
+            <div class="cc-menu"><div>Estadísticas</div></div>
+            <div class="cc-stats" id="cc-stats"></div>
+        </div>
+        <div class="cc-right">
+            <div class="cc-storehead">Tienda</div>
+            <div class="cc-ups" id="cc-ups"></div>
+            <div class="cc-bl" id="cc-bl"></div>
+        </div>
     </div>
+    <div class="cc-tip" id="cc-tip"></div>
 </div>
-
-<!-- ===== JUEGO LOCAL: FLAPPY BIRD ===== -->
 <div id="pantalla-flappy">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -1720,14 +1645,32 @@
             <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
-    <div class="local-game-wrap flappy-wrap">
-        <canvas id="flappy-canvas" width="360" height="520"></canvas>
+    <div class="local-game-wrap fb-wrap">
+        <canvas id="flappy-canvas" width="288" height="512"></canvas>
         <p class="local-game-hint">Toca la pantalla, haz clic o pulsa Espacio para volar.</p>
     </div>
 </div>
-
-<!-- ===== CONFIGURACIÓN ===== -->
-<!-- ===== JUEGO LOCAL: SNAKE ===== -->
+<div id="pantalla-dino">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-dino')">⬅ Volver</button>
+            <span class="toolbar-title">Dino</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-share" onclick="reiniciarDino()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div class="local-game-wrap dn-wrap">
+        <div class="dn-page">
+            <canvas id="dino-canvas" width="600" height="150"></canvas>
+            <h1 class="dn-h1">No hay Internet</h1>
+            <div class="dn-p">Prueba a:<ul><li>Comprobar el cable de red, el módem y el router</li><li>Volver a conectarte a la red Wi-Fi</li></ul></div>
+            <div class="dn-code">ERR_INTERNET_DISCONNECTED</div>
+            <div class="dn-hint">Pulsa Espacio o toca el dinosaurio para jugar · Flecha abajo para agacharte</div>
+        </div>
+    </div>
+</div>
 <div id="pantalla-snake">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -1739,33 +1682,57 @@
             <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
-    <div class="local-game-wrap flappy-wrap">
-        <canvas id="snake-canvas" width="360" height="360"></canvas>
-        <p class="local-game-hint">Usa las flechas o desliza para mover la serpiente.</p>
+    <div class="local-game-wrap sk-wrap">
+        <div class="sk-phone">
+            <div class="sk-bezel"><canvas id="snake-canvas"></canvas></div>
+            <div class="sk-pad"><button class="u">▲</button><button class="l">◀</button><button class="d">▼</button><button class="r">▶</button></div>
+        </div>
+        <p class="local-game-hint">Flechas o WASD para mover · Espacio para pausar · También puedes deslizar sobre la pantalla.</p>
     </div>
 </div>
-
-<!-- ===== JUEGO LOCAL: MEMORY ===== -->
-<div id="pantalla-memory">
+<div id="pantalla-minas">
     <div class="toolbar">
         <div class="toolbar-left">
-            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-memory')">⬅ Volver</button>
-            <span class="toolbar-title">Memory</span>
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-minas')">⬅ Volver</button>
+            <span class="toolbar-title">Buscaminas</span>
         </div>
         <div class="toolbar-right">
-            <button class="btn-toolbar btn-share" onclick="reiniciarMemory()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-share" onclick="reiniciarMinas()">🔄 Reiniciar</button>
             <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
         </div>
     </div>
-    <div class="local-game-wrap">
-        <div class="g2048-stats">
-            <div class="g2048-stat"><span>Movimientos</span><strong id="memory-moves">0</strong></div>
-            <div class="g2048-stat"><span>Mejor</span><strong id="memory-best">–</strong></div>
+    <div class="local-game-wrap ms-wrap">
+        <div class="ms-scroll"><div class="ms-win">
+            <div class="ms-title"><span>Buscaminas</span><i class="m"></i><i class="mx"></i><i class="x"></i></div>
+            <div class="ms-menu" id="ms-menu"><button data-n="p">Principiante</button><button data-n="i">Intermedio</button><button data-n="e">Experto</button></div>
+            <div class="ms-body">
+                <div class="ms-top"><div class="ms-led" id="ms-minas"></div><button class="ms-face" id="ms-face" aria-label="Nueva partida"></button><div class="ms-led" id="ms-tiempo"></div></div>
+                <div class="ms-grid" id="ms-grid"></div>
+            </div>
+        </div></div>
+        <div class="ms-tools"><button id="ms-flag-btn">🚩 Modo bandera</button></div>
+        <p class="local-game-hint" style="color:#e8ffff">Clic derecho o pulsación larga para poner bandera. Toca un número para abrir sus vecinas.</p>
+    </div>
+</div>
+<div id="pantalla-tetris">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-tetris')">⬅ Volver</button>
+            <span class="toolbar-title">Tetris clásico</span>
         </div>
-        <div class="memory-board" id="memory-board"></div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-share" onclick="reiniciarTetris()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div class="local-game-wrap tt-wrap">
+        <div class="tt-body"><div class="tt-bezel"><canvas id="tetris-canvas"></canvas></div></div>
+        <div class="tt-pad"><button data-a="l">◀</button><button data-a="rot">⟳</button><button data-a="d">▼</button><button data-a="r">▶</button><button data-a="drop">⤓</button></div>
+        <p class="local-game-hint">Flechas para mover y girar (↑) · Espacio para caída rápida · Enter para pausar.</p>
     </div>
 </div>
 
+<!-- ===== CONFIGURACIÓN ===== -->
 <div id="pantalla-config">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -1820,8 +1787,10 @@
         { id: 'game2048', name: '2048' },
         { id: 'cookieclicker', name: 'Cookie Clicker' },
         { id: 'flappybird', name: 'Flappy Bird' },
-        { id: 'snake', name: 'Snake' },
-        { id: 'memory', name: 'Memory' }
+        { id: 'dinooffline', name: 'Dino sin conexión' },
+        { id: 'snakeoffline', name: 'Snake' },
+        { id: 'minasoffline', name: 'Buscaminas' },
+        { id: 'tetrisoffline', name: 'Tetris clásico' }
     ];
 
     function generarParticulas() {
@@ -1869,33 +1838,24 @@
     let urlJuegoActual = '';
 
     function abrirJuego(url, requiereNuevaPestana = false) {
-        const gameCard = event.currentTarget;
-        const gameName = gameCard.querySelector('.game-name')?.textContent || 'Juego';
-        const idJuego = gameCard.querySelector('.like-button')?.getAttribute('data-id') || gameName;
-        const emoji = gameCard.querySelector('.thumb-emoji')?.textContent || '🎮';
-
         if (requiereNuevaPestana) {
-            registrarReciente({ id: idJuego, name: gameName, icon: emoji, kind: 'tab', arg: url });
             window.open(url, '_blank');
         } else {
-            registrarReciente({ id: idJuego, name: gameName, icon: emoji, kind: 'iframe', arg: url });
-            abrirJuegoDirecto(url, gameName);
+            const gameCard = event.currentTarget;
+            const gameName = gameCard.querySelector('.game-name')?.textContent || 'Juego';
+            urlJuegoActual = url;
+            document.getElementById('game-title').textContent = gameName;
+            document.getElementById('pantalla-menu').style.display = 'none';
+            document.getElementById('pantalla-juego').style.display = 'flex';
+            const loading = document.getElementById('iframe-loading');
+            if (loading) loading.classList.remove('hidden');
+            document.getElementById('iframe-juego').src = url;
+
+            setTimeout(() => {
+                const l = document.getElementById('iframe-loading');
+                if (l && !l.classList.contains('hidden')) l.classList.add('hidden');
+            }, 6000);
         }
-    }
-
-    function abrirJuegoDirecto(url, gameName) {
-        urlJuegoActual = url;
-        document.getElementById('game-title').textContent = gameName;
-        document.getElementById('pantalla-menu').style.display = 'none';
-        document.getElementById('pantalla-juego').style.display = 'flex';
-        const loading = document.getElementById('iframe-loading');
-        if (loading) loading.classList.remove('hidden');
-        document.getElementById('iframe-juego').src = url;
-
-        setTimeout(() => {
-            const l = document.getElementById('iframe-loading');
-            if (l && !l.classList.contains('hidden')) l.classList.add('hidden');
-        }, 6000);
     }
 
     function ocultarCargaJuego() {
@@ -1918,9 +1878,12 @@
         document.getElementById('pantalla-menu').style.display = 'flex';
         document.getElementById('iframe-juego').src = '';
         document.getElementById('iframe-chat').src = '';
+        if (pantallaActual === 'pantalla-cookie') pararCookie();
         if (pantallaActual === 'pantalla-flappy') pararFlappy();
+        if (pantallaActual === 'pantalla-dino') pararDino();
         if (pantallaActual === 'pantalla-snake') pararSnake();
-        renderPuntuaciones();
+        if (pantallaActual === 'pantalla-minas') pararMinas();
+        if (pantallaActual === 'pantalla-tetris') pararTetris();
     }
 
     function abrirJuegoLocal(pantallaId) {
@@ -1929,786 +1892,1411 @@
         if (pantallaId === 'pantalla-2048') iniciar2048();
         if (pantallaId === 'pantalla-cookie') iniciarCookie();
         if (pantallaId === 'pantalla-flappy') iniciarFlappy();
+        if (pantallaId === 'pantalla-dino') iniciarDino();
         if (pantallaId === 'pantalla-snake') iniciarSnake();
-        if (pantallaId === 'pantalla-memory') iniciarMemory();
+        if (pantallaId === 'pantalla-minas') iniciarMinas();
+        if (pantallaId === 'pantalla-tetris') iniciarTetris();
         if (pantallaId === 'pantalla-config') iniciarConfiguracion();
-
-        const info = LOCAL_GAME_INFO[pantallaId];
-        if (info) registrarReciente({ id: info.id, name: info.name, icon: info.icon, kind: 'local', arg: pantallaId });
     }
+
+    /* ============================================================
+       JUEGOS SIN CONEXIÓN
+       ============================================================ */
+    const LG = {
+        activo: (id) => { const el = document.getElementById(id); return el && el.style.display === 'flex'; }
+    };
+
+    /* Fuente de píxeles 3x5 (compartida por Snake, Tetris y Dino) */
+    const PXG = {
+        'A':'010101111101101','B':'110101110101110','C':'011100100100011','D':'110101101101110','E':'111100110100111','F':'111100110100100',
+        'G':'011100101101011','H':'101101111101101','I':'111010010010111','J':'001001001101010','K':'101101110101101','L':'100100100100111',
+        'M':'101111111101101','N':'110101101101101','O':'010101101101010','P':'110101110100100','Q':'010101101111011','R':'110101110101101',
+        'S':'011100010001110','T':'111010010010010','U':'101101101101111','V':'101101101101010','W':'101101111111101','X':'101101010101101',
+        'Y':'101101010010010','Z':'111001010100111',
+        '0':'111101101101111','1':'010110010010111','2':'110001010100111','3':'110001010001110','4':'101101111001001',
+        '5':'111100110001110','6':'011100111101111','7':'111001010010010','8':'111101111101111','9':'111101111001110',
+        ' ':'000000000000000','.':'000000000000010',':':'000010000010000','-':'000000111000000'
+    };
+    function pxTexto(ctx, txt, x, y, esc, color, sep) {
+        sep = sep === undefined ? 1 : sep;
+        ctx.fillStyle = color;
+        for (let i = 0; i < txt.length; i++) {
+            const g = PXG[txt[i]] || PXG[' '];
+            for (let k = 0; k < 15; k++) {
+                if (g[k] === '1') ctx.fillRect(x + ((k % 3) + i * (3 + sep)) * esc, y + Math.floor(k / 3) * esc, esc, esc);
+            }
+        }
+    }
+    function pxAncho(txt, esc, sep) { sep = sep === undefined ? 1 : sep; return (txt.length * (3 + sep) - sep) * esc; }
 
     /* === 2048 === */
-    let g2048 = { board: [], score: 0, best: 0 };
+    const G48 = { tiles: [], score: 0, best: 0, over: false, won: false, keep: false, uid: 0, listo: false };
+    const G48_COL = { 2:'2', 4:'4', 8:'8', 16:'16', 32:'32', 64:'64', 128:'128', 256:'256', 512:'512', 1024:'1024', 2048:'2048' };
 
     function iniciar2048() {
-        g2048.best = parseInt(localStorage.getItem('g2048-best') || '0', 10);
-        g2048.score = 0;
-        g2048.board = Array.from({ length: 4 }, () => [0, 0, 0, 0]);
-        agregarFicha2048();
-        agregarFicha2048();
-        render2048();
+        G48.best = parseInt(localStorage.getItem('g2048-best') || '0', 10);
+        const board = document.getElementById('g48-board');
+        if (!G48.listo) {
+            for (let i = 0; i < 16; i++) {
+                const c = document.createElement('div');
+                c.className = 'g48-cellbg';
+                c.style.left = (3 + (i % 4) * 24.25) + '%';
+                c.style.top = (3 + Math.floor(i / 4) * 24.25) + '%';
+                board.insertBefore(c, board.firstChild);
+            }
+            document.getElementById('g48-keep').onclick = () => { G48.keep = true; document.getElementById('g48-msg').className = 'g48-msg'; };
+            G48.listo = true;
+        }
+        nuevo2048();
     }
-
-    function reiniciar2048() { iniciar2048(); }
-
+    function reiniciar2048() { nuevo2048(); }
+    function nuevo2048() {
+        G48.tiles.forEach(t => t.el.remove());
+        G48.tiles = []; G48.score = 0; G48.over = false; G48.won = false; G48.keep = false;
+        document.getElementById('g48-msg').className = 'g48-msg';
+        agregarFicha2048(); agregarFicha2048();
+        actualizar2048();
+    }
+    function claseFicha2048(v) { return 'g48-tile g48-t' + (v > 2048 ? 'super' : v); }
+    function posFicha2048(t) { t.el.style.left = (3 + t.c * 24.25) + '%'; t.el.style.top = (3 + t.r * 24.25) + '%'; }
+    function crearFicha2048(r, c, v, tipo) {
+        const el = document.createElement('div');
+        el.className = claseFicha2048(v) + (tipo ? ' g48-' + tipo : '');
+        const inner = document.createElement('div');
+        inner.className = 'g48-in'; inner.textContent = v;
+        el.appendChild(inner);
+        const t = { id: ++G48.uid, r, c, v, el, fus: false };
+        posFicha2048(t);
+        document.getElementById('g48-board').appendChild(el);
+        G48.tiles.push(t);
+        return t;
+    }
     function agregarFicha2048() {
-        const vacias = [];
-        for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) if (g2048.board[r][c] === 0) vacias.push([r, c]);
-        if (vacias.length === 0) return;
-        const [r, c] = vacias[Math.floor(Math.random() * vacias.length)];
-        g2048.board[r][c] = Math.random() < 0.9 ? 2 : 4;
+        const ocup = new Set(G48.tiles.map(t => t.r * 4 + t.c));
+        const libres = [];
+        for (let i = 0; i < 16; i++) if (!ocup.has(i)) libres.push(i);
+        if (!libres.length) return;
+        const i = libres[Math.floor(Math.random() * libres.length)];
+        crearFicha2048(Math.floor(i / 4), i % 4, Math.random() < 0.9 ? 2 : 4, 'new');
     }
-
-    function render2048() {
-        const tablero = document.getElementById('g2048-board');
-        if (!tablero) return;
-        tablero.innerHTML = '';
-        for (let r = 0; r < 4; r++) {
-            for (let c = 0; c < 4; c++) {
-                const v = g2048.board[r][c];
-                const celda = document.createElement('div');
-                celda.className = 'g2048-cell';
-                celda.setAttribute('data-v', v);
-                celda.textContent = v === 0 ? '' : v;
-                tablero.appendChild(celda);
-            }
-        }
-        document.getElementById('g2048-score').textContent = g2048.score;
-        if (g2048.score > g2048.best) {
-            g2048.best = g2048.score;
-            localStorage.setItem('g2048-best', g2048.best);
-        }
-        document.getElementById('g2048-best').textContent = g2048.best;
-    }
-
-    function comprimirYFusionar(fila) {
-        let nums = fila.filter(v => v !== 0);
-        for (let i = 0; i < nums.length - 1; i++) {
-            if (nums[i] === nums[i + 1]) {
-                nums[i] *= 2;
-                g2048.score += nums[i];
-                nums[i + 1] = 0;
-            }
-        }
-        nums = nums.filter(v => v !== 0);
-        while (nums.length < 4) nums.push(0);
-        return nums;
-    }
-
-    function mover2048(direccion) {
-        const antes = JSON.stringify(g2048.board);
-        const b = g2048.board;
-
-        if (direccion === 'izquierda') {
-            for (let r = 0; r < 4; r++) b[r] = comprimirYFusionar(b[r]);
-        } else if (direccion === 'derecha') {
-            for (let r = 0; r < 4; r++) b[r] = comprimirYFusionar([...b[r]].reverse()).reverse();
-        } else if (direccion === 'arriba') {
-            for (let c = 0; c < 4; c++) {
-                const col = [b[0][c], b[1][c], b[2][c], b[3][c]];
-                const nueva = comprimirYFusionar(col);
-                for (let r = 0; r < 4; r++) b[r][c] = nueva[r];
-            }
-        } else if (direccion === 'abajo') {
-            for (let c = 0; c < 4; c++) {
-                const col = [b[3][c], b[2][c], b[1][c], b[0][c]];
-                const nueva = comprimirYFusionar(col);
-                for (let r = 0; r < 4; r++) b[3 - r][c] = nueva[r];
-            }
-        }
-
-        if (JSON.stringify(b) !== antes) {
-            agregarFicha2048();
-            render2048();
-            if (!hayMovimientos2048()) mostrarToast('💀 ¡Sin movimientos! Puntuación: ' + g2048.score);
+    function actualizar2048(suma) {
+        document.getElementById('g48-score').firstChild.nodeValue = G48.score;
+        if (G48.score > G48.best) { G48.best = G48.score; localStorage.setItem('g2048-best', G48.best); }
+        document.getElementById('g48-best').firstChild.nodeValue = G48.best;
+        if (suma) {
+            const a = document.createElement('div');
+            a.className = 'g48-add'; a.textContent = '+' + suma;
+            document.getElementById('g48-score').parentElement.appendChild(a);
+            setTimeout(() => a.remove(), 650);
         }
     }
-
+    function mover2048(dir) {
+        if (G48.over || (G48.won && !G48.keep)) return false;
+        const vec = { arriba: [-1, 0], abajo: [1, 0], izquierda: [0, -1], derecha: [0, 1] }[dir];
+        const grid = Array.from({ length: 4 }, () => Array(4).fill(null));
+        G48.tiles.forEach(t => { grid[t.r][t.c] = t; t.fus = false; });
+        const rs = [0, 1, 2, 3], cs = [0, 1, 2, 3];
+        if (vec[0] === 1) rs.reverse();
+        if (vec[1] === 1) cs.reverse();
+        let movido = false, ganado = 0;
+        const dentro = (r, c) => r >= 0 && r < 4 && c >= 0 && c < 4;
+        rs.forEach(r => cs.forEach(c => {
+            const t = grid[r][c];
+            if (!t) return;
+            let nr = r, nc = c;
+            while (dentro(nr + vec[0], nc + vec[1]) && !grid[nr + vec[0]][nc + vec[1]]) { nr += vec[0]; nc += vec[1]; }
+            const sig = dentro(nr + vec[0], nc + vec[1]) ? grid[nr + vec[0]][nc + vec[1]] : null;
+            grid[r][c] = null;
+            if (sig && sig.v === t.v && !sig.fus) {
+                t.r = sig.r; t.c = sig.c; posFicha2048(t);
+                const nv = t.v * 2;
+                const m = crearFicha2048(sig.r, sig.c, nv, 'mrg');
+                m.fus = true; grid[sig.r][sig.c] = m;
+                G48.tiles = G48.tiles.filter(x => x !== t && x !== sig);
+                setTimeout(() => { t.el.remove(); sig.el.remove(); }, 110);
+                ganado += nv; movido = true;
+                if (nv === 2048 && !G48.won) G48.won = true;
+            } else {
+                grid[nr][nc] = t;
+                if (nr !== t.r || nc !== t.c) { t.r = nr; t.c = nc; posFicha2048(t); movido = true; }
+            }
+        }));
+        if (!movido) return false;
+        G48.score += ganado;
+        agregarFicha2048();
+        actualizar2048(ganado);
+        if (G48.won && !G48.keep) {
+            const m = document.getElementById('g48-msg');
+            document.getElementById('g48-msg-t').textContent = '¡Ganaste!';
+            m.className = 'g48-msg show win';
+            document.getElementById('g48-keep').style.display = '';
+        } else if (!hayMovimientos2048()) {
+            G48.over = true;
+            const m = document.getElementById('g48-msg');
+            document.getElementById('g48-msg-t').textContent = '¡Fin del juego!';
+            m.className = 'g48-msg show';
+            document.getElementById('g48-keep').style.display = 'none';
+        }
+        return true;
+    }
     function hayMovimientos2048() {
-        for (let r = 0; r < 4; r++) {
-            for (let c = 0; c < 4; c++) {
-                if (g2048.board[r][c] === 0) return true;
-                if (c < 3 && g2048.board[r][c] === g2048.board[r][c + 1]) return true;
-                if (r < 3 && g2048.board[r][c] === g2048.board[r + 1][c]) return true;
-            }
+        if (G48.tiles.length < 16) return true;
+        const g = Array.from({ length: 4 }, () => Array(4).fill(0));
+        G48.tiles.forEach(t => g[t.r][t.c] = t.v);
+        for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+            if (c < 3 && g[r][c] === g[r][c + 1]) return true;
+            if (r < 3 && g[r][c] === g[r + 1][c]) return true;
         }
         return false;
     }
-
     document.addEventListener('keydown', function(e) {
-        if (document.getElementById('pantalla-2048').style.display !== 'flex') return;
-        const mapa = { ArrowLeft: 'izquierda', ArrowRight: 'derecha', ArrowUp: 'arriba', ArrowDown: 'abajo' };
+        if (!LG.activo('pantalla-2048')) return;
+        const mapa = { ArrowLeft: 'izquierda', ArrowRight: 'derecha', ArrowUp: 'arriba', ArrowDown: 'abajo', a: 'izquierda', d: 'derecha', w: 'arriba', s: 'abajo' };
         if (mapa[e.key]) { e.preventDefault(); mover2048(mapa[e.key]); }
     });
-
-    (function habilitarSwipe2048() {
+    (function swipe2048() {
         let x0 = null, y0 = null;
-        document.addEventListener('touchstart', e => {
-            if (document.getElementById('pantalla-2048').style.display !== 'flex') return;
-            x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
-        }, { passive: true });
-        document.addEventListener('touchend', e => {
-            if (x0 === null || document.getElementById('pantalla-2048').style.display !== 'flex') return;
-            const dx = e.changedTouches[0].clientX - x0;
-            const dy = e.changedTouches[0].clientY - y0;
-            if (Math.max(Math.abs(dx), Math.abs(dy)) > 30) {
+        const b = document.getElementById('g48-board');
+        b.addEventListener('touchstart', e => { if (e.touches.length > 1) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; e.preventDefault(); }, { passive: false });
+        b.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+        b.addEventListener('touchend', e => {
+            if (x0 === null) return;
+            const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+            if (Math.max(Math.abs(dx), Math.abs(dy)) > 10) {
                 if (Math.abs(dx) > Math.abs(dy)) mover2048(dx > 0 ? 'derecha' : 'izquierda');
                 else mover2048(dy > 0 ? 'abajo' : 'arriba');
             }
-            x0 = null; y0 = null;
-        }, { passive: true });
+            x0 = null; y0 = null; e.preventDefault();
+        }, { passive: false });
     })();
 
     /* === GALLETA CLICKER === */
-    let cookieState = { galletas: 0, porClic: 1, cps: 0, items: [] };
-    let cookieIntervalo = null;
-
-    const COOKIE_ITEMS = [
-        { id: 'cursor', nombre: '🖱️ Cursor', desc: '+0.1 galletas/seg', base: 15, cps: 0.1, cantidad: 0 },
-        { id: 'abuela', nombre: '👵 Abuela', desc: '+1 galleta/seg', base: 100, cps: 1, cantidad: 0 },
-        { id: 'granja', nombre: '🚜 Granja', desc: '+8 galletas/seg', base: 500, cps: 8, cantidad: 0 },
-        { id: 'fabrica', nombre: '🏭 Fábrica', desc: '+40 galletas/seg', base: 3000, cps: 40, cantidad: 0 },
-        { id: 'mina', nombre: '⛏️ Mina', desc: '+200 galletas/seg', base: 15000, cps: 200, cantidad: 0 }
+    const CC_B = [
+        { id: 'cursor',  n: 'Cursor',  ic: '👆', base: 15,      cps: 0.1,  d: 'Hace clic automáticamente en la galleta.' },
+        { id: 'abuela',  n: 'Abuela',  ic: '👵', base: 100,     cps: 1,    d: 'Una abuela amable que hornea galletas para ti.' },
+        { id: 'granja',  n: 'Granja',  ic: '🌾', base: 1100,    cps: 8,    d: 'Cultiva plantaciones de galletas.' },
+        { id: 'mina',    n: 'Mina',    ic: '⛏️', base: 12000,   cps: 47,   d: 'Extrae masa de galleta y pepitas de chocolate.' },
+        { id: 'fabrica', n: 'Fábrica', ic: '🏭', base: 130000,  cps: 260,  d: 'Produce grandes cantidades de galletas.' },
+        { id: 'banco',   n: 'Banco',   ic: '🏦', base: 1400000, cps: 1400, d: 'Genera galletas a partir de intereses.' }
     ];
+    const CC_U = [
+        { id: 'u1', n: 'Dedo índice reforzado', d: 'Los cursores y los clics producen el doble.', cost: 100,      req: ['cursor', 1],  ic: '☝️', mult: { cursor: 2 }, click: 2 },
+        { id: 'u2', n: 'Crema anti túnel carpiano', d: 'Los cursores y los clics producen el doble.', cost: 500, req: ['cursor', 1],  ic: '🧴', mult: { cursor: 2 }, click: 2 },
+        { id: 'u3', n: 'Ambidiestro', d: 'Los cursores y los clics producen el doble.', cost: 10000,   req: ['cursor', 10], ic: '🤲', mult: { cursor: 2 }, click: 2 },
+        { id: 'u4', n: 'Rodillos de abuela', d: 'Las abuelas producen el doble.',          cost: 1000,     req: ['abuela', 1],  ic: '🥖', mult: { abuela: 2 } },
+        { id: 'u5', n: 'Fertilizante superior', d: 'Las granjas producen el doble.',       cost: 11000,    req: ['granja', 1],  ic: '🌱', mult: { granja: 2 } },
+        { id: 'u6', n: 'Explosivos de azúcar', d: 'Las minas producen el doble.',          cost: 120000,   req: ['mina', 1],    ic: '💥', mult: { mina: 2 } },
+        { id: 'u7', n: 'Cinta transportadora', d: 'Las fábricas producen el doble.',       cost: 1300000,  req: ['fabrica', 1], ic: '⚙️', mult: { fabrica: 2 } },
+        { id: 'u8', n: 'Interés compuesto', d: 'Los bancos producen el doble.',            cost: 14000000, req: ['banco', 1],   ic: '📈', mult: { banco: 2 } }
+    ];
+    const CC_NEWS = [
+        'Tu abuela dice que hornear es demostrar cariño con las manos.',
+        'Los expertos aseguran que una galleta al día no hace daño. Tú ya vas por muchas.',
+        'Un cursor se cansó de hacer clic y pidió vacaciones. Sigue haciendo clic.',
+        'Las pepitas de chocolate son la principal moneda de la región.',
+        'La leche sube de precio. Las galletas, en cambio, siguen a la baja.',
+        'Un vecino asegura oler galletas desde tres calles más allá.',
+        'Encuesta: el 97% de los encuestados prefiere galletas recién hechas.',
+        'Se busca abuela con experiencia. Se ofrece cariño y harina ilimitada.',
+        'Un estudio confirma que hacer clic es el mejor deporte.'
+    ];
+    const CC = { g: 0, total: 0, clicks: 0, n: {}, up: {}, name: '', frenzyFin: 0, luckyMsg: '', tick: null, goldT: null, newsT: null, ult: 0, guardado: 0, listo: false, cps: 0, clic: 1, mult: 1 };
+
+    function ccFmt(x) {
+        x = Math.floor(x);
+        const u = [[1e12, 'billones'], [1e9, 'mil millones'], [1e6, 'millones']];
+        for (const [v, s] of u) if (x >= v) return (x / v).toFixed(3).replace('.', ',') + ' ' + s;
+        return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function ccPrecio(b) { return Math.ceil(b.base * Math.pow(1.15, CC.n[b.id] || 0)); }
+    function ccMultEdif(id) {
+        let m = 1;
+        CC_U.forEach(u => { if (CC.up[u.id] && u.mult && u.mult[id]) m *= u.mult[id]; });
+        return m;
+    }
+    function ccRecalc() {
+        let cps = 0;
+        CC_B.forEach(b => { cps += (CC.n[b.id] || 0) * b.cps * ccMultEdif(b.id); });
+        CC.cps = cps;
+        let c = 1;
+        CC_U.forEach(u => { if (CC.up[u.id] && u.click) c *= u.click; });
+        CC.clic = c;
+        CC.mult = Date.now() < CC.frenzyFin ? 7 : 1;
+    }
+    function ccCargar() {
+        CC.g = 0; CC.total = 0; CC.clicks = 0; CC.n = {}; CC.up = {}; CC.name = '';
+        try {
+            const d = JSON.parse(localStorage.getItem('cookie-clicker-save') || 'null');
+            if (d) {
+                CC.g = d.galletas || 0; CC.total = d.total || d.galletas || 0; CC.clicks = d.clicks || 0;
+                CC.n = d.items || {}; CC.up = d.ups || {}; CC.name = d.name || '';
+            }
+        } catch (e) {}
+    }
+    function ccGuardar() {
+        try {
+            localStorage.setItem('cookie-clicker-save', JSON.stringify({ galletas: CC.g, total: CC.total, clicks: CC.clicks, items: CC.n, ups: CC.up, name: CC.name }));
+        } catch (e) {}
+    }
+    const SVG_GALLETA = '<svg viewBox="0 0 200 200"><defs><radialGradient id="ccg" cx="42%" cy="38%" r="70%"><stop offset="0" stop-color="#f0c27b"/><stop offset=".55" stop-color="#d69a4f"/><stop offset="1" stop-color="#a86a2a"/></radialGradient></defs><circle cx="100" cy="100" r="92" fill="url(#ccg)" stroke="#7a4517" stroke-width="4"/><circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,230,180,.35)" stroke-width="3"/>' +
+        [[62,58,13],[128,52,11],[150,98,13],[112,96,10],[70,110,12],[100,150,14],[148,142,10],[48,150,9],[92,40,9],[36,96,8],[130,168,8],[168,60,7]].map(c => '<ellipse cx="' + c[0] + '" cy="' + c[1] + '" rx="' + c[2] + '" ry="' + (c[2] * .8) + '" fill="#3f2110" transform="rotate(' + (c[0] * 3 % 60) + ' ' + c[0] + ' ' + c[1] + ')"/><ellipse cx="' + (c[0] - c[2] * .25) + '" cy="' + (c[1] - c[2] * .3) + '" rx="' + (c[2] * .35) + '" ry="' + (c[2] * .2) + '" fill="rgba(255,255,255,.22)"/>').join('') + '</svg>';
+    const SVG_DORADA = '<svg viewBox="0 0 200 200"><defs><radialGradient id="ccd" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#fff6b0"/><stop offset=".5" stop-color="#ffd23f"/><stop offset="1" stop-color="#d8981a"/></radialGradient></defs><circle cx="100" cy="100" r="92" fill="url(#ccd)" stroke="#a86a0a" stroke-width="5"/><circle cx="60" cy="65" r="10" fill="#b8730f"/><circle cx="125" cy="55" r="8" fill="#b8730f"/><circle cx="145" cy="105" r="10" fill="#b8730f"/><circle cx="90" cy="120" r="9" fill="#b8730f"/><circle cx="60" cy="130" r="8" fill="#b8730f"/><circle cx="115" cy="155" r="9" fill="#b8730f"/></svg>';
 
     function iniciarCookie() {
-        const guardado = localStorage.getItem('cookie-clicker-save');
-        if (guardado) {
-            const data = JSON.parse(guardado);
-            cookieState.galletas = data.galletas || 0;
-            COOKIE_ITEMS.forEach(item => { item.cantidad = (data.items && data.items[item.id]) || 0; });
-        } else {
-            cookieState.galletas = 0;
-            COOKIE_ITEMS.forEach(item => item.cantidad = 0);
+        ccCargar();
+        if (!CC.listo) {
+            document.getElementById('cc-big').innerHTML = SVG_GALLETA;
+            document.getElementById('cc-milk').innerHTML = '<svg viewBox="0 0 400 60" preserveAspectRatio="none" style="width:100%;height:100%"><path d="M0 18 Q25 0 50 14 T100 14 T150 14 T200 14 T250 14 T300 14 T350 14 T400 14 V60 H0Z" fill="#f4f7ff"/></svg>';
+            const big = document.getElementById('cc-bigbtn');
+            big.addEventListener('pointerdown', ccClic);
+            big.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); ccClic(e); } });
+            document.getElementById('cc-name').onclick = () => {
+                const n = prompt('Nombre de tu panadería:', CC.name || '');
+                if (n !== null && n.trim()) { CC.name = n.trim().slice(0, 24); ccRender(); ccGuardar(); }
+            };
+            ccBuildStore();
+            CC.listo = true;
         }
-        recalcularCps();
-        renderCookie();
-
-        const boton = document.getElementById('cookie-btn');
-        boton.onclick = () => {
-            cookieState.galletas += cookieState.porClic;
-            boton.style.transform = 'scale(0.85)';
-            setTimeout(() => boton.style.transform = '', 90);
-            renderCookie();
-            guardarCookie();
-        };
-
-        if (cookieIntervalo) clearInterval(cookieIntervalo);
-        cookieIntervalo = setInterval(() => {
-            if (document.getElementById('pantalla-cookie').style.display !== 'flex') return;
-            cookieState.galletas += cookieState.cps / 10;
-            renderCookie();
-        }, 100);
+        ccRecalc(); ccRender(); ccStore();
+        CC.ult = performance.now();
+        clearInterval(CC.tick);
+        CC.tick = setInterval(ccTick, 100);
+        clearTimeout(CC.goldT); ccProgDorada();
+        clearInterval(CC.newsT); ccNoticia(); CC.newsT = setInterval(ccNoticia, 12000);
     }
-
-    function recalcularCps() {
-        cookieState.cps = COOKIE_ITEMS.reduce((sum, item) => sum + item.cps * item.cantidad, 0);
+    function pararCookie() {
+        clearInterval(CC.tick); clearTimeout(CC.goldT); clearInterval(CC.newsT);
+        document.querySelectorAll('.cc-gold, .cc-rain, .cc-float').forEach(e => e.remove());
+        document.getElementById('cc-tip').style.display = 'none';
+        document.title = 'Classroom - Gaming Platform';
+        ccGuardar();
     }
-
-    function precioItem(item) {
-        return Math.round(item.base * Math.pow(1.15, item.cantidad));
+    function ccTick() {
+        const ahora = performance.now();
+        const dt = Math.min((ahora - CC.ult) / 1000, 2);
+        CC.ult = ahora;
+        ccRecalc();
+        const gan = CC.cps * CC.mult * dt;
+        CC.g += gan; CC.total += gan;
+        if (Math.random() < Math.min(CC.cps / 40, 0.5) * dt * 4) ccLluvia();
+        ccRender(); ccStore();
+        if (ahora - CC.guardado > 5000) { CC.guardado = ahora; ccGuardar(); }
     }
-
-    function comprarCookieItem(id) {
-        const item = COOKIE_ITEMS.find(i => i.id === id);
-        const precio = precioItem(item);
-        if (cookieState.galletas >= precio) {
-            cookieState.galletas -= precio;
-            item.cantidad++;
-            recalcularCps();
-            renderCookie();
-            guardarCookie();
-        }
+    function ccClic(e) {
+        if (e.button > 0) return;
+        ccRecalc();
+        const v = CC.clic * CC.mult;
+        CC.g += v; CC.total += v; CC.clicks++;
+        const big = document.getElementById('cc-bigbtn');
+        big.classList.add('press'); setTimeout(() => big.classList.remove('press'), 60);
+        const izq = document.getElementById('cc-left').getBoundingClientRect();
+        const px = (e.clientX || izq.left + izq.width / 2) - izq.left, py = (e.clientY || izq.top + izq.height / 2) - izq.top;
+        const f = document.createElement('div');
+        f.className = 'cc-float'; f.textContent = '+' + ccFmt(v).replace(/^0$/, '1');
+        f.style.left = px + 'px'; f.style.top = (py - 20) + 'px';
+        document.getElementById('cc-left').appendChild(f);
+        setTimeout(() => f.remove(), 1100);
+        ccLluvia();
+        ccRender(); ccStore();
     }
-
-    function renderCookie() {
-        document.getElementById('cookie-count').textContent = Math.floor(cookieState.galletas).toLocaleString('es-ES');
-        document.getElementById('cookie-cps').textContent = cookieState.cps.toFixed(1) + ' por segundo';
-
-        const shop = document.getElementById('cookie-shop');
-        shop.innerHTML = '';
-        COOKIE_ITEMS.forEach(item => {
-            const precio = precioItem(item);
-            const div = document.createElement('div');
-            div.className = 'cookie-item' + (cookieState.galletas < precio ? ' disabled' : '');
-            div.onclick = () => comprarCookieItem(item.id);
-            div.innerHTML = `
-                <div>
-                    <div class="cookie-item-name">${item.nombre} (${item.cantidad})</div>
-                    <div class="cookie-item-desc">${item.desc}</div>
-                </div>
-                <div class="cookie-item-price">${precio.toLocaleString('es-ES')} 🍪</div>
-            `;
-            shop.appendChild(div);
+    function ccLluvia() {
+        const izq = document.getElementById('cc-left');
+        if (izq.querySelectorAll('.cc-rain').length > 30) return;
+        const c = document.createElement('div');
+        c.className = 'cc-rain'; c.innerHTML = SVG_GALLETA.replace(/id="ccg"/, '').replace('url(#ccg)', '#d69a4f');
+        c.style.left = (Math.random() * 88 + 2) + '%';
+        const s = 20 + Math.random() * 22;
+        c.style.width = c.style.height = s + 'px';
+        izq.appendChild(c);
+        setTimeout(() => c.remove(), 1650);
+    }
+    function ccRender() {
+        const nombre = CC.name ? 'Panadería de ' + CC.name : 'Tu panadería';
+        document.getElementById('cc-name').textContent = nombre;
+        const g = Math.floor(CC.g);
+        const s = ccFmt(g);
+        document.getElementById('cc-count').innerHTML = s + '<small>' + (g === 1 ? 'galleta' : 'galletas') + '</small>';
+        document.getElementById('cc-cps').textContent = 'por segundo: ' + (Math.round(CC.cps * CC.mult * 10) / 10).toString().replace('.', ',');
+        document.title = s + ' ' + (g === 1 ? 'galleta' : 'galletas') + ' - Galleta Clicker';
+        const st = document.getElementById('cc-stats');
+        st.innerHTML = '<b>Galletas horneadas (total):</b> ' + ccFmt(CC.total) + '<br><b>Clics realizados:</b> ' + ccFmt(CC.clicks) + '<br><b>Producción actual:</b> ' + (Math.round(CC.cps * CC.mult * 10) / 10).toString().replace('.', ',') + ' galletas/seg<br><b>Valor de cada clic:</b> ' + ccFmt(CC.clic * CC.mult);
+        const buff = document.getElementById('cc-buff');
+        const resto = Math.ceil((CC.frenzyFin - Date.now()) / 1000);
+        if (resto > 0) { buff.style.display = 'block'; buff.textContent = '🔥 ¡Frenesí! Producción x7 — ' + resto + ' s'; } else buff.style.display = 'none';
+    }
+    function ccBuildStore() {
+        const bl = document.getElementById('cc-bl');
+        bl.innerHTML = '';
+        CC_B.forEach(b => {
+            const d = document.createElement('div');
+            d.className = 'cc-b'; d.id = 'ccb-' + b.id;
+            d.innerHTML = '<div class="cc-bi">' + b.ic + '</div><div class="cc-bt"><div class="cc-bn"></div><div class="cc-bp"><i></i><span></span></div></div><div class="cc-bo"></div>';
+            d.addEventListener('click', () => ccComprar(b.id));
+            d.addEventListener('mousemove', e => ccTip(e, b));
+            d.addEventListener('mouseleave', () => { document.getElementById('cc-tip').style.display = 'none'; });
+            bl.appendChild(d);
+        });
+        const ups = document.getElementById('cc-ups');
+        ups.innerHTML = '';
+        CC_U.forEach(u => {
+            const d = document.createElement('div');
+            d.className = 'cc-up'; d.id = 'ccu-' + u.id; d.textContent = u.ic; d.style.display = 'none';
+            d.addEventListener('click', () => ccComprarUp(u.id));
+            d.addEventListener('mousemove', e => ccTipUp(e, u));
+            d.addEventListener('mouseleave', () => { document.getElementById('cc-tip').style.display = 'none'; });
+            ups.appendChild(d);
         });
     }
-
-    function guardarCookie() {
-        const items = {};
-        COOKIE_ITEMS.forEach(item => items[item.id] = item.cantidad);
-        localStorage.setItem('cookie-clicker-save', JSON.stringify({ galletas: cookieState.galletas, items }));
+    function ccStore() {
+        let maxDes = -1;
+        CC_B.forEach((b, i) => { if ((CC.n[b.id] || 0) > 0 || CC.total >= b.base * 0.75) maxDes = i; });
+        CC_B.forEach((b, i) => {
+            const el = document.getElementById('ccb-' + b.id);
+            const precio = ccPrecio(b);
+            const vis = i <= maxDes + 1 || i === 0;
+            const revelado = i <= maxDes || i === 0;
+            el.style.display = vis ? '' : 'none';
+            el.classList.toggle('lock', !revelado);
+            el.classList.toggle('off', revelado && CC.g < precio);
+            el.querySelector('.cc-bn').textContent = revelado ? b.n : '???';
+            el.querySelector('.cc-bi').style.filter = revelado ? '' : 'brightness(0)';
+            el.querySelector('.cc-bp span').textContent = ccFmt(precio);
+            el.querySelector('.cc-bp').classList.toggle('no', CC.g < precio);
+            el.querySelector('.cc-bo').textContent = (CC.n[b.id] || 0) > 0 ? CC.n[b.id] : '';
+        });
+        let hayUp = false;
+        CC_U.forEach(u => {
+            const el = document.getElementById('ccu-' + u.id);
+            const visible = !CC.up[u.id] && (CC.n[u.req[0]] || 0) >= u.req[1];
+            el.style.display = visible ? 'flex' : 'none';
+            el.classList.toggle('off', CC.g < u.cost);
+            if (visible) hayUp = true;
+        });
+        document.getElementById('cc-ups').style.display = hayUp ? 'flex' : 'none';
     }
-
+    function ccComprar(id) {
+        const b = CC_B.find(x => x.id === id), p = ccPrecio(b);
+        if (CC.g < p) return;
+        CC.g -= p; CC.n[id] = (CC.n[id] || 0) + 1;
+        ccRecalc(); ccRender(); ccStore(); ccGuardar();
+    }
+    function ccComprarUp(id) {
+        const u = CC_U.find(x => x.id === id);
+        if (CC.up[id] || CC.g < u.cost) return;
+        CC.g -= u.cost; CC.up[id] = true;
+        ccRecalc(); ccRender(); ccStore(); ccGuardar();
+        document.getElementById('cc-tip').style.display = 'none';
+    }
+    function ccPosTip(e) {
+        const t = document.getElementById('cc-tip');
+        t.style.display = 'block';
+        t.style.left = Math.max(8, e.clientX - t.offsetWidth - 16) + 'px';
+        t.style.top = Math.min(e.clientY - 10, window.innerHeight - t.offsetHeight - 8) + 'px';
+    }
+    function ccTip(e, b) {
+        const t = document.getElementById('cc-tip');
+        const n = CC.n[b.id] || 0, m = ccMultEdif(b.id);
+        t.innerHTML = '<b>' + b.n + '</b><br><i>' + b.d + '</i><br>Cada ' + b.n.toLowerCase() + ' produce <b>' + (Math.round(b.cps * m * 10) / 10).toString().replace('.', ',') + '</b> galletas por segundo.' + (n ? '<br>' + n + ' en total: ' + (Math.round(n * b.cps * m * 10) / 10).toString().replace('.', ',') + ' por segundo.' : '');
+        ccPosTip(e);
+    }
+    function ccTipUp(e, u) {
+        const t = document.getElementById('cc-tip');
+        t.innerHTML = '<b>' + u.n + '</b><br>' + u.d + '<br><b>Coste: ' + ccFmt(u.cost) + ' galletas</b>';
+        ccPosTip(e);
+    }
+    function ccNoticia() {
+        const l = [];
+        if ((CC.n.cursor || 0) > 0) l.push('Un cursor nuevo llega a la panadería y ya quiere ascender.');
+        if ((CC.n.abuela || 0) > 0) l.push('Tus abuelas se organizan en un club de tejido de galletas.');
+        if (CC.total < 20) l.push('Hoy es un buen día para empezar a hacer clic.');
+        if (CC.cps > 100) l.push('Los medios internacionales cubren tu imperio galletero.');
+        const todas = l.concat(CC_NEWS);
+        const el = document.getElementById('cc-news');
+        el.innerHTML = '<span>' + todas[Math.floor(Math.random() * todas.length)] + '</span>';
+    }
+    function ccProgDorada() {
+        clearTimeout(CC.goldT);
+        CC.goldT = setTimeout(ccDorada, 45000 + Math.random() * 75000);
+    }
+    function ccDorada() {
+        if (!LG.activo('pantalla-cookie')) return;
+        const g = document.createElement('div');
+        g.className = 'cc-gold'; g.innerHTML = SVG_DORADA;
+        g.style.left = (10 + Math.random() * 70) + '%'; g.style.top = (18 + Math.random() * 60) + '%';
+        g.addEventListener('pointerdown', () => {
+            g.remove(); ccRecalc();
+            if (Math.random() < 0.5) {
+                CC.frenzyFin = Date.now() + 77000;
+                mostrarToast('🔥 ¡Frenesí! Producción x7 durante 77 segundos');
+            } else {
+                const bono = Math.min(CC.g * 0.15, CC.cps * 900) + 13;
+                CC.g += bono; CC.total += bono;
+                mostrarToast('🍀 ¡Suerte! Ganas ' + ccFmt(bono) + ' galletas');
+            }
+            ccRecalc(); ccRender(); ccStore();
+        });
+        document.getElementById('pantalla-cookie').appendChild(g);
+        setTimeout(() => g.remove(), 13100);
+        ccProgDorada();
+    }
+    let ccConfirmar = 0;
     function reiniciarCookie() {
+        if (Date.now() - ccConfirmar > 3000) { ccConfirmar = Date.now(); mostrarToast('Pulsa Reiniciar otra vez para borrar tu progreso'); return; }
+        ccConfirmar = 0;
         localStorage.removeItem('cookie-clicker-save');
-        iniciarCookie();
+        CC.frenzyFin = 0;
+        ccCargar(); ccRecalc(); ccRender(); ccStore();
         mostrarToast('🔄 Progreso reiniciado');
     }
 
     /* === FLAPPY BIRD === */
-    let flappy = null;
-    let flappyRAF = null;
+    const FB = { W: 288, H: 512, SUELO: 400, cv: null, ctx: null, estado: 'title', raf: 0, run: false, acc: 0, last: 0, t: 0, gx: 0, bird: null, tubos: [], pts: 0, mejor: 0, nuevo: false, flash: 0, over: 0, bg: null, listo: false };
+    const FB_C = { borde: '#543847', verde: '#73bf2e', verdeL: '#9ce659', verdeD: '#558022', arena: '#ded895' };
 
+    function fbFondo() {
+        const c = document.createElement('canvas'); c.width = FB.W; c.height = FB.H;
+        const x = c.getContext('2d');
+        x.fillStyle = '#4ec0ca'; x.fillRect(0, 0, FB.W, FB.H);
+        // nubes
+        x.fillStyle = '#d7f3ee';
+        [[30, 350, 30], [80, 358, 36], [140, 352, 32], [200, 360, 38], [260, 352, 32], [8, 366, 26], [110, 368, 30], [170, 370, 30], [235, 368, 28]].forEach(n => { x.beginPath(); x.arc(n[0], n[1], n[2], 0, 7); x.fill(); });
+        x.fillRect(0, 366, FB.W, 40);
+        // ciudad
+        x.fillStyle = '#a7e0d3';
+        const edif = [[0, 40, 44], [30, 60, 50], [72, 28, 38], [104, 52, 40], [140, 34, 46], [178, 64, 36], [208, 42, 50], [250, 54, 40]];
+        edif.forEach(b => x.fillRect(b[0], 372 - b[1] + 24, b[2], b[1] + 40));
+        x.fillStyle = '#c4efe5';
+        edif.forEach(b => { for (let yy = 372 - b[1] + 30; yy < 396; yy += 9) for (let xx = b[0] + 5; xx < b[0] + b[2] - 5; xx += 9) x.fillRect(xx, yy, 4, 5); });
+        // arbustos
+        x.fillStyle = '#5ec46a';
+        for (let i = -10; i < FB.W + 20; i += 24) { x.beginPath(); x.arc(i, 402, 16, 0, 7); x.fill(); }
+        x.fillStyle = '#74d660';
+        for (let i = 4; i < FB.W + 20; i += 24) { x.beginPath(); x.arc(i, 408, 13, 0, 7); x.fill(); }
+        return c;
+    }
+    function fbReset(estado) {
+        FB.estado = estado;
+        FB.bird = { x: 70, y: 240, vy: 0, ang: 0, alas: 0 };
+        FB.tubos = []; FB.pts = 0; FB.nuevo = false; FB.flash = 0; FB.over = 0; FB.gx = FB.gx || 0;
+    }
     function iniciarFlappy() {
-        if (flappyRAF) { cancelAnimationFrame(flappyRAF); flappyRAF = null; }
-        const canvas = document.getElementById('flappy-canvas');
-        const ctx = canvas.getContext('2d');
-        const W = canvas.width, H = canvas.height;
-
-        flappy = {
-            ctx, W, H,
-            pajaroY: H / 2, velocidad: 0, gravedad: 0.45, impulso: -7.5,
-            tuberias: [], gap: 150, anchoTuberia: 60, velocidadJuego: 2.6,
-            puntos: 0, mejor: parseInt(localStorage.getItem('flappy-best') || '0', 10),
-            vivo: true, corriendo: true, frame: 0
-        };
-
-        canvas.onclick = saltarFlappy;
-        canvas.ontouchstart = (e) => { e.preventDefault(); saltarFlappy(); };
-
-        bucleFlappy();
+        const cv = document.getElementById('flappy-canvas');
+        FB.cv = cv; FB.ctx = cv.getContext('2d');
+        FB.ctx.imageSmoothingEnabled = false;
+        if (!FB.listo) {
+            FB.bg = fbFondo();
+            cv.addEventListener('pointerdown', e => { e.preventDefault(); fbToque(); });
+            FB.listo = true;
+        }
+        FB.mejor = parseInt(localStorage.getItem('flappy-best') || '0', 10);
+        fbReset('title');
+        FB.run = true; FB.last = performance.now(); FB.acc = 0;
+        cancelAnimationFrame(FB.raf);
+        FB.raf = requestAnimationFrame(fbBucle);
     }
-
-    function saltarFlappy() {
-        if (!flappy) return;
-        if (!flappy.vivo) { iniciarFlappy(); return; }
-        flappy.velocidad = flappy.impulso;
+    function pararFlappy() { FB.run = false; cancelAnimationFrame(FB.raf); }
+    function reiniciarFlappy() { if (FB.run) fbReset('title'); }
+    function fbToque() {
+        if (FB.estado === 'title') { FB.estado = 'ready'; }
+        else if (FB.estado === 'ready') { FB.estado = 'play'; FB.bird.vy = -5.6; }
+        else if (FB.estado === 'play') { FB.bird.vy = -5.6; }
+        else if (FB.estado === 'over' && FB.over > 35) { fbReset('ready'); }
     }
-
     document.addEventListener('keydown', function(e) {
-        if (document.getElementById('pantalla-flappy').style.display !== 'flex') return;
-        if (e.code === 'Space') { e.preventDefault(); saltarFlappy(); }
+        if (!LG.activo('pantalla-flappy')) return;
+        if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); if (!e.repeat) fbToque(); }
     });
-
-    function reiniciarFlappy() { iniciarFlappy(); }
-
-    function pararFlappy() {
-        if (flappy) flappy.corriendo = false;
-        if (flappyRAF) { cancelAnimationFrame(flappyRAF); flappyRAF = null; }
+    function fbBucle(ahora) {
+        if (!FB.run) return;
+        FB.acc += Math.min(ahora - FB.last, 100); FB.last = ahora;
+        while (FB.acc >= 1000 / 60) { fbPaso(); FB.acc -= 1000 / 60; }
+        fbDibujar();
+        FB.raf = requestAnimationFrame(fbBucle);
     }
-
-    function bucleFlappy() {
-        if (!flappy || !flappy.corriendo) return;
-        const { ctx, W, H } = flappy;
-
-        if (flappy.vivo) {
-            flappy.velocidad += flappy.gravedad;
-            flappy.pajaroY += flappy.velocidad;
-            flappy.frame++;
-
-            if (flappy.frame % 90 === 0) {
-                const centro = 80 + Math.random() * (H - 220);
-                flappy.tuberias.push({ x: W, top: centro - flappy.gap / 2, bottom: centro + flappy.gap / 2, contado: false });
-            }
-
-            flappy.tuberias.forEach(t => t.x -= flappy.velocidadJuego);
-            flappy.tuberias = flappy.tuberias.filter(t => t.x > -flappy.anchoTuberia);
-
-            flappy.tuberias.forEach(t => {
-                if (!t.contado && t.x + flappy.anchoTuberia < 60) {
-                    t.contado = true;
-                    flappy.puntos++;
-                }
-                const dentroX = 60 + 18 > t.x && 60 - 18 < t.x + flappy.anchoTuberia;
-                if (dentroX && (flappy.pajaroY - 14 < t.top || flappy.pajaroY + 14 > t.bottom)) {
-                    flappy.vivo = false;
-                }
+    function fbPaso() {
+        FB.t++;
+        const b = FB.bird;
+        if (FB.estado !== 'dead' && FB.estado !== 'over') FB.gx = (FB.gx + 2) % 24;
+        if (FB.estado === 'title' || FB.estado === 'ready') {
+            b.y = 240 + Math.sin(FB.t * 0.12) * 7; b.ang = 0; b.alas = Math.floor(FB.t / 5) % 3;
+        } else if (FB.estado === 'play') {
+            b.vy = Math.min(b.vy + 0.32, 8.5);
+            b.y += b.vy;
+            b.ang = Math.max(-0.42, Math.min(1.45, b.vy * 0.11));
+            b.alas = b.vy < 0 ? Math.floor(FB.t / 4) % 3 : 1;
+            const ult = FB.tubos[FB.tubos.length - 1];
+            if (!ult || ult.x < FB.W - 170) FB.tubos.push({ x: FB.W + 10, gy: 105 + Math.random() * 170, pas: false });
+            FB.tubos.forEach(t => t.x -= 2);
+            FB.tubos = FB.tubos.filter(t => t.x > -70);
+            let choque = false;
+            FB.tubos.forEach(t => {
+                if (!t.pas && t.x + 52 < b.x - 12) { t.pas = true; FB.pts++; }
+                const gap = 108;
+                if (b.x + 12 > t.x && b.x - 12 < t.x + 52 && (b.y - 10 < t.gy - gap / 2 || b.y + 10 > t.gy + gap / 2)) choque = true;
             });
-
-            if (flappy.pajaroY + 14 > H || flappy.pajaroY - 14 < 0) flappy.vivo = false;
-
-            if (!flappy.vivo && flappy.puntos > flappy.mejor) {
-                flappy.mejor = flappy.puntos;
-                localStorage.setItem('flappy-best', flappy.mejor);
+            if (b.y - 10 < -20) b.y = -10;
+            if (b.y + 12 >= FB.SUELO) { b.y = FB.SUELO - 12; fbMorir(true); }
+            else if (choque) fbMorir(false);
+        } else if (FB.estado === 'dead') {
+            b.vy = Math.min(b.vy + 0.5, 11);
+            b.y += b.vy; b.ang = Math.min(1.5, b.ang + 0.12);
+            if (b.y + 12 >= FB.SUELO) { b.y = FB.SUELO - 12; FB.estado = 'over'; FB.over = 0; }
+        } else if (FB.estado === 'over') { FB.over++; }
+        if (FB.flash > 0) FB.flash--;
+    }
+    function fbMorir(suelo) {
+        FB.flash = 8;
+        if (FB.pts > FB.mejor) { FB.mejor = FB.pts; FB.nuevo = true; localStorage.setItem('flappy-best', FB.mejor); }
+        FB.estado = suelo ? 'over' : 'dead'; FB.over = 0;
+        if (!suelo) FB.bird.vy = Math.max(FB.bird.vy, 0);
+    }
+    function fbTexto(x, texto, y, tam, rel, borde) {
+        const c = FB.ctx;
+        c.font = 'bold ' + tam + 'px "Arial Black", Impact, "Helvetica Neue", sans-serif';
+        c.textAlign = 'center'; c.lineJoin = 'round';
+        c.lineWidth = borde || 6; c.strokeStyle = '#000'; c.strokeText(texto, x, y);
+        c.fillStyle = rel; c.fillText(texto, x, y);
+    }
+    function fbTubo(x, gy) {
+        const c = FB.ctx, gap = 108, w = 52, capH = 26;
+        const dib = (yy, h, cap) => {
+            c.fillStyle = FB_C.borde; c.fillRect(x, yy, w, h);
+            c.fillStyle = FB_C.verde; c.fillRect(x + 2, yy, w - 4, h);
+            c.fillStyle = FB_C.verdeL; c.fillRect(x + 4, yy, 6, h);
+            c.fillStyle = FB_C.verdeD; c.fillRect(x + w - 12, yy, 8, h);
+            c.fillStyle = '#8ad13c'; c.fillRect(x + 12, yy, 4, h);
+        };
+        const top = gy - gap / 2, bot = gy + gap / 2;
+        // cuerpos
+        dib(0, top - capH); dib(bot + capH, FB.SUELO - bot - capH);
+        // remates
+        const cap = (yy) => {
+            c.fillStyle = FB_C.borde; c.fillRect(x - 3, yy, w + 6, capH);
+            c.fillStyle = FB_C.verde; c.fillRect(x - 1, yy + 2, w + 2, capH - 4);
+            c.fillStyle = FB_C.verdeL; c.fillRect(x + 1, yy + 2, 7, capH - 4);
+            c.fillStyle = '#8ad13c'; c.fillRect(x + 14, yy + 2, 4, capH - 4);
+            c.fillStyle = FB_C.verdeD; c.fillRect(x + w - 11, yy + 2, 9, capH - 4);
+        };
+        cap(top - capH); cap(bot);
+    }
+    function fbPajaro() {
+        const c = FB.ctx, b = FB.bird;
+        c.save(); c.translate(b.x, b.y); c.rotate(b.ang);
+        // cuerpo
+        c.fillStyle = FB_C.borde; c.beginPath(); c.ellipse(0, 0, 17, 13, 0, 0, 7); c.fill();
+        c.fillStyle = '#f8d030'; c.beginPath(); c.ellipse(0, 0, 15, 11, 0, 0, 7); c.fill();
+        c.fillStyle = '#fbe98a'; c.beginPath(); c.ellipse(-2, -4, 10, 5, 0, 0, 7); c.fill();
+        c.fillStyle = '#f0a020'; c.beginPath(); c.ellipse(-1, 8, 13, 4, 0, 0, 7); c.fill();
+        // ala
+        const dy = [-3, 0, 3][b.alas];
+        c.fillStyle = FB_C.borde; c.beginPath(); c.ellipse(-7, 3 + dy, 9, 6, 0, 0, 7); c.fill();
+        c.fillStyle = '#fbf3c2'; c.beginPath(); c.ellipse(-7, 3 + dy, 7, 4.2, 0, 0, 7); c.fill();
+        // ojo
+        c.fillStyle = FB_C.borde; c.beginPath(); c.arc(8, -5, 7, 0, 7); c.fill();
+        c.fillStyle = '#fff'; c.beginPath(); c.arc(8, -5, 5.5, 0, 7); c.fill();
+        c.fillStyle = '#000'; c.beginPath(); c.arc(10, -4.5, 2.4, 0, 7); c.fill();
+        // pico
+        c.fillStyle = FB_C.borde; c.fillRect(6, 0, 15, 12);
+        c.fillStyle = '#f85c1c'; c.fillRect(8, 6, 11, 4);
+        c.fillStyle = '#fc9c1c'; c.fillRect(8, 2, 12, 4);
+        c.fillStyle = '#fff'; c.fillRect(10, 3, 4, 1);
+        c.restore();
+    }
+    function fbSuelo() {
+        const c = FB.ctx, y = FB.SUELO;
+        c.fillStyle = FB_C.arena; c.fillRect(0, y, FB.W, FB.H - y);
+        c.fillStyle = FB_C.borde; c.fillRect(0, y, FB.W, 3);
+        c.fillStyle = FB_C.verdeL; c.fillRect(0, y + 3, FB.W, 3);
+        c.fillStyle = FB_C.verde; c.fillRect(0, y + 6, FB.W, 9);
+        c.fillStyle = FB_C.verdeD;
+        for (let i = -24; i < FB.W + 24; i += 24) {
+            c.beginPath(); c.moveTo(i - FB.gx, y + 6); c.lineTo(i - FB.gx + 12, y + 6); c.lineTo(i - FB.gx + 4, y + 15); c.lineTo(i - FB.gx - 8, y + 15); c.fill();
+        }
+        c.fillStyle = '#e4f7a4'; c.fillRect(0, y + 15, FB.W, 2);
+        c.fillStyle = FB_C.borde; c.fillRect(0, y + 17, FB.W, 2);
+        c.fillStyle = '#d2b558'; c.fillRect(0, y + 19, FB.W, 3);
+        c.fillStyle = '#c8a24a'; c.fillRect(0, FB.H - 10, FB.W, 10);
+    }
+    function fbMedalla(x, y, m) {
+        const c = FB.ctx, col = [['#b5651d', '#e0913f'], ['#9aa4a6', '#dbe3e5'], ['#d6a516', '#ffe063'], ['#8fb9c9', '#e7f7ff']][m];
+        c.fillStyle = FB_C.borde; c.beginPath(); c.arc(x, y, 20, 0, 7); c.fill();
+        c.fillStyle = col[0]; c.beginPath(); c.arc(x, y, 17, 0, 7); c.fill();
+        c.fillStyle = col[1]; c.beginPath(); c.arc(x, y, 12, 0, 7); c.fill();
+        c.fillStyle = 'rgba(255,255,255,.5)'; c.beginPath(); c.ellipse(x - 5, y - 6, 4, 2.4, -.6, 0, 7); c.fill();
+    }
+    function fbDibujar() {
+        const c = FB.ctx, W = FB.W, H = FB.H;
+        c.drawImage(FB.bg, 0, 0);
+        FB.tubos.forEach(t => fbTubo(t.x, t.gy));
+        fbSuelo();
+        if (FB.estado === 'title') {
+            fbTexto(W / 2, 'Flappy Bird', 128, 38, '#fdd23a', 8);
+            fbPajaro();
+            c.fillStyle = FB_C.borde; c.fillRect(W / 2 - 62, 316, 124, 46);
+            c.fillStyle = '#fff'; c.fillRect(W / 2 - 60, 318, 120, 42);
+            c.fillStyle = '#e86101'; c.fillRect(W / 2 - 57, 321, 114, 36);
+            fbTexto(W / 2, 'JUGAR', 348, 20, '#fff', 4);
+        } else if (FB.estado === 'ready') {
+            fbTexto(W / 2, '¡Prepárate!', 120, 28, '#f8a020', 7);
+            fbPajaro();
+            c.fillStyle = 'rgba(255,255,255,.9)'; c.strokeStyle = FB_C.borde; c.lineWidth = 2;
+            const a = 8 * Math.abs(Math.sin(FB.t / 12));
+            c.beginPath(); c.arc(W / 2 + 6, 320 - a, 14, 0, 7); c.fill(); c.stroke();
+            fbTexto(W / 2, 'Toca para volar', 372, 13, '#fff', 4);
+            fbTexto(W / 2, '0', 62, 40, '#fff', 7);
+        } else {
+            fbPajaro();
+            if (FB.estado === 'play' || FB.estado === 'dead') fbTexto(W / 2, String(FB.pts), 66, 42, '#fff', 8);
+        }
+        if (FB.estado === 'over') {
+            const k = Math.min(FB.over / 20, 1), s = 1 - Math.pow(1 - k, 3);
+            fbTexto(W / 2, 'Fin del juego', 118, 32, '#fc7a1c', 8);
+            const py = 160 + (1 - s) * 260;
+            c.fillStyle = FB_C.borde; c.fillRect(24, py, 240, 118);
+            c.fillStyle = '#ded895'; c.fillRect(27, py + 3, 234, 112);
+            c.fillStyle = '#f5f0c6'; c.fillRect(27, py + 3, 234, 3);
+            c.fillStyle = '#d2b558'; c.fillRect(27, py + 112, 234, 3);
+            c.fillStyle = '#e8a11a'; c.font = 'bold 13px "Arial Black", Impact, sans-serif'; c.textAlign = 'left';
+            c.fillText('MEDALLA', 40, py + 28);
+            c.fillText('PUNTOS', 190, py + 28); c.fillText('MEJOR', 190, py + 76);
+            const m = FB.pts >= 40 ? 3 : FB.pts >= 30 ? 2 : FB.pts >= 20 ? 1 : FB.pts >= 10 ? 0 : -1;
+            if (m >= 0) fbMedalla(76, py + 68, m); else { c.fillStyle = '#c8bd7c'; c.beginPath(); c.arc(76, py + 68, 20, 0, 7); c.fill(); }
+            c.textAlign = 'right';
+            const num = (t, x, y) => { c.font = 'bold 26px "Arial Black", Impact, sans-serif'; c.lineWidth = 5; c.lineJoin = 'round'; c.strokeStyle = '#543847'; c.strokeText(t, x, y); c.fillStyle = '#fff'; c.fillText(t, x, y); };
+            num(String(FB.pts), 250, py + 56); num(String(FB.mejor), 250, py + 104);
+            if (FB.nuevo) { c.fillStyle = '#f0432c'; c.fillRect(150, py + 82, 34, 16); c.fillStyle = '#fff'; c.font = 'bold 10px Arial'; c.textAlign = 'center'; c.fillText('NUEVO', 167, py + 94); }
+            if (FB.over > 20) {
+                c.fillStyle = FB_C.borde; c.fillRect(W / 2 - 52, py + 136, 104, 42);
+                c.fillStyle = '#fff'; c.fillRect(W / 2 - 50, py + 138, 100, 38);
+                c.fillStyle = '#e86101'; c.fillRect(W / 2 - 47, py + 141, 94, 32);
+                fbTexto(W / 2, 'OK', py + 166, 20, '#fff', 4);
             }
         }
+        c.textAlign = 'left';
+        if (FB.flash > 0) { c.fillStyle = 'rgba(255,255,255,' + (FB.flash / 8) + ')'; c.fillRect(0, 0, W, H); }
+    }
 
-        ctx.clearRect(0, 0, W, H);
-        const cielo = ctx.createLinearGradient(0, 0, 0, H);
-        cielo.addColorStop(0, '#0f172a'); cielo.addColorStop(1, '#1e3a5f');
-        ctx.fillStyle = cielo; ctx.fillRect(0, 0, W, H);
-
-        ctx.fillStyle = '#3b82f6';
-        flappy.tuberias.forEach(t => {
-            ctx.fillRect(t.x, 0, flappy.anchoTuberia, t.top);
-            ctx.fillRect(t.x, t.bottom, flappy.anchoTuberia, H - t.bottom);
-        });
-
-        ctx.font = '28px sans-serif';
-        ctx.fillText('🐦', 60 - 16, flappy.pajaroY + 10);
-
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 26px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(flappy.puntos, W / 2, 50);
-
-        if (!flappy.vivo) {
-            ctx.fillStyle = 'rgba(0,0,0,0.55)';
-            ctx.fillRect(0, 0, W, H);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 22px sans-serif';
-            ctx.fillText('💀 Game Over', W / 2, H / 2 - 30);
-            ctx.font = '16px sans-serif';
-            ctx.fillText('Puntos: ' + flappy.puntos + '   Mejor: ' + flappy.mejor, W / 2, H / 2);
-            ctx.fillText('Toca para reintentar', W / 2, H / 2 + 30);
+    /* === DINO (página sin conexión) === */
+    const DN = { W: 600, H: 150, cv: null, ctx: null, run: false, raf: 0, last: 0, listo: false, st: 'idle', best: 0 };
+    const DN_CUERPO = [
+        '..........############',
+        '.........#############',
+        '.........###.#########',
+        '.........#############',
+        '.........#############',
+        '.........#############',
+        '.........#############',
+        '.........#####........',
+        '.........#####........',
+        '.........#########....',
+        '#........#######......',
+        '#.......#########.....',
+        '##......#########..#..',
+        '##.....##########.##..',
+        '###....##########.#...',
+        '####..###########.....',
+        '.###############......',
+        '..##############......',
+        '...#############......',
+        '....############......',
+        '.....##########.......'
+    ];
+    function dnColores() {
+        const claro = document.body.classList.contains('light-mode');
+        if (claro) return DN.noche ? { fondo: '#000', fg: '#dcdcdc', nube: '#333', suelo: '#dcdcdc' } : { fondo: '#ffffff', fg: '#535353', nube: '#dbdbdb', suelo: '#535353' };
+        return { fondo: '#202124', fg: '#acacac', nube: '#3d3d3d', suelo: '#acacac' };
+    }
+    function iniciarDino() {
+        const cv = document.getElementById('dino-canvas');
+        DN.cv = cv; DN.ctx = cv.getContext('2d'); DN.ctx.imageSmoothingEnabled = false;
+        if (!DN.listo) {
+            cv.addEventListener('pointerdown', e => { e.preventDefault(); dnSalto(); });
+            DN.listo = true;
         }
-        ctx.textAlign = 'left';
-
-        flappyRAF = requestAnimationFrame(bucleFlappy);
+        DN.best = parseInt(localStorage.getItem('dino-best') || '0', 10);
+        dnReset();
+        DN.run = true; DN.last = performance.now();
+        cancelAnimationFrame(DN.raf); DN.raf = requestAnimationFrame(dnBucle);
     }
-
-    /* ==================================================
-       BANDEJAS PLEGABLES: RECIENTES Y PUNTUACIONES
-    ================================================== */
-    function toggleTray(id) {
-        document.getElementById(id).classList.toggle('open');
+    function pararDino() { DN.run = false; cancelAnimationFrame(DN.raf); }
+    function reiniciarDino() { if (DN.run) dnReset(); }
+    function dnReset() {
+        DN.st = 'idle'; DN.vel = 6; DN.dist = 0; DN.score = 0; DN.obs = []; DN.nubes = []; DN.gx = 0; DN.t = 0;
+        DN.noche = false; DN.lunaX = 500; DN.parp = 0; DN.parpT = 0; DN.sigObs = 0; DN.sobre = 0;
+        DN.baches = [];
+        DN.d = { x: 24, y: 0, vy: 0, salto: false, agacha: false, frame: 0, ft: 0 };
+        for (let i = 0; i < 3; i++) DN.nubes.push({ x: 150 + i * 200 + Math.random() * 80, y: 20 + Math.random() * 40 });
     }
-
-    const LOCAL_GAME_INFO = {
-        'pantalla-2048': { id: 'game2048', name: '2048', icon: '🔢' },
-        'pantalla-cookie': { id: 'cookieclicker', name: 'Galleta Clicker', icon: '🍪' },
-        'pantalla-flappy': { id: 'flappybird', name: 'Flappy Bird', icon: '🐦' },
-        'pantalla-snake': { id: 'snake', name: 'Snake', icon: '🐍' },
-        'pantalla-memory': { id: 'memory', name: 'Memory', icon: '🧠' }
-    };
-
-    function registrarReciente(item) {
-        let lista = [];
-        try { lista = JSON.parse(localStorage.getItem('classroom-recientes') || '[]'); } catch (e) { lista = []; }
-        lista = lista.filter(g => g.id !== item.id);
-        lista.unshift(Object.assign({}, item, { ts: Date.now() }));
-        lista = lista.slice(0, 8);
-        localStorage.setItem('classroom-recientes', JSON.stringify(lista));
-        renderRecientes();
+    function dnSalto() {
+        if (DN.st === 'idle') { DN.st = 'run'; DN.d.vy = -10.3; DN.d.salto = true; }
+        else if (DN.st === 'run') { if (!DN.d.salto && !DN.d.agacha) { DN.d.vy = -10.3; DN.d.salto = true; } }
+        else if (DN.st === 'dead' && DN.sobre > 25) { const b = DN.best; dnReset(); DN.best = b; DN.st = 'run'; DN.d.vy = -10.3; DN.d.salto = true; }
     }
-
-    function tiempoRelativo(ts) {
-        const seg = Math.floor((Date.now() - ts) / 1000);
-        if (seg < 60) return 'Ahora mismo';
-        const min = Math.floor(seg / 60);
-        if (min < 60) return 'Hace ' + min + ' min';
-        const h = Math.floor(min / 60);
-        if (h < 24) return 'Hace ' + h + ' h';
-        return 'Hace ' + Math.floor(h / 24) + ' d';
+    document.addEventListener('keydown', function(e) {
+        if (!LG.activo('pantalla-dino')) return;
+        if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); if (!e.repeat) dnSalto(); }
+        else if (e.code === 'ArrowDown') { e.preventDefault(); DN.d && (DN.d.agacha = true); if (DN.d && DN.d.salto) DN.rapido = true; }
+    });
+    document.addEventListener('keyup', function(e) {
+        if (!LG.activo('pantalla-dino')) return;
+        if (e.code === 'ArrowDown') { DN.d.agacha = false; DN.rapido = false; }
+    });
+    const DN_SUELO = 127;
+    function dnBucle(ahora) {
+        if (!DN.run) return;
+        const k = Math.min((ahora - DN.last) / 16.667, 4); DN.last = ahora;
+        dnPaso(k); dnDibujar();
+        DN.raf = requestAnimationFrame(dnBucle);
     }
-
-    function escaparHtml(s) {
-        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    function dnCaja(o) { return { x: o.x, y: o.y, w: o.w, h: o.h }; }
+    function dnPaso(k) {
+        DN.t += k;
+        const d = DN.d;
+        const altoDino = d.agacha && !d.salto ? 26 : 47;
+        if (DN.st === 'run') {
+            DN.vel = Math.min(13, DN.vel + 0.001 * k * 16.667 / 16.667 * 1.0);
+            DN.dist += DN.vel * k;
+            DN.score = Math.floor(DN.dist * 0.025);
+            if (DN.score > 0 && DN.score % 100 === 0 && DN.parpT === 0) { DN.parp = 60; DN.parpT = 1; }
+            if (DN.score % 100 !== 0) DN.parpT = 0;
+            if (DN.parp > 0) DN.parp -= k;
+            const n = Math.floor(DN.score / 700) % 2 === 1;
+            DN.noche = n;
+            DN.gx += DN.vel * k;
+            // física
+            if (d.salto) {
+                d.vy += 0.6 * k * (DN.rapido ? 3 : 1);
+                d.y += d.vy * k;
+                if (d.y >= 0) { d.y = 0; d.vy = 0; d.salto = false; }
+            }
+            d.ft += k; if (d.ft > 6) { d.ft = 0; d.frame = 1 - d.frame; }
+            // obstáculos
+            DN.sigObs -= DN.vel * k;
+            if (DN.sigObs <= 0 && (DN.obs.length === 0 || DN.obs[DN.obs.length - 1].x < DN.W - 200)) dnNuevoObs();
+            DN.obs.forEach(o => { o.x -= DN.vel * k; if (o.ptero) { o.ft = (o.ft || 0) + k; if (o.ft > 10) { o.ft = 0; o.frame = 1 - (o.frame || 0); } } });
+            DN.obs = DN.obs.filter(o => o.x + o.w > -10);
+            // colisión
+            const cd = d.agacha && !d.salto
+                ? { x: 24 + 4, y: DN_SUELO - 26 + 6, w: 59 - 10, h: 26 - 10 }
+                : { x: 24 + 8, y: DN_SUELO - 47 + d.y + 4, w: 44 - 16, h: 47 - 10 };
+            for (const o of DN.obs) {
+                const co = { x: o.x + 3, y: o.y + 3, w: o.w - 6, h: o.h - 6 };
+                if (cd.x < co.x + co.w && cd.x + cd.w > co.x && cd.y < co.y + co.h && cd.y + cd.h > co.y) {
+                    DN.st = 'dead'; DN.sobre = 0;
+                    if (DN.score > DN.best) { DN.best = DN.score; localStorage.setItem('dino-best', DN.best); }
+                    break;
+                }
+            }
+        } else if (DN.st === 'dead') { DN.sobre += k; }
+        // nubes
+        DN.nubes.forEach(n => { n.x -= (DN.st === 'run' ? 0.9 : 0.2) * k; if (n.x < -50) { n.x = DN.W + Math.random() * 100; n.y = 20 + Math.random() * 40; } });
+        // baches del suelo
+        if (DN.st === 'run') { while (DN.baches.length < 20) DN.baches.push({ x: (DN.baches.length ? DN.baches[DN.baches.length - 1].x : 0) + 20 + Math.random() * 60, w: 2 + Math.floor(Math.random() * 6), y: Math.random() < .5 ? 3 : 6 }); DN.baches.forEach(b => b.x -= DN.vel * k); DN.baches = DN.baches.filter(b => b.x > -20); }
     }
-
-    function renderRecientes() {
-        const cont = document.getElementById('recientes-row');
-        if (!cont) return;
-        let lista = [];
-        try { lista = JSON.parse(localStorage.getItem('classroom-recientes') || '[]'); } catch (e) { lista = []; }
-        if (lista.length === 0) {
-            cont.innerHTML = '<p class="tray-empty">Aún no has abierto ningún juego.</p>';
+    function dnNuevoObs() {
+        const r = Math.random();
+        if (DN.score >= 200 && r < 0.25) {
+            const alt = [100, 75, 50][Math.floor(Math.random() * 3)];
+            DN.obs.push({ ptero: true, x: DN.W + 10, y: alt - 10, w: 46, h: 40, frame: 0 });
+        } else {
+            const grande = Math.random() < 0.45;
+            const n = 1 + Math.floor(Math.random() * (DN.vel > 8 ? 3 : 2));
+            const aw = grande ? 25 : 17, ah = grande ? 50 : 35;
+            DN.obs.push({ cactus: true, grande, n, x: DN.W + 10, y: DN_SUELO - ah, w: aw * n + (n - 1) * 6 - (n > 1 ? 0 : 0), h: ah, aw });
+        }
+        DN.sigObs = DN.vel * 25 + Math.random() * 180 + 60;
+    }
+    function dnDibujar() {
+        const c = DN.ctx, col = dnColores();
+        c.fillStyle = col.fondo; c.fillRect(0, 0, DN.W, DN.H);
+        // estrellas y luna (noche)
+        if (DN.noche) {
+            c.fillStyle = col.fg;
+            [[80, 30], [200, 50], [330, 22], [420, 60], [560, 35], [150, 80]].forEach(s => c.fillRect(s[0], s[1], 2, 2));
+            c.beginPath(); c.arc(DN.lunaX, 40, 14, 0, 7); c.fill();
+            c.fillStyle = col.fondo; c.beginPath(); c.arc(DN.lunaX + 8, 38, 13, 0, 7); c.fill();
+        }
+        // nubes
+        DN.nubes.forEach(n => {
+            c.fillStyle = col.nube;
+            c.fillRect(n.x + 8, n.y, 22, 6); c.fillRect(n.x, n.y + 6, 46, 6); c.fillRect(n.x + 14, n.y + 12, 26, 2);
+            c.fillRect(n.x + 14, n.y - 4, 12, 4); c.fillRect(n.x + 34, n.y + 2, 8, 4);
+        });
+        // suelo
+        c.fillStyle = col.suelo; c.fillRect(0, DN_SUELO + 12, DN.W, 1);
+        (DN.baches || []).forEach(b => c.fillRect(b.x, DN_SUELO + 12 + b.y - 1, b.w, 2));
+        c.fillStyle = col.suelo;
+        // obstáculos
+        DN.obs.forEach(o => {
+            if (o.cactus) for (let i = 0; i < o.n; i++) dnCactus(c, o.x + i * (o.aw + 6), o.y, o.aw, o.h, col.fg);
+            else dnPtero(c, o.x, o.y, o.frame || 0, col.fg);
+        });
+        dnDino(c, col);
+        // puntuación
+        const pt = String(DN.score).padStart(5, '0');
+        const hi = String(DN.best).padStart(5, '0');
+        const parpadeo = DN.parp > 0 && Math.floor(DN.parp / 8) % 2 === 0;
+        if (!parpadeo) pxTexto(c, pt, DN.W - 8 - pxAncho(pt, 2, 1), 10, 2, col.fg);
+        if (DN.best > 0) { pxTexto(c, 'HI ' + hi, DN.W - 8 - pxAncho(pt, 2, 1) - 14 - pxAncho('HI ' + hi, 2, 1), 10, 2, col.fg === '#535353' ? '#757575' : '#8a8a8a'); }
+        if (DN.st === 'idle') {
+            pxTexto(c, 'PULSA ESPACIO', DN.W / 2 - pxAncho('PULSA ESPACIO', 2, 1) / 2, 60, 2, col.fg === '#535353' ? '#757575' : '#8a8a8a');
+        }
+        if (DN.st === 'dead') {
+            const t = 'G A M E  O V E R';
+            pxTexto(c, t, DN.W / 2 - pxAncho(t, 2, 1) / 2, 45, 2, col.fg);
+            // icono de reinicio
+            c.strokeStyle = col.fg; c.lineWidth = 3;
+            c.beginPath(); c.arc(DN.W / 2, 88, 14, -0.6, 4.4); c.stroke();
+            c.fillStyle = col.fg; c.beginPath(); c.moveTo(DN.W / 2 + 12, 72); c.lineTo(DN.W / 2 + 22, 84); c.lineTo(DN.W / 2 + 6, 84); c.fill();
+        }
+    }
+    function dnCactus(c, x, y, w, h, fg) {
+        c.fillStyle = fg;
+        const tw = Math.round(w * 0.4), tx = x + Math.round((w - tw) / 2);
+        c.fillRect(tx, y + 2, tw, h - 2); c.fillRect(tx + 1, y, tw - 2, 2);
+        const ay = y + Math.round(h * 0.32), ah = Math.round(h * 0.22);
+        // brazo izquierdo
+        c.fillRect(x, ay, tx - x + 1, 4); c.fillRect(x, ay - ah + 4, 4, ah); c.fillRect(x + 1, ay - ah + 2, 2, 2);
+        // brazo derecho
+        const by = y + Math.round(h * 0.2);
+        c.fillRect(tx + tw - 1, by + 6, x + w - (tx + tw) + 1, 4); c.fillRect(x + w - 4, by - 2, 4, ah); c.fillRect(x + w - 3, by - 4, 2, 2);
+    }
+    function dnPtero(c, x, y, f, fg) {
+        c.fillStyle = fg;
+        c.fillRect(x + 8, y + 18, 26, 8); c.fillRect(x + 4, y + 20, 8, 6); c.fillRect(x, y + 22, 6, 3);
+        c.fillRect(x + 30, y + 14, 10, 8); c.fillRect(x + 38, y + 16, 8, 3); c.fillRect(x + 40, y + 19, 4, 2);
+        c.fillStyle = dnColores().fondo; c.fillRect(x + 35, y + 16, 2, 2); c.fillStyle = fg;
+        c.fillRect(x + 12, y + 26, 16, 4);
+        if (f === 0) { c.fillRect(x + 14, y + 2, 4, 16); c.fillRect(x + 18, y + 6, 4, 12); c.fillRect(x + 22, y + 10, 4, 8); c.fillRect(x + 10, y - 2 + 4, 4, 14); }
+        else { c.fillRect(x + 14, y + 26, 4, 12); c.fillRect(x + 18, y + 26, 4, 8); c.fillRect(x + 22, y + 26, 4, 6); c.fillRect(x + 10, y + 26, 4, 10); }
+    }
+    function dnDino(c, col) {
+        const d = DN.d, fg = col.fg, x = d.x, muerto = DN.st === 'dead';
+        if (d.agacha && !d.salto && !muerto) {
+            const y = DN_SUELO - 26;
+            c.fillStyle = fg;
+            c.fillRect(x + 6, y + 2, 44, 14); c.fillRect(x + 2, y + 6, 8, 8); c.fillRect(x, y + 8, 4, 4);
+            c.fillRect(x + 40, y - 2, 19, 14); c.fillRect(x + 40, y + 10, 10, 4);
+            c.fillStyle = col.fondo; c.fillRect(x + 46, y, 3, 3); c.fillStyle = fg;
+            const f = Math.floor(DN.t / 6) % 2;
+            c.fillRect(x + 12, y + 16, 5, f ? 10 : 6); c.fillRect(x + 28, y + 16, 5, f ? 6 : 10);
+            if (f) c.fillRect(x + 12, y + 22, 8, 4); else c.fillRect(x + 28, y + 22, 8, 4);
             return;
         }
-        cont.innerHTML = lista.map((g, i) => (
-            '<div class="tray-chip" data-reciente-idx="' + i + '">' +
-                '<span class="chip-icon">' + (g.icon || '🎮') + '</span>' +
-                '<span class="chip-text">' +
-                    '<span class="chip-name">' + escaparHtml(g.name) + '</span>' +
-                    '<span class="chip-sub">' + tiempoRelativo(g.ts) + '</span>' +
-                '</span>' +
-            '</div>'
-        )).join('');
-        cont.querySelectorAll('.tray-chip').forEach(chip => {
-            chip.onclick = () => {
-                const idx = parseInt(chip.getAttribute('data-reciente-idx'), 10);
-                reabrirDesdeTray(lista[idx]);
-            };
-        });
+        const oy = DN_SUELO - 47 + d.y;
+        c.fillStyle = fg;
+        for (let r = 0; r < DN_CUERPO.length; r++) for (let q = 0; q < 22; q++) if (DN_CUERPO[r][q] === '#') c.fillRect(x + q * 2, oy + r * 2, 2, 2);
+        // ojo
+        c.fillStyle = col.fondo;
+        if (muerto) { c.fillRect(x + 24, oy + 4, 2, 2); c.fillRect(x + 28, oy + 4, 2, 2); c.fillRect(x + 26, oy + 6, 2, 2); c.fillRect(x + 24, oy + 8, 2, 2); c.fillRect(x + 28, oy + 8, 2, 2); }
+        else c.fillRect(x + 24, oy + 4, 2, 2);
+        c.fillStyle = fg;
+        if (muerto) { c.fillRect(x + 24, oy + 4, 2, 2); }
+        // patas
+        const f = d.salto || muerto || DN.st === 'idle' ? -1 : d.frame;
+        const legs = (lx, largo) => { c.fillRect(x + lx, oy + 42, 6, largo); };
+        c.fillStyle = fg;
+        if (f === -1) { c.fillRect(x + 12, oy + 42, 6, 5); c.fillRect(x + 12, oy + 44, 10, 3); c.fillRect(x + 26, oy + 42, 6, 5); c.fillRect(x + 26, oy + 44, 10, 3); }
+        else if (f === 0) { c.fillRect(x + 12, oy + 42, 6, 5); c.fillRect(x + 12, oy + 44, 10, 3); c.fillRect(x + 26, oy + 42, 6, 3); }
+        else { c.fillRect(x + 26, oy + 42, 6, 5); c.fillRect(x + 26, oy + 44, 10, 3); c.fillRect(x + 12, oy + 42, 6, 3); }
     }
 
-    function reabrirDesdeTray(g) {
-        if (g.kind === 'local') abrirJuegoLocal(g.arg);
-        else if (g.kind === 'tab') window.open(g.arg, '_blank');
-        else abrirJuegoDirecto(g.arg, g.name);
-    }
-
-    function renderPuntuaciones() {
-        const cont = document.getElementById('puntuaciones-row');
-        if (!cont) return;
-        const items = [];
-
-        const best2048 = parseInt(localStorage.getItem('g2048-best') || '0', 10);
-        if (best2048 > 0) items.push({ icon: '🔢', name: '2048', valor: 'Mejor: ' + best2048.toLocaleString('es-ES'), arg: 'pantalla-2048' });
-
-        let cookieTotal = 0;
-        try {
-            const data = JSON.parse(localStorage.getItem('cookie-clicker-save') || 'null');
-            if (data) cookieTotal = Math.floor(data.galletas || 0);
-        } catch (e) {}
-        if (cookieTotal > 0) items.push({ icon: '🍪', name: 'Galleta Clicker', valor: 'Total: ' + cookieTotal.toLocaleString('es-ES'), arg: 'pantalla-cookie' });
-
-        const bestFlappy = parseInt(localStorage.getItem('flappy-best') || '0', 10);
-        if (bestFlappy > 0) items.push({ icon: '🐦', name: 'Flappy Bird', valor: 'Mejor: ' + bestFlappy, arg: 'pantalla-flappy' });
-
-        const bestSnake = parseInt(localStorage.getItem('snake-best') || '0', 10);
-        if (bestSnake > 0) items.push({ icon: '🐍', name: 'Snake', valor: 'Mejor: ' + bestSnake, arg: 'pantalla-snake' });
-
-        const bestMemory = parseInt(localStorage.getItem('memory-best') || '0', 10);
-        if (bestMemory > 0) items.push({ icon: '🧠', name: 'Memory', valor: 'Mejor: ' + bestMemory + ' mov.', arg: 'pantalla-memory' });
-
-        if (items.length === 0) {
-            cont.innerHTML = '<p class="tray-empty">Juega para desbloquear puntuaciones.</p>';
-            return;
-        }
-
-        cont.innerHTML = items.map((it, i) => (
-            '<div class="tray-chip" data-punt-idx="' + i + '">' +
-                '<span class="chip-icon">' + it.icon + '</span>' +
-                '<span class="chip-text">' +
-                    '<span class="chip-name">' + it.name + '</span>' +
-                    '<span class="chip-sub">' + it.valor + '</span>' +
-                '</span>' +
-            '</div>'
-        )).join('');
-        cont.querySelectorAll('.tray-chip').forEach(chip => {
-            chip.onclick = () => {
-                const idx = parseInt(chip.getAttribute('data-punt-idx'), 10);
-                abrirJuegoLocal(items[idx].arg);
-            };
-        });
-    }
-
-    /* ==================================================
-       JUEGO LOCAL: SNAKE
-    ================================================== */
-    let snake = null;
-    let snakeRAF = null;
+    /* === SNAKE (pantalla LCD de móvil clásico) === */
+    const SK = { cv: null, ctx: null, DW: 84, DH: 48, D: 6, cols: 27, filas: 12, x0: 1, y0: 10, run: false, st: 'ready', sn: [], dir: [1, 0], cola: [], comida: null, pts: 0, comidas: 0, ms: 130, ult: 0, tm: null, listo: false, best: 0, parp: 0 };
+    const SK_ON = '#1e2a19', SK_OFF = 'rgba(30,42,25,0.085)';
 
     function iniciarSnake() {
-        if (snakeRAF) { cancelAnimationFrame(snakeRAF); snakeRAF = null; }
-        const canvas = document.getElementById('snake-canvas');
-        const ctx = canvas.getContext('2d');
-        const tam = 18;
-
-        snake = {
-            ctx, W: canvas.width, H: canvas.height, tam, cel: canvas.width / tam,
-            cuerpo: [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }],
-            dir: { x: 1, y: 0 }, siguienteDir: { x: 1, y: 0 },
-            comida: { x: 12, y: 9 },
-            puntos: 0, mejor: parseInt(localStorage.getItem('snake-best') || '0', 10),
-            vivo: true, corriendo: true, velocidad: 120, ultimoTs: null
-        };
-        colocarComidaSnake();
-
-        canvas.onclick = () => {
-            if (!snake.vivo) iniciarSnake();
-        };
-
-        requestAnimationFrame(bucleSnake);
+        const cv = document.getElementById('snake-canvas');
+        SK.cv = cv; SK.ctx = cv.getContext('2d');
+        cv.width = SK.DW * SK.D; cv.height = SK.DH * SK.D;
+        if (!SK.listo) {
+            cv.addEventListener('pointerdown', e => { e.preventDefault(); if (SK.st !== 'play') skEmpezar(); else skPausa(); });
+            let x0 = null, y0 = null;
+            cv.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+            cv.addEventListener('touchend', e => {
+                if (x0 === null) return;
+                const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+                if (Math.max(Math.abs(dx), Math.abs(dy)) > 20) skDir(Math.abs(dx) > Math.abs(dy) ? [dx > 0 ? 1 : -1, 0] : [0, dy > 0 ? 1 : -1]);
+                x0 = null;
+            }, { passive: true });
+            document.querySelectorAll('#pantalla-snake .sk-pad button').forEach(b => {
+                b.addEventListener('pointerdown', e => { e.preventDefault(); skDir({ u: [0, -1], d: [0, 1], l: [-1, 0], r: [1, 0] }[b.className]); });
+            });
+            SK.listo = true;
+        }
+        SK.best = parseInt(localStorage.getItem('snake-best') || '0', 10);
+        SK.run = true;
+        skReset();
+    }
+    function pararSnake() { SK.run = false; clearTimeout(SK.tm); }
+    function reiniciarSnake() { skReset(); }
+    function skReset() {
+        clearTimeout(SK.tm);
+        const cy = Math.floor(SK.filas / 2), cx = 8;
+        SK.sn = [[cx, cy], [cx - 1, cy], [cx - 2, cy], [cx - 3, cy], [cx - 4, cy]];
+        SK.dir = [1, 0]; SK.cola = []; SK.pts = 0; SK.comidas = 0; SK.ms = 130; SK.st = 'ready';
+        skComida(); skDibujar();
+    }
+    function skComida() {
+        let p;
+        do { p = [Math.floor(Math.random() * SK.cols), Math.floor(Math.random() * SK.filas)]; }
+        while (SK.sn.some(s => s[0] === p[0] && s[1] === p[1]));
+        SK.comida = p;
+    }
+    function skEmpezar() {
+        if (SK.st === 'over') { skReset(); }
+        if (SK.st === 'ready') { SK.st = 'play'; skPaso(); }
+        else if (SK.st === 'pause') skPausa();
+    }
+    function skPausa() {
+        if (SK.st === 'play') { SK.st = 'pause'; clearTimeout(SK.tm); skDibujar(); }
+        else if (SK.st === 'pause') { SK.st = 'play'; skPaso(); }
+    }
+    function skDir(d) {
+        if (!SK.run) return;
+        if (SK.st === 'over') { skReset(); return; }
+        if (SK.st === 'ready') { skEmpezar(); }
+        if (SK.st === 'pause') skPausa();
+        const ult = SK.cola.length ? SK.cola[SK.cola.length - 1] : SK.dir;
+        if (d[0] === -ult[0] && d[1] === -ult[1]) return;
+        if (d[0] === ult[0] && d[1] === ult[1]) return;
+        if (SK.cola.length < 2) SK.cola.push(d);
+    }
+    document.addEventListener('keydown', function(e) {
+        if (!LG.activo('pantalla-snake')) return;
+        const m = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0] };
+        if (m[e.key]) { e.preventDefault(); skDir(m[e.key]); }
+        else if (e.code === 'Space' || e.key === 'p') { e.preventDefault(); if (SK.st === 'play' || SK.st === 'pause') skPausa(); else skEmpezar(); }
+    });
+    function skPaso() {
+        if (!SK.run || SK.st !== 'play') return;
+        if (SK.cola.length) SK.dir = SK.cola.shift();
+        const h = SK.sn[0], n = [h[0] + SK.dir[0], h[1] + SK.dir[1]];
+        const come = SK.comida && n[0] === SK.comida[0] && n[1] === SK.comida[1];
+        const cuerpo = come ? SK.sn : SK.sn.slice(0, -1);
+        if (n[0] < 0 || n[1] < 0 || n[0] >= SK.cols || n[1] >= SK.filas || cuerpo.some(s => s[0] === n[0] && s[1] === n[1])) {
+            SK.st = 'over';
+            if (SK.pts > SK.best) { SK.best = SK.pts; localStorage.setItem('snake-best', SK.best); }
+            skDibujar(); return;
+        }
+        SK.sn.unshift(n);
+        if (come) {
+            SK.pts += 7; SK.comidas++;
+            SK.ms = Math.max(65, 130 - Math.floor(SK.comidas / 4) * 6);
+            if (SK.sn.length >= SK.cols * SK.filas) { SK.st = 'over'; skDibujar(); return; }
+            skComida();
+        } else SK.sn.pop();
+        skDibujar();
+        SK.tm = setTimeout(skPaso, SK.ms);
+    }
+    function skDibujar() {
+        const lcd = new Uint8Array(SK.DW * SK.DH);
+        const on = (x, y) => { if (x >= 0 && y >= 0 && x < SK.DW && y < SK.DH) lcd[y * SK.DW + x] = 1; };
+        const texto = (t, x, y) => { for (let i = 0; i < t.length; i++) { const g = PXG[t[i]] || PXG[' ']; for (let k = 0; k < 15; k++) if (g[k] === '1') on(x + i * 4 + (k % 3), y + Math.floor(k / 3)); } };
+        // marco
+        for (let x = 0; x < SK.DW; x++) { on(x, 8); on(x, 47); }
+        for (let y = 8; y < 48; y++) { on(0, y); on(83, y); }
+        // puntuación
+        texto(String(SK.pts).padStart(4, '0'), 2, 1);
+        if (SK.st === 'pause' || SK.st === 'ready') { if (Math.floor(Date.now() / 500) % 2 === 0 || SK.st === 'pause') texto(SK.st === 'pause' ? 'PAUSA' : 'LISTO', 60, 1); }
+        // comida (rombo)
+        if (SK.comida) {
+            const bx = SK.x0 + SK.comida[0] * 3, by = SK.y0 + SK.comida[1] * 3;
+            on(bx + 1, by); on(bx, by + 1); on(bx + 2, by + 1); on(bx + 1, by + 2);
+        }
+        // serpiente
+        const seg = (s) => { const bx = SK.x0 + s[0] * 3, by = SK.y0 + s[1] * 3; on(bx, by); on(bx + 1, by); on(bx, by + 1); on(bx + 1, by + 1); };
+        const blink = SK.st === 'over' && Math.floor(Date.now() / 250) % 2 === 0;
+        if (!blink) {
+            SK.sn.forEach((s, i) => {
+                seg(s);
+                if (i > 0) {
+                    const p = SK.sn[i - 1], bx = SK.x0 + s[0] * 3, by = SK.y0 + s[1] * 3;
+                    if (p[0] > s[0]) { on(bx + 2, by); on(bx + 2, by + 1); }
+                    if (p[0] < s[0]) { on(bx - 1, by); on(bx - 1, by + 1); }
+                    if (p[1] > s[1]) { on(bx, by + 2); on(bx + 1, by + 2); }
+                    if (p[1] < s[1]) { on(bx, by - 1); on(bx + 1, by - 1); }
+                }
+            });
+            // cabeza: boca abierta si la comida está cerca
+            const h = SK.sn[0];
+            if (SK.comida && Math.abs(SK.comida[0] - h[0]) + Math.abs(SK.comida[1] - h[1]) <= 2 && SK.st === 'play') {
+                const bx = SK.x0 + h[0] * 3, by = SK.y0 + h[1] * 3;
+                if (SK.dir[0] === 1) { on(bx + 2, by - 1 + 0); on(bx + 2, by + 2); }
+                else if (SK.dir[0] === -1) { on(bx - 1, by - 1 + 0); on(bx - 1, by + 2); }
+                else if (SK.dir[1] === 1) { on(bx - 1, by + 2); on(bx + 2, by + 2); }
+                else { on(bx - 1, by - 1); on(bx + 2, by - 1); }
+            }
+        }
+        if (SK.st === 'over') {
+            for (let y = 16; y < 36; y++) for (let x = 14; x < 70; x++) lcd[y * SK.DW + x] = 0;
+            for (let x = 14; x < 70; x++) { on(x, 16); on(x, 35); }
+            for (let y = 16; y < 36; y++) { on(14, y); on(69, y); }
+            texto('GAME OVER', 24, 20);
+            texto(String(SK.pts).padStart(4, '0'), 34, 28);
+        }
+        const c = SK.ctx, D = SK.D;
+        c.clearRect(0, 0, SK.cv.width, SK.cv.height);
+        for (let y = 0; y < SK.DH; y++) for (let x = 0; x < SK.DW; x++) {
+            c.fillStyle = lcd[y * SK.DW + x] ? SK_ON : SK_OFF;
+            c.fillRect(x * D, y * D, D - 1, D - 1);
+        }
+        if ((SK.st === 'over' || SK.st === 'ready') && SK.run) { clearTimeout(SK.blinkT); SK.blinkT = setTimeout(() => { if (SK.run && (SK.st === 'over' || SK.st === 'ready')) skDibujar(); }, 250); }
     }
 
-    function colocarComidaSnake() {
-        if (!snake) return;
-        let pos;
-        do {
-            pos = {
-                x: Math.floor(Math.random() * snake.cel),
-                y: Math.floor(Math.random() * snake.cel)
+    /* === BUSCAMINAS (Windows clásico) === */
+    const MS = { cols: 9, filas: 9, minas: 10, celdas: [], st: 'listo', t: 0, tm: null, reveladas: 0, banderas: 0, modoBandera: false, listo: false, nivel: 'p', lp: null, down: null };
+    const MS_NIV = { p: [9, 9, 10], i: [16, 16, 40], e: [30, 16, 99] };
+
+    function msDigito(ch, on, off) {
+        const seg = { a: [2, 1, 9, 2], b: [10, 2, 2, 9], c: [10, 12, 2, 9], d: [2, 20, 9, 2], e: [1, 12, 2, 9], f: [1, 2, 2, 9], g: [2, 10, 9, 2] };
+        const map = { '0': 'abcdef', '1': 'bc', '2': 'abged', '3': 'abgcd', '4': 'fgbc', '5': 'afgcd', '6': 'afgedc', '7': 'abc', '8': 'abcdefg', '9': 'abcdfg', '-': 'g' };
+        const act = map[ch] || '';
+        let s = '<svg viewBox="0 0 13 23">';
+        for (const k in seg) { const r = seg[k]; s += '<rect x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '" fill="' + (act.includes(k) ? '#f00' : '#3a0000') + '"/>'; }
+        return s + '</svg>';
+    }
+    function msLed(id, n) {
+        n = Math.max(-99, Math.min(999, n));
+        const t = n < 0 ? '-' + String(-n).padStart(2, '0') : String(n).padStart(3, '0');
+        document.getElementById(id).innerHTML = t.split('').map(ch => msDigito(ch)).join('');
+    }
+    function msCara(tipo) {
+        const o = '<circle cx="10" cy="10" r="9" fill="#ff0" stroke="#000"/>';
+        const caras = {
+            feliz: o + '<circle cx="7" cy="8" r="1.3"/><circle cx="13" cy="8" r="1.3"/><path d="M5 12 Q10 17 15 12" stroke="#000" fill="none" stroke-width="1.3"/>',
+            ooh: o + '<circle cx="7" cy="8" r="1.3"/><circle cx="13" cy="8" r="1.3"/><circle cx="10" cy="13.5" r="2.2" fill="#000"/>',
+            muerto: o + '<path d="M5 6l4 4M9 6l-4 4M11 6l4 4M15 6l-4 4" stroke="#000" stroke-width="1.3"/><path d="M5.5 14.5 Q10 10.5 14.5 14.5" stroke="#000" fill="none" stroke-width="1.3"/>',
+            gafas: o + '<rect x="3.5" y="6" width="5" height="3.5" fill="#000"/><rect x="11.5" y="6" width="5" height="3.5" fill="#000"/><rect x="8" y="6.5" width="4" height="1.2" fill="#000"/><path d="M5 12.5 Q10 17 15 12.5" stroke="#000" fill="none" stroke-width="1.3"/>'
+        };
+        document.getElementById('ms-face').innerHTML = '<svg viewBox="0 0 20 20">' + caras[tipo] + '</svg>';
+    }
+    const MS_MINA = '<svg viewBox="0 0 16 16"><path d="M8 1v14M1 8h14M3 3l10 10M13 3L3 13" stroke="#000" stroke-width="1.4"/><circle cx="8" cy="8" r="4.6" fill="#000"/><rect x="5.5" y="5.5" width="2" height="2" fill="#fff"/></svg>';
+    const MS_BAND = '<svg viewBox="0 0 16 16"><path d="M8 2.5l-5 3 5 3z" fill="#f00"/><path d="M8 2.5V11" stroke="#000" stroke-width="1.2"/><path d="M4 13h8v1.5H4zM6 11.3h4V13H6z" fill="#000"/></svg>';
+    const MS_MALA = '<svg viewBox="0 0 16 16"><path d="M8 1v14M1 8h14M3 3l10 10M13 3L3 13" stroke="#000" stroke-width="1.4"/><circle cx="8" cy="8" r="4.6" fill="#000"/><path d="M2 2l12 12M14 2L2 14" stroke="#f00" stroke-width="1.8"/></svg>';
+
+    function iniciarMinas() {
+        if (!MS.listo) {
+            const g = document.getElementById('ms-grid');
+            g.addEventListener('contextmenu', e => { e.preventDefault(); const c = msCeldaDe(e); if (c) msBandera(c); });
+            g.addEventListener('pointerdown', e => {
+                if (e.button === 2) return;
+                const c = msCeldaDe(e); if (!c) return;
+                MS.down = { c, largo: false, btn: e.button };
+                if (MS.st === 'listo' || MS.st === 'juego') msCara('ooh');
+                if (e.pointerType !== 'mouse') {
+                    clearTimeout(MS.lp);
+                    MS.lp = setTimeout(() => { if (MS.down) { MS.down.largo = true; msBandera(MS.down.c); if (navigator.vibrate) navigator.vibrate(25); } }, 380);
+                }
+            });
+            const fin = e => {
+                clearTimeout(MS.lp);
+                const d = MS.down; MS.down = null;
+                if (MS.st === 'listo' || MS.st === 'juego') msCara('feliz');
+                if (!d || d.largo || e.type === 'pointercancel') return;
+                if (e.button === 2) return;
+                const c = e.pointerType === 'mouse' ? (msCeldaDe(e) || d.c) : d.c;
+                if (d.btn === 1) { msAcorde(c); return; }
+                if (MS.modoBandera && e.pointerType !== 'mouse') { msBandera(c); return; }
+                if (c.rev) msAcorde(c); else msRevelar(c);
             };
-        } while (snake.cuerpo.some(c => c.x === pos.x && c.y === pos.y));
-        snake.comida = pos;
-    }
-
-    function reiniciarSnake() { iniciarSnake(); }
-
-    function pararSnake() {
-        if (snake) snake.corriendo = false;
-        if (snakeRAF) { cancelAnimationFrame(snakeRAF); snakeRAF = null; }
-    }
-
-    function bucleSnake(timestamp) {
-        if (!snake || !snake.corriendo) return;
-        if (!snake.ultimoTs) snake.ultimoTs = timestamp;
-        const delta = timestamp - snake.ultimoTs;
-
-        if (delta > snake.velocidad) {
-            snake.ultimoTs = timestamp;
-            if (snake.vivo) {
-                snake.dir = snake.siguienteDir;
-                const cabeza = { x: snake.cuerpo[0].x + snake.dir.x, y: snake.cuerpo[0].y + snake.dir.y };
-
-                if (cabeza.x < 0 || cabeza.x >= snake.cel || cabeza.y < 0 || cabeza.y >= snake.cel) {
-                    snake.vivo = false;
-                } else if (snake.cuerpo.some(c => c.x === cabeza.x && c.y === cabeza.y)) {
-                    snake.vivo = false;
-                } else {
-                    snake.cuerpo.unshift(cabeza);
-                    if (cabeza.x === snake.comida.x && cabeza.y === snake.comida.y) {
-                        snake.puntos += 10;
-                        colocarComidaSnake();
-                        if (snake.puntos > snake.mejor) {
-                            snake.mejor = snake.puntos;
-                            localStorage.setItem('snake-best', snake.mejor);
-                        }
-                    } else {
-                        snake.cuerpo.pop();
-                    }
-                }
-            }
+            g.addEventListener('pointerup', fin);
+            g.addEventListener('pointercancel', fin);
+            g.addEventListener('pointerleave', () => { if (MS.down && (MS.st === 'listo' || MS.st === 'juego')) msCara('feliz'); });
+            document.getElementById('ms-face').addEventListener('click', () => msNuevo());
+            document.querySelectorAll('#ms-menu button').forEach(b => b.addEventListener('click', () => { MS.nivel = b.dataset.n; msNuevo(); }));
+            document.getElementById('ms-flag-btn').addEventListener('click', () => { MS.modoBandera = !MS.modoBandera; document.getElementById('ms-flag-btn').classList.toggle('on', MS.modoBandera); });
+            MS.listo = true;
         }
-
-        const { ctx, W, H, tam } = snake;
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(0, 0, W, H);
-
-        ctx.fillStyle = '#ef4444';
-        ctx.fillRect(snake.comida.x * tam + 1, snake.comida.y * tam + 1, tam - 2, tam - 2);
-
-        snake.cuerpo.forEach((c, i) => {
-            ctx.fillStyle = i === 0 ? '#34d399' : '#10b981';
-            ctx.fillRect(c.x * tam + 1, c.y * tam + 1, tam - 2, tam - 2);
-        });
-
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 18px sans-serif';
-        ctx.fillText('Puntos: ' + snake.puntos, 10, 25);
-
-        if (!snake.vivo) {
-            ctx.fillStyle = 'rgba(0,0,0,0.6)';
-            ctx.fillRect(0, 0, W, H);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 22px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('💀 Game Over', W / 2, H / 2 - 20);
-            ctx.font = '16px sans-serif';
-            ctx.fillText('Puntos: ' + snake.puntos + '  Mejor: ' + snake.mejor, W / 2, H / 2 + 10);
-            ctx.fillText('Toca o pulsa para reintentar', W / 2, H / 2 + 40);
-            ctx.textAlign = 'left';
-        }
-
-        snakeRAF = requestAnimationFrame(bucleSnake);
+        msNuevo();
     }
-
-    document.addEventListener('keydown', function(e) {
-        if (document.getElementById('pantalla-snake').style.display !== 'flex' || !snake) return;
-        const d = snake.dir;
-        if (e.key === 'ArrowUp' && d.y === 0) snake.siguienteDir = { x: 0, y: -1 };
-        if (e.key === 'ArrowDown' && d.y === 0) snake.siguienteDir = { x: 0, y: 1 };
-        if (e.key === 'ArrowLeft' && d.x === 0) snake.siguienteDir = { x: -1, y: 0 };
-        if (e.key === 'ArrowRight' && d.x === 0) snake.siguienteDir = { x: 1, y: 0 };
-    });
-
-    /* === JUEGO LOCAL: MEMORY === */
-    let memory = { cartas: [], volteadas: [], parejas: 0, movimientos: 0, mejor: 0, bloqueado: false };
-    const EMOJIS_MEMORY = ['🎮', '🕹️', '🎲', '🎯', '👾', '🚀', '⭐', '🏆'];
-
-    function iniciarMemory() {
-        memory.mejor = parseInt(localStorage.getItem('memory-best') || '0', 10);
-        memory.movimientos = 0;
-        memory.parejas = 0;
-        memory.volteadas = [];
-        memory.bloqueado = false;
-
-        document.getElementById('memory-moves').textContent = '0';
-        document.getElementById('memory-best').textContent = memory.mejor > 0 ? memory.mejor : '–';
-
-        const baraja = [...EMOJIS_MEMORY, ...EMOJIS_MEMORY].sort(() => Math.random() - 0.5);
-        memory.cartas = baraja.map((emoji, index) => ({ id: index, emoji, flipped: false, matched: false }));
-
-        renderMemory();
+    function pararMinas() { clearInterval(MS.tm); }
+    function reiniciarMinas() { msNuevo(); }
+    function msCeldaDe(e) {
+        const el = e.target.closest ? e.target.closest('.ms-c') : null;
+        return el ? MS.celdas[+el.dataset.i] : null;
     }
-
-    function reiniciarMemory() { iniciarMemory(); }
-
-    function renderMemory() {
-        const board = document.getElementById('memory-board');
-        if (!board) return;
-        board.innerHTML = '';
-        memory.cartas.forEach(carta => {
+    function msNuevo() {
+        clearInterval(MS.tm);
+        const [c, f, m] = MS_NIV[MS.nivel];
+        MS.cols = c; MS.filas = f; MS.minas = m; MS.st = 'listo'; MS.t = 0; MS.reveladas = 0; MS.banderas = 0; MS.celdas = [];
+        document.querySelectorAll('#ms-menu button').forEach(b => b.classList.toggle('on', b.dataset.n === MS.nivel));
+        const g = document.getElementById('ms-grid');
+        const disp = Math.max(300, Math.min(window.innerWidth, 1000)) - 60;
+        const cs = Math.max(17, Math.min(26, Math.floor(disp / c)));
+        g.style.setProperty('--cs', cs + 'px');
+        g.style.gridTemplateColumns = 'repeat(' + c + ', var(--cs))';
+        g.innerHTML = '';
+        for (let i = 0; i < c * f; i++) {
             const el = document.createElement('div');
-            el.className = 'memory-card' + (carta.flipped ? ' flipped' : '') + (carta.matched ? ' matched' : '');
-            el.textContent = (carta.flipped || carta.matched) ? carta.emoji : '❓';
-            el.onclick = () => voltearCartaMemory(carta);
-            board.appendChild(el);
-        });
-    }
-
-    function voltearCartaMemory(carta) {
-        if (memory.bloqueado || carta.flipped || carta.matched) return;
-
-        carta.flipped = true;
-        memory.volteadas.push(carta);
-        renderMemory();
-
-        if (memory.volteadas.length === 2) {
-            memory.movimientos++;
-            document.getElementById('memory-moves').textContent = memory.movimientos;
-            memory.bloqueado = true;
-
-            const [c1, c2] = memory.volteadas;
-            if (c1.emoji === c2.emoji) {
-                c1.matched = true;
-                c2.matched = true;
-                memory.parejas++;
-                memory.volteadas = [];
-                memory.bloqueado = false;
-
-                if (memory.parejas === EMOJIS_MEMORY.length) {
-                    if (memory.mejor === 0 || memory.movimientos < memory.mejor) {
-                        memory.mejor = memory.movimientos;
-                        localStorage.setItem('memory-best', memory.mejor);
-                        document.getElementById('memory-best').textContent = memory.mejor;
-                    }
-                    setTimeout(() => mostrarToast('🎉 ¡Ganaste en ' + memory.movimientos + ' movimientos!'), 300);
-                }
-            } else {
-                setTimeout(() => {
-                    c1.flipped = false;
-                    c2.flipped = false;
-                    memory.volteadas = [];
-                    memory.bloqueado = false;
-                    renderMemory();
-                }, 800);
-            }
+            el.className = 'ms-c'; el.dataset.i = i;
+            g.appendChild(el);
+            MS.celdas.push({ i, x: i % c, y: Math.floor(i / c), mina: false, rev: false, band: false, n: 0, el });
         }
+        msLed('ms-minas', MS.minas); msLed('ms-tiempo', 0); msCara('feliz');
+    }
+    function msVecinas(c) {
+        const r = [];
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+            if (!dx && !dy) continue;
+            const x = c.x + dx, y = c.y + dy;
+            if (x >= 0 && y >= 0 && x < MS.cols && y < MS.filas) r.push(MS.celdas[y * MS.cols + x]);
+        }
+        return r;
+    }
+    function msColocar(seguro) {
+        const libres = MS.celdas.filter(c => c !== seguro);
+        for (let i = libres.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [libres[i], libres[j]] = [libres[j], libres[i]]; }
+        libres.slice(0, MS.minas).forEach(c => c.mina = true);
+        MS.celdas.forEach(c => { c.n = msVecinas(c).filter(v => v.mina).length; });
+    }
+    function msPintar(c) {
+        const el = c.el;
+        el.className = 'ms-c' + (c.rev ? ' o' : '');
+        el.innerHTML = '';
+        if (c.mala) { el.className = 'ms-c o'; el.innerHTML = MS_MALA; return; }
+        if (c.rev) {
+            if (c.mina) { el.innerHTML = MS_MINA; if (c.boom) el.classList.add('boom'); }
+            else if (c.n) { el.textContent = c.n; el.classList.add('ms-n' + c.n); }
+        } else if (c.band) el.innerHTML = MS_BAND;
+    }
+    function msIniciarReloj() {
+        MS.st = 'juego';
+        MS.tm = setInterval(() => { MS.t = Math.min(999, MS.t + 1); msLed('ms-tiempo', MS.t); }, 1000);
+    }
+    function msRevelar(c) {
+        if (MS.st === 'perdido' || MS.st === 'ganado' || c.band || c.rev) return;
+        if (MS.st === 'listo') { msColocar(c); msIniciarReloj(); }
+        if (c.mina) { c.boom = true; msPerder(); return; }
+        const pila = [c];
+        while (pila.length) {
+            const a = pila.pop();
+            if (a.rev || a.band) continue;
+            a.rev = true; MS.reveladas++; msPintar(a);
+            if (a.n === 0) msVecinas(a).forEach(v => { if (!v.rev && !v.band && !v.mina) pila.push(v); });
+        }
+        if (MS.reveladas === MS.cols * MS.filas - MS.minas) msGanar();
+    }
+    function msAcorde(c) {
+        if (!c.rev || !c.n || MS.st !== 'juego') return;
+        const v = msVecinas(c);
+        if (v.filter(x => x.band).length !== c.n) return;
+        v.forEach(x => { if (!x.band && !x.rev) msRevelar(x); });
+    }
+    function msBandera(c) {
+        if (c.rev || MS.st === 'perdido' || MS.st === 'ganado') return;
+        c.band = !c.band; MS.banderas += c.band ? 1 : -1;
+        msPintar(c); msLed('ms-minas', MS.minas - MS.banderas);
+    }
+    function msPerder() {
+        clearInterval(MS.tm); MS.st = 'perdido';
+        MS.celdas.forEach(c => {
+            if (c.mina && !c.band) { c.rev = true; msPintar(c); }
+            else if (!c.mina && c.band) { c.mala = true; c.band = false; c.rev = true; msPintar(c); }
+        });
+        msCara('muerto');
+    }
+    function msGanar() {
+        clearInterval(MS.tm); MS.st = 'ganado';
+        MS.celdas.forEach(c => { if (c.mina && !c.band) { c.band = true; msPintar(c); } });
+        MS.banderas = MS.minas; msLed('ms-minas', 0); msCara('gafas');
+        mostrarToast('🎉 ¡Ganaste en ' + MS.t + ' segundos!');
     }
 
-    /* === CONFIGURACIÓN Y BOTÓN DE PÁNICO === */
-    let panicoConfig = {
-        tecla: localStorage.getItem('panico-tecla') || '0',
-        url: localStorage.getItem('panico-url') || 'https://classroom.google.com'
+    /* === TETRIS (pantalla verde de portátil clásica) === */
+    const TT = { cv: null, ctx: null, W: 160, H: 144, run: false, raf: 0, st: 'ready', tab: [], p: null, sig: null, pts: 0, lin: 0, niv: 0, caida: 0, last: 0, flash: null, listo: false, best: 0, bolsa: [], rep: {} };
+    const TT_PAL = ['#9bbc0f', '#8bac0f', '#306230', '#0f380f'];
+    const TT_PIEZAS = {
+        I: { m: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], e: 'B' },
+        O: { m: [[1,1],[1,1]], e: 'A' },
+        T: { m: [[0,1,0],[1,1,1],[0,0,0]], e: 'C' },
+        S: { m: [[0,1,1],[1,1,0],[0,0,0]], e: 'A' },
+        Z: { m: [[1,1,0],[0,1,1],[0,0,0]], e: 'C' },
+        J: { m: [[1,0,0],[1,1,1],[0,0,0]], e: 'B' },
+        L: { m: [[0,0,1],[1,1,1],[0,0,0]], e: 'A' }
     };
-    let capturandoTecla = false;
+    const TT_VEL = [800, 720, 630, 550, 470, 380, 300, 220, 140, 100, 85, 85, 85, 70, 70, 70, 55, 55, 55, 35];
 
-    function iniciarConfiguracion() {
-        document.getElementById('panico-tecla-input').value = panicoConfig.tecla;
-        document.getElementById('panico-url-input').value = panicoConfig.url;
+    function iniciarTetris() {
+        const cv = document.getElementById('tetris-canvas');
+        TT.cv = cv; TT.ctx = cv.getContext('2d'); TT.ctx.imageSmoothingEnabled = false;
+        cv.width = TT.W; cv.height = TT.H;
+        if (!TT.listo) {
+            cv.addEventListener('pointerdown', e => { e.preventDefault(); if (TT.st !== 'play') ttEmpezar(); });
+            document.querySelectorAll('#pantalla-tetris .tt-pad button').forEach(b => {
+                const a = b.dataset.a;
+                const hacer = () => ttAccion(a);
+                b.addEventListener('pointerdown', e => {
+                    e.preventDefault(); hacer();
+                    if (a === 'l' || a === 'r' || a === 'd') { clearInterval(TT.rep[a]); TT.rep[a] = setInterval(hacer, a === 'd' ? 60 : 110); }
+                });
+                ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => clearInterval(TT.rep[a])));
+            });
+            TT.listo = true;
+        }
+        TT.best = parseInt(localStorage.getItem('tetris-best') || '0', 10);
+        TT.run = true; TT.last = performance.now();
+        ttReset();
+        cancelAnimationFrame(TT.raf); TT.raf = requestAnimationFrame(ttBucle);
     }
-
-    function iniciarCapturaTecla() {
-        const btn = document.getElementById('btn-capturar-tecla');
-        btn.textContent = '⌛ Presiona...';
-        capturandoTecla = true;
-
-        const handler = (e) => {
-            e.preventDefault();
-            panicoConfig.tecla = e.key;
-            document.getElementById('panico-tecla-input').value = e.key;
-            btn.textContent = '🎹 Pulsar tecla';
-            capturandoTecla = false;
-            window.removeEventListener('keydown', handler);
-        };
-        window.addEventListener('keydown', handler);
+    function pararTetris() { TT.run = false; cancelAnimationFrame(TT.raf); Object.values(TT.rep).forEach(clearInterval); }
+    function reiniciarTetris() { if (TT.run) { ttReset(); ttEmpezar(); } }
+    function ttReset() {
+        TT.tab = Array.from({ length: 18 }, () => Array(10).fill(''));
+        TT.pts = 0; TT.lin = 0; TT.niv = 0; TT.st = 'ready'; TT.flash = null; TT.bolsa = [];
+        TT.sig = ttPieza(); TT.p = null; TT.caida = 0;
     }
-
-    function guardarConfigPanico() {
-        const urlInput = document.getElementById('panico-url-input').value.trim();
-        panicoConfig.url = urlInput || 'https://classroom.google.com';
-        localStorage.setItem('panico-tecla', panicoConfig.tecla);
-        localStorage.setItem('panico-url', panicoConfig.url);
-        const note = document.getElementById('panic-note');
-        if (note) note.textContent = 'BOTÓN DE PÁNICO = TECLA ' + panicoConfig.tecla.toUpperCase();
-        mostrarToast('💾 Configuración guardada');
+    function ttPieza() {
+        if (!TT.bolsa.length) { TT.bolsa = Object.keys(TT_PIEZAS); for (let i = 6; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [TT.bolsa[i], TT.bolsa[j]] = [TT.bolsa[j], TT.bolsa[i]]; } }
+        const k = TT.bolsa.pop();
+        return { k, m: TT_PIEZAS[k].m.map(r => r.slice()), x: 0, y: 0 };
     }
-
-    function restablecerConfigPanico() {
-        panicoConfig.tecla = '0';
-        panicoConfig.url = 'https://classroom.google.com';
-        localStorage.removeItem('panico-tecla');
-        localStorage.removeItem('panico-url');
-        document.getElementById('panico-tecla-input').value = '0';
-        document.getElementById('panico-url-input').value = panicoConfig.url;
-        const note = document.getElementById('panic-note');
-        if (note) note.textContent = 'BOTÓN DE PÁNICO = TECLA 0';
-        mostrarToast('↺ Configuración restablecida');
+    function ttEmpezar() {
+        if (TT.st === 'play') return;
+        if (TT.st === 'over') ttReset();
+        if (TT.st === 'pausa') { TT.st = 'play'; TT.last = performance.now(); return; }
+        TT.st = 'play'; ttSiguiente();
     }
-
-    function activarPanico() {
-        window.location.href = panicoConfig.url;
+    function ttSiguiente() {
+        TT.p = TT.sig; TT.sig = ttPieza();
+        TT.p.x = Math.floor((10 - TT.p.m[0].length) / 2); TT.p.y = 0;
+        TT.caida = 0;
+        if (ttColision(TT.p.m, TT.p.x, TT.p.y)) {
+            TT.st = 'over';
+            if (TT.pts > TT.best) { TT.best = TT.pts; localStorage.setItem('tetris-best', TT.best); }
+        }
     }
-
+    function ttColision(m, x, y) {
+        for (let r = 0; r < m.length; r++) for (let c = 0; c < m[r].length; c++) {
+            if (!m[r][c]) continue;
+            const tx = x + c, ty = y + r;
+            if (tx < 0 || tx >= 10 || ty >= 18) return true;
+            if (ty >= 0 && TT.tab[ty][tx]) return true;
+        }
+        return false;
+    }
+    function ttRotar(m) { const n = m.length; return m[0].map((_, c) => m.map((_, r) => m[n - 1 - r][c])); }
+    function ttAccion(a) {
+        if (!TT.run) return;
+        if (TT.st === 'over' || TT.st === 'ready') { if (a === 'rot' || a === 'drop') ttEmpezar(); return; }
+        if (TT.st === 'pausa') { if (a === 'pausa') ttEmpezar(); return; }
+        if (TT.st !== 'play' || !TT.p || TT.flash) return;
+        const p = TT.p;
+        if (a === 'l' && !ttColision(p.m, p.x - 1, p.y)) p.x--;
+        else if (a === 'r' && !ttColision(p.m, p.x + 1, p.y)) p.x++;
+        else if (a === 'd') { if (!ttColision(p.m, p.x, p.y + 1)) { p.y++; TT.pts += 1; TT.caida = 0; } else ttFijar(); }
+        else if (a === 'rot') {
+            const m = ttRotar(p.m);
+            for (const dx of [0, -1, 1, -2, 2]) if (!ttColision(m, p.x + dx, p.y)) { p.m = m; p.x += dx; break; }
+        } else if (a === 'drop') { while (!ttColision(p.m, p.x, p.y + 1)) { p.y++; TT.pts += 2; } ttFijar(); }
+        else if (a === 'pausa') { TT.st = 'pausa'; }
+    }
     document.addEventListener('keydown', function(e) {
-        if (capturandoTecla) return;
-        if (e.key === panicoConfig.tecla || e.key.toLowerCase() === panicoConfig.tecla.toLowerCase()) {
-            activarPanico();
+        if (!LG.activo('pantalla-tetris')) return;
+        const m = { ArrowLeft: 'l', ArrowRight: 'r', ArrowDown: 'd', ArrowUp: 'rot', x: 'rot', z: 'rot', ' ': 'drop', p: 'pausa', Enter: 'pausa', a: 'l', d: 'r', s: 'd', w: 'rot' };
+        if (m[e.key]) {
+            e.preventDefault();
+            if (e.key === 'Enter' && (TT.st === 'ready' || TT.st === 'over')) { ttEmpezar(); return; }
+            ttAccion(m[e.key]);
         }
     });
-
-    /* === LIKES / FAVORITOS === */
-    function cargarLikes() {
-        let likes = [];
-        try { likes = JSON.parse(localStorage.getItem('classroom-likes') || '[]'); } catch (e) { likes = []; }
-        document.querySelectorAll('.like-button').forEach(btn => {
-            const id = btn.getAttribute('data-id');
-            if (likes.includes(id)) {
-                btn.classList.add('liked');
-                btn.textContent = '❤️';
-            } else {
-                btn.classList.remove('liked');
-                btn.textContent = '🤍';
+    function ttFijar() {
+        const p = TT.p;
+        for (let r = 0; r < p.m.length; r++) for (let c = 0; c < p.m[r].length; c++) if (p.m[r][c] && p.y + r >= 0) TT.tab[p.y + r][p.x + c] = p.k;
+        const llenas = [];
+        for (let r = 0; r < 18; r++) if (TT.tab[r].every(v => v)) llenas.push(r);
+        TT.p = null;
+        if (llenas.length) { TT.flash = { filas: llenas, t: 0 }; }
+        else ttSiguiente();
+    }
+    function ttTerminarFlash() {
+        const filas = TT.flash.filas; TT.flash = null;
+        TT.tab = TT.tab.filter((_, i) => !filas.includes(i));
+        while (TT.tab.length < 18) TT.tab.unshift(Array(10).fill(''));
+        TT.pts += [0, 40, 100, 300, 1200][filas.length] * (TT.niv + 1);
+        TT.lin += filas.length;
+        TT.niv = Math.min(19, Math.floor(TT.lin / 10));
+        ttSiguiente();
+    }
+    function ttBucle(ahora) {
+        if (!TT.run) return;
+        const dt = Math.min(ahora - TT.last, 100); TT.last = ahora;
+        if (TT.st === 'play') {
+            if (TT.flash) { TT.flash.t += dt; if (TT.flash.t > 420) ttTerminarFlash(); }
+            else if (TT.p) {
+                TT.caida += dt;
+                if (TT.caida >= TT_VEL[TT.niv]) {
+                    TT.caida = 0;
+                    if (!ttColision(TT.p.m, TT.p.x, TT.p.y + 1)) TT.p.y++;
+                    else ttFijar();
+                }
             }
-        });
-        actualizarContadorFavoritos();
-    }
-
-    function toggleLike(e) {
-        const btn = e.currentTarget;
-        const id = btn.getAttribute('data-id');
-        let likes = [];
-        try { likes = JSON.parse(localStorage.getItem('classroom-likes') || '[]'); } catch (e) { likes = []; }
-
-        if (likes.includes(id)) {
-            likes = likes.filter(x => x !== id);
-            btn.classList.remove('liked');
-            btn.textContent = '🤍';
-        } else {
-            likes.push(id);
-            btn.classList.add('liked');
-            btn.textContent = '❤️';
         }
-        localStorage.setItem('classroom-likes', JSON.stringify(likes));
-        actualizarContadorFavoritos();
+        ttDibujar();
+        TT.raf = requestAnimationFrame(ttBucle);
     }
-
-    function actualizarContadorFavoritos() {
-        let likes = [];
-        try { likes = JSON.parse(localStorage.getItem('classroom-likes') || '[]'); } catch (e) { likes = []; }
-        const el = document.getElementById('favorites-count');
-        if (el) el.textContent = likes.length;
+    function ttBloque(c, x, y, tipo) {
+        const P = TT_PAL, e = TT_PIEZAS[tipo].e;
+        if (e === 'A') { c.fillStyle = P[3]; c.fillRect(x, y, 8, 8); c.fillStyle = P[0]; c.fillRect(x + 1, y + 1, 6, 6); c.fillStyle = P[2]; c.fillRect(x + 2, y + 2, 4, 4); }
+        else if (e === 'B') { c.fillStyle = P[3]; c.fillRect(x, y, 8, 8); c.fillStyle = P[2]; c.fillRect(x + 1, y + 1, 6, 6); c.fillStyle = P[3]; c.fillRect(x + 2, y + 2, 4, 4); c.fillStyle = P[1]; c.fillRect(x + 3, y + 3, 2, 2); }
+        else { c.fillStyle = P[3]; c.fillRect(x, y, 8, 8); c.fillStyle = P[1]; c.fillRect(x + 1, y + 1, 6, 6); c.fillStyle = P[3]; c.fillRect(x + 3, y + 1, 2, 6); c.fillRect(x + 1, y + 3, 6, 2); }
     }
-
-    /* === BUSCADOR DE JUEGOS === */
-    document.getElementById('search-input')?.addEventListener('input', function(e) {
-        const query = e.target.value.toLowerCase().trim();
-        document.querySelectorAll('.game-card').forEach(card => {
-            const name = card.querySelector('.game-name')?.textContent.toLowerCase() || '';
-            if (name.includes(query)) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
-
-    /* === UTILIDADES === */
-    function compartirWeb() {
-        if (navigator.share) {
-            navigator.share({ title: 'Classroom - Gaming Platform', url: window.location.href });
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            mostrarToast('📋 ¡Enlace copiado al portapapeles!');
+    function ttPared(c, x) {
+        c.fillStyle = TT_PAL[2]; c.fillRect(x, 0, 8, 144);
+        c.fillStyle = TT_PAL[3];
+        for (let y = 0; y < 144; y += 8) { c.fillRect(x, y, 8, 1); c.fillRect(x + ((y / 8) % 2 ? 2 : 5), y, 1, 8); }
+        c.fillStyle = TT_PAL[1]; for (let y = 0; y < 144; y += 8) c.fillRect(x + 1, y + 1, 3, 2);
+    }
+    function ttDibujar() {
+        const c = TT.ctx, P = TT_PAL;
+        c.fillStyle = P[0]; c.fillRect(0, 0, 160, 144);
+        // columna izquierda decorativa
+        ttPared(c, 0); ttPared(c, 8);
+        c.fillStyle = P[1]; c.fillRect(16, 0, 80, 144);
+        // cuadrícula muy suave
+        c.fillStyle = 'rgba(15,56,15,0.06)';
+        for (let x = 16; x < 96; x += 8) c.fillRect(x, 0, 1, 144);
+        for (let y = 0; y < 144; y += 8) c.fillRect(16, y, 80, 1);
+        ttPared(c, 96);
+        // tablero
+        for (let r = 0; r < 18; r++) for (let q = 0; q < 10; q++) if (TT.tab[r][q]) ttBloque(c, 16 + q * 8, r * 8, TT.tab[r][q]);
+        // pieza actual y sombra no (fiel al original)
+        if (TT.p) TT.p.m.forEach((fila, r) => fila.forEach((v, q) => { if (v && TT.p.y + r >= 0) ttBloque(c, 16 + (TT.p.x + q) * 8, (TT.p.y + r) * 8, TT.p.k); }));
+        // parpadeo de líneas
+        if (TT.flash) {
+            const on = Math.floor(TT.flash.t / 70) % 2 === 0;
+            TT.flash.filas.forEach(r => { c.fillStyle = on ? P[3] : P[0]; c.fillRect(16, r * 8, 80, 8); });
         }
+        // panel derecho
+        c.fillStyle = P[0]; c.fillRect(104, 0, 56, 144);
+        c.fillStyle = P[2]; c.fillRect(104, 0, 1, 144);
+        const et = (t, y) => pxTexto(c, t, 112, y, 1, P[3]);
+        const num = (n, y, l) => pxTexto(c, String(n).padStart(l, '0'), 112, y, 2, P[3]);
+        et('NIVEL', 8); num(TT.niv, 16, 2);
+        et('LINEAS', 36); num(TT.lin, 44, 3);
+        et('PUNTOS', 64); num(TT.pts, 72, 5);
+        et('MEJOR', 92); pxTexto(c, String(TT.best).padStart(5, '0'), 112, 100, 1, P[2]);
+        // siguiente
+        c.fillStyle = P[3]; c.fillRect(108, 112, 44, 28);
+        c.fillStyle = P[1]; c.fillRect(110, 114, 40, 24);
+        if (TT.sig) {
+            const m = TT.sig.m, w = m[0].length * 6, h = m.length * 6;
+            const ox = 110 + Math.floor((40 - w) / 2), oy = 114 + Math.floor((24 - 12) / 2) - (TT.sig.k === 'I' ? 6 : 0);
+            m.forEach((fila, r) => fila.forEach((v, q) => { if (v) { c.fillStyle = P[3]; c.fillRect(ox + q * 6, oy + r * 6, 6, 6); c.fillStyle = P[1 + (TT.sig.k === 'I' || TT.sig.k === 'J' ? 0 : 1)]; c.fillRect(ox + q * 6 + 1, oy + r * 6 + 1, 4, 4); } }));
+        }
+        // mensajes
+        const caja = (l1, l2) => {
+            c.fillStyle = P[3]; c.fillRect(20, 52, 72, 40); c.fillStyle = P[0]; c.fillRect(22, 54, 68, 36);
+            pxTexto(c, l1, 56 - pxAncho(l1, 1) / 2, 60, 1, P[3]);
+            if (l2) pxTexto(c, l2, 56 - pxAncho(l2, 1) / 2, 74, 1, P[2]);
+        };
+        if (TT.st === 'ready') caja('TETRIS', 'PULSA TECLA');
+        else if (TT.st === 'pausa') caja('PAUSA', 'ENTER: SEGUIR');
+        else if (TT.st === 'over') caja('FIN DEL JUEGO', 'PULSA TECLA');
     }
+
 
     function mostrarToast(mensaje) {
-        const previo = document.querySelector('.toast');
-        if (previo) previo.remove();
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.textContent = mensaje;
@@ -2716,20 +3304,226 @@
         setTimeout(() => toast.remove(), 3000);
     }
 
-    /* === INICIALIZACIÓN === */
-    window.addEventListener('DOMContentLoaded', () => {
-        mostrarIntro();
-        inicializarTema();
-        cargarLikes();
-        renderRecientes();
-        renderPuntuaciones();
+    function reordenarTarjetas() {
+        document.querySelectorAll('.games-grid').forEach(grid => {
+            const cards = Array.from(grid.children);
+            cards.sort((a, b) => {
+                const idA = a.querySelector('.like-button')?.getAttribute('data-id');
+                const idB = b.querySelector('.like-button')?.getAttribute('data-id');
+                const likedA = idA && localStorage.getItem('like_juego_' + idA) === 'true';
+                const likedB = idB && localStorage.getItem('like_juego_' + idB) === 'true';
+                const fijarUltimoA = a.getAttribute('data-pin-last') === 'true' && !likedA;
+                const fijarUltimoB = b.getAttribute('data-pin-last') === 'true' && !likedB;
 
-        const teclaGuardada = localStorage.getItem('panico-tecla');
-        if (teclaGuardada) {
-            const note = document.getElementById('panic-note');
-            if (note) note.textContent = 'BOTÓN DE PÁNICO = TECLA ' + teclaGuardada.toUpperCase();
+                if (fijarUltimoA && !fijarUltimoB) return 1;
+                if (!fijarUltimoA && fijarUltimoB) return -1;
+                if (likedA && !likedB) return -1;
+                if (!likedA && likedB) return 1;
+                return 0;
+            });
+            cards.forEach(card => grid.appendChild(card));
+        });
+    }
+
+    function toggleLike(event) {
+        const button = event.target.closest('.like-button');
+        const idJuego = button.getAttribute('data-id');
+        const isLiked = localStorage.getItem('like_juego_' + idJuego) === 'true';
+
+        if (isLiked) {
+            localStorage.removeItem('like_juego_' + idJuego);
+            button.innerHTML = '🤍';
+            button.classList.remove('liked');
+        } else {
+            localStorage.setItem('like_juego_' + idJuego, 'true');
+            button.innerHTML = '❤️';
+            button.classList.add('liked');
+        }
+
+        actualizarContadorFavoritos();
+        reordenarTarjetas();
+    }
+
+    function inicializarLikes() {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const idJuego = button.getAttribute('data-id');
+            if (localStorage.getItem('like_juego_' + idJuego) === 'true') {
+                button.innerHTML = '❤️';
+                button.classList.add('liked');
+            }
+        });
+        actualizarContadorFavoritos();
+    }
+
+    function actualizarContadorFavoritos() {
+        let count = 0;
+        GAMES.forEach(game => {
+            if (localStorage.getItem('like_juego_' + game.id) === 'true') {
+                count++;
+            }
+        });
+        document.getElementById('favorites-count').textContent = count;
+    }
+
+    function compartirWeb() {
+        const url = window.location.href;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Classroom - Gaming Platform',
+                text: '¡Descubre nuestra plataforma de juegos!',
+                url: url
+            }).catch(() => {
+                copiarAlPortapapeles(url);
+            });
+        } else {
+            copiarAlPortapapeles(url);
+        }
+    }
+
+    function copiarAlPortapapeles(texto) {
+        navigator.clipboard.writeText(texto).then(() => {
+            mostrarToast('✓ Enlace copiado al portapapeles');
+        }).catch(() => {
+            mostrarToast('✗ No se pudo copiar el enlace');
+        });
+    }
+
+    document.getElementById('search-input').addEventListener('input', function(e) {
+        const termino = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll('.game-card');
+        let visible = 0;
+
+        cards.forEach(card => {
+            const nombre = card.querySelector('.game-name').textContent.toLowerCase();
+            if (nombre.includes(termino)) {
+                card.style.display = '';
+                visible++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        if (visible === 0 && termino.length > 0) {
+            mostrarToast('No se encontraron resultados');
         }
     });
+
+    let capturandoTeclaPanico = false;
+
+    function obtenerConfigPanico() {
+        return {
+            tecla: localStorage.getItem('panico-tecla') || '0',
+            url: localStorage.getItem('panico-url') || 'https://classroom.google.com'
+        };
+    }
+
+    function activarPanico() {
+        const cfg = obtenerConfigPanico();
+        window.location.replace(cfg.url);
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (capturandoTeclaPanico) return;
+        const cfg = obtenerConfigPanico();
+        if (e.key === cfg.tecla) {
+            activarPanico();
+        }
+    });
+
+    function formatearTeclaPanico(tecla) {
+        if (tecla === ' ') return 'Espacio';
+        return tecla;
+    }
+
+    function iniciarConfiguracion() {
+        const cfg = obtenerConfigPanico();
+        document.getElementById('panico-tecla-input').value = formatearTeclaPanico(cfg.tecla);
+        document.getElementById('panico-tecla-input').setAttribute('data-tecla-real', cfg.tecla);
+        document.getElementById('panico-url-input').value = cfg.url;
+    }
+
+    function iniciarCapturaTecla() {
+        const boton = document.getElementById('btn-capturar-tecla');
+        const input = document.getElementById('panico-tecla-input');
+        input.value = '...';
+        boton.textContent = '⌨️ Pulsa una tecla...';
+        capturandoTeclaPanico = true;
+
+        const teclasIgnoradas = ['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock'];
+
+        const manejador = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (teclasIgnoradas.includes(e.key)) return;
+            input.value = formatearTeclaPanico(e.key);
+            input.setAttribute('data-tecla-real', e.key);
+            boton.textContent = '🎹 Pulsar tecla';
+            document.removeEventListener('keydown', manejador, true);
+            setTimeout(() => { capturandoTeclaPanico = false; }, 0);
+        };
+        document.addEventListener('keydown', manejador, true);
+    }
+
+    function actualizarNotaPanico() {
+        const cfg = obtenerConfigPanico();
+        const nota = document.getElementById('panic-note');
+        if (nota) nota.textContent = 'BOTÓN DE PÁNICO = TECLA ' + formatearTeclaPanico(cfg.tecla).toUpperCase();
+    }
+
+    function guardarConfigPanico() {
+        const input = document.getElementById('panico-tecla-input');
+        const tecla = input.getAttribute('data-tecla-real') || input.value || '0';
+        let url = document.getElementById('panico-url-input').value.trim();
+        if (!url) url = 'https://classroom.google.com';
+        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+        localStorage.setItem('panico-tecla', tecla);
+        localStorage.setItem('panico-url', url);
+        document.getElementById('panico-url-input').value = url;
+        actualizarNotaPanico();
+        mostrarToast('✅ Configuración guardada');
+    }
+
+    function restablecerConfigPanico() {
+        localStorage.removeItem('panico-tecla');
+        localStorage.removeItem('panico-url');
+        iniciarConfiguracion();
+        actualizarNotaPanico();
+        mostrarToast('↺ Restablecido por defecto');
+    }
+
+    const extraStyles = document.createElement('style');
+    extraStyles.textContent = `
+    @keyframes floatParticula {
+        0% { transform: translateY(0) translateX(0); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+    }
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    `;
+    document.head.appendChild(extraStyles);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        mostrarIntro();
+        inicializarTema();
+        inicializarLikes();
+        reordenarTarjetas();
+        document.getElementById('total-games').textContent = GAMES.length;
+        actualizarNotaPanico();
+    });
 </script>
+
+<!-- StatCounter Analytics -->
+<script type="text/javascript">
+var sc_project=13210634;
+var sc_invisible=1;
+var sc_security="81904266";
+</script>
+<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/13210634/0/81904266/1/" alt="Análisis web" referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+
 </body>
 </html>
