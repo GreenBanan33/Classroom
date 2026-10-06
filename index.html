@@ -1033,8 +1033,11 @@
         @keyframes mmpulse { 0%, 100% { transform: rotateY(180deg) scale(1); } 50% { transform: rotateY(180deg) scale(1.12); } }
 
         /* ---------------- Pong ---------------- */
-        .pg-wrap { background: radial-gradient(ellipse at 50% -10%, #1f3a7a 0%, #101a3d 55%, #090d22 100%); }
-        .pg-stage { position: relative; width: min(96vw, 900px, calc((100vh - 230px) * 1.6)); border-radius: 22px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.1); }
+        .pg-wrap { background: radial-gradient(ellipse at 50% -10%, #1f3a7a 0%, #101a3d 55%, #090d22 100%); justify-content: flex-start; gap: 10px; padding: 12px 12px 18px; }
+        .pg-wrap > :first-child { margin-top: auto; } .pg-wrap > :last-child { margin-bottom: auto; }
+        .pg-extra { display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .pg-stage { position: relative; width: max(240px, min(96vw, 900px, calc((100vh - 340px) * 1.6)));
+            width: max(240px, min(96vw, 900px, calc((100dvh - 340px) * 1.6))); border-radius: 22px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.1); }
         #pong-canvas { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; touch-action: none; cursor: none; }
 
         /* ---------------- Wordle ---------------- */
@@ -1321,7 +1324,7 @@
         @keyframes clipblink { 50% { opacity: .25; } }
         #clip-toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px); background: rgba(15,18,40,.95); color: #fff; padding: 10px 16px; border-radius: 12px; font: 600 14px "Inter","Segoe UI",sans-serif; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; max-width: 90vw; text-align: center; }
         #clip-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-        .pg-mega { margin-top: 8px; }
+        .pg-mega { margin: 0; }
         .pg-mega:disabled { opacity: .4; cursor: not-allowed; }
 
         .btn-share {
@@ -2303,7 +2306,7 @@
             <canvas id="pong-canvas" width="1600" height="1000"></canvas>
             <div class="gm-ov" id="pg-ov"><h3 id="pg-ov-t"></h3><p id="pg-ov-p"></p><button class="gm-btn" id="pg-replay">Jugar de nuevo</button></div>
         </div>
-        <label style="color:#fff;font:600 13px Inter,sans-serif">Puntos para ganar <select class="gm-select" id="pg-meta"><option>3</option><option>5</option><option selected>7</option><option>11</option></select></label> <button class="gm-btn pg-mega" id="pg-mega" disabled>⚡ Mega tiro (E)</button>
+        <div class="pg-extra"><label style="color:#fff;font:600 13px Inter,sans-serif">Puntos para ganar <select class="gm-select" id="pg-meta"><option>3</option><option>5</option><option selected>7</option><option>11</option></select></label> <button class="gm-btn pg-mega" id="pg-mega" disabled>⚡ Mega tiro (E)</button></div>
         <p class="gm-hint">Gana el primero en llegar a 7 · Ratón, dedo o W/S · Espacio para pausar · Con 15 golpes seguidos: E = mega tiro (J2: Enter) · Entreno: sin marcador.</p>
     </div>
 </div>
