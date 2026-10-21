@@ -2476,6 +2476,17 @@
         </div>
     </div>
     <div style="text-align:center;padding:26px 16px 34px"><button onclick="descargarJuego()" style="background:#7c3aed;color:#fff;border:0;border-radius:12px;padding:12px 22px;font:700 15px Inter,Segoe UI,sans-serif;cursor:pointer">⬇ Descargar todo el juego</button> <button onclick="abrirGaleria()" style="background:#2a2f55;color:#fff;border:0;border-radius:12px;padding:12px 22px;font:700 15px Inter,Segoe UI,sans-serif;cursor:pointer">🎬 Galería</button></div>
+        <div id="ad-final" style="display:flex;justify-content:center;padding:10px 8px 28px;overflow-x:auto;max-width:100%">
+<script>
+/* Se carga solo UN banner según el ancho de pantalla: 320x50 en móvil y 728x90 en ordenador/tablet */
+(function () {
+    var m = window.innerWidth < 760;
+    var k = m ? '781349ebac90f12590656b72200b22f6' : '500184a8c771d1aad8f28a344fe026f4';
+    window.atOptions = { 'key': k, 'format': 'iframe', 'height': m ? 50 : 90, 'width': m ? 320 : 728, 'params': {} };
+    document.write('<scr' + 'ipt src="https://bauval.org/22/' + k + '"></scr' + 'ipt>');
+})();
+</script>
+    </div>
 </div>
 
 <script>
@@ -5582,14 +5593,5 @@ function alternarSilencio() { SILENCIO = !SILENCIO; localStorage.setItem('silenc
 function pintarAjustes() { const b = document.getElementById('btn-mute'); if (b) b.textContent = SILENCIO ? '🔇 Sonido silenciado' : '🔊 Sonido activado'; }
 pintarAjustes();
 </script>
-<!-- Botón Compartir Plataforma -->
-<div style="text-align: center; margin-bottom: 25px;">
-    <button class="btn-compartir">💻 Compartir Plataforma</button>
-</div>
-
-<!-- Contenedor del Anuncio (Debajo del botón) -->
-<div id="ad-container" style="text-align: center; margin: 20px auto; min-height: 90px; width: 100%; max-width: 728px; display: block; clear: both;">
-    <iframe srcdoc="<script>window.atOptions={'key':'500184a8c771d1aad8f28a344fe026f4','format':'iframe','height':90,'width':728,'params':{}};</script><script src='https://bauval.org/22/500184a8c771d1aad8f28a344fe026f4'></script>" width="728" height="90" frameborder="0" scrolling="no" style="border:none; overflow:hidden;"></iframe>
-</div>
 </body>
 </html>
