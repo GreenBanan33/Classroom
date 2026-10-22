@@ -1475,7 +1475,7 @@
             .toolbar-title { font-size: 15px; }
         }
         /* Banners laterales 160x300 (solo ordenador, solo en la pantalla principal) */
-        .side-ad { position: fixed; top: 50%; transform: translateY(-50%); width: 160px; height: 300px; z-index: 50; display: flex; align-items: center; justify-content: center; }
+        .side-ad { position: fixed; top: 50%; transform: translateY(-50%); width: 160px; height: 300px; z-index: 40; display: flex; align-items: center; justify-content: center; }
         #side-ad-l { left: 12px; } #side-ad-r { right: 12px; }
         #side-ad-l { left: calc(50% - 488px); } #side-ad-r { right: calc(50% - 488px); left: auto; }
         @media (max-width: 1279px) { .side-ad { display: none !important; } }
@@ -1811,11 +1811,11 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="abrirJuego('https://gartic.io/')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#9d174d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">✏️</div></div>
-                <button class="like-button" data-id="gartic" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+            <div class="game-card" onclick="abrirJuego('https://bloxd.io/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#84cc16 0%,#365314 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🟫</div></div>
+                <button class="like-button" data-id="bloxd" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
-                    <div class="game-name">index 38</div>
+                    <div class="game-name">Otros juegos</div>
                     <div class="game-meta game-meta-local">🎮 Iframe</div>
                 </div>
             </div>
@@ -2056,15 +2056,6 @@
                 <button class="like-button" data-id="holeio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">Hole.io</div>
-                    <div class="game-meta game-meta-local">🌐 Sitio</div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="window.open('https://bloxd.io/', '_blank')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#84cc16 0%,#365314 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🟫</div></div>
-                <button class="like-button" data-id="bloxd" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
-                <div class="game-card-content">
-                    <div class="game-name">Bloxd.io</div>
                     <div class="game-meta game-meta-local">🌐 Sitio</div>
                 </div>
             </div>
@@ -6113,7 +6104,7 @@ pintarAjustes();
 <script>
 /* Muestra los laterales solo cuando se ve la pantalla principal */
 setInterval(function () {
-    var menu = document.getElementById('ad-final'), on = !!menu && menu.offsetParent !== null && localStorage.getItem('ads_laterales') !== '0';
+    var menu = document.getElementById('pantalla-menu'), on = !!menu && getComputedStyle(menu).display !== 'none' && localStorage.getItem('ads_laterales') !== '0' && !Array.prototype.some.call(document.querySelectorAll('[id^="pantalla-"]'), function (e) { return e.id !== 'pantalla-menu' && getComputedStyle(e).display !== 'none'; });
     ['side-ad-l', 'side-ad-r'].forEach(function (id) { var e = document.getElementById(id); if (e) e.style.visibility = on ? 'visible' : 'hidden'; });
 }, 400);
 </script>
