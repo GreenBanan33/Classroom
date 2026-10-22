@@ -1474,6 +1474,14 @@
             .btn-panic .panic-label { display: none; }
             .toolbar-title { font-size: 15px; }
         }
+        /* Banners laterales 160x300 (solo ordenador, solo en la pantalla principal) */
+        .side-ad { position: fixed; top: 50%; transform: translateY(-50%); width: 160px; height: 300px; z-index: 50; display: flex; align-items: center; justify-content: center; }
+        #side-ad-l { left: 12px; } #side-ad-r { right: 12px; }
+        #side-ad-l { left: calc(50% - 488px); } #side-ad-r { right: calc(50% - 488px); left: auto; }
+        @media (max-width: 1279px) { .side-ad { display: none !important; } }
+        @media (min-width: 1280px) {
+            #pantalla-menu > * { max-width: 960px; margin-left: auto !important; margin-right: auto !important; }
+        }
     </style>
 </head>
 <body>
@@ -1783,6 +1791,114 @@
     </div>
     <div class="games-container">
         <div class="games-grid" id="grid-externos">
+            <div class="game-card" onclick="window.open('https://lichess.org/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#334155 0%,#0f172a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">♟️</div></div>
+                <button class="like-button" data-id="lichess" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Lichess (ajedrez)</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.chess.com/play/computer', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#71717a 0%,#27272a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">♞</div></div>
+                <button class="like-button" data-id="chesscom" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Chess.com</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://gartic.io/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#9d174d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">✏️</div></div>
+                <button class="like-button" data-id="gartic" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Gartic.io</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://sudoku.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#60a5fa 0%,#1e3a8a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🔢</div></div>
+                <button class="like-button" data-id="sudoku" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Sudoku.com</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://play.typeracer.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#fb923c 0%,#7c2d12 100%);"></div><div class="game-thumb-icon" style="font-size:44px">⌨️</div></div>
+                <button class="like-button" data-id="typeracer" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">TypeRacer</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.nitrotype.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#facc15 0%,#713f12 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🏎️</div></div>
+                <button class="like-button" data-id="nitrotype" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Nitro Type</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://poki.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#22d3ee 0%,#164e63 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🎲</div></div>
+                <button class="like-button" data-id="poki" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Poki</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.crazygames.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#a3e635 0%,#3f6212 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🕹️</div></div>
+                <button class="like-button" data-id="crazygames" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">CrazyGames</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.geoguessr.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#34d399 0%,#064e3b 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🌍</div></div>
+                <button class="like-button" data-id="geoguessr" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">GeoGuessr</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.miniclip.com/games/es/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#c084fc 0%,#581c87 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🎯</div></div>
+                <button class="like-button" data-id="miniclip" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Miniclip</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.kongregate.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f87171 0%,#7f1d1d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">👾</div></div>
+                <button class="like-button" data-id="kongregate" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Kongregate</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.addictinggames.com/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#fbbf24 0%,#78350f 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🧩</div></div>
+                <button class="like-button" data-id="addicting" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Addicting Games</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
             <div class="game-card" onclick="abrirJuego('https://paper-io.com/', true)">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#22c55e 0%,#166534 100%);"></div><div class="game-thumb-icon" style="font-size:44px">📄</div></div>
                 <button class="like-button" data-id="paperio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
@@ -2525,6 +2641,18 @@
         { id: 'hexanaut', name: 'Hexanaut.io' },
         { id: 'openfront', name: 'OpenFront.io' },
         { id: 'yohoho', name: 'Yohoho.io' },
+        { id: 'lichess', name: 'Lichess (ajedrez)' },
+        { id: 'chesscom', name: 'Chess.com' },
+        { id: 'gartic', name: 'Gartic.io' },
+        { id: 'sudoku', name: 'Sudoku.com' },
+        { id: 'typeracer', name: 'TypeRacer' },
+        { id: 'nitrotype', name: 'Nitro Type' },
+        { id: 'poki', name: 'Poki' },
+        { id: 'crazygames', name: 'CrazyGames' },
+        { id: 'geoguessr', name: 'GeoGuessr' },
+        { id: 'miniclip', name: 'Miniclip' },
+        { id: 'kongregate', name: 'Kongregate' },
+        { id: 'addicting', name: 'Addicting Games' },
         { id: 'paperio', name: 'Paper.io 2' },
         { id: 'slither', name: 'Slither.io' },
         { id: 'krunker', name: 'Krunker.io' },
@@ -5592,6 +5720,27 @@ setInterval(() => { if (!SILENCIO) return; ACS.forEach(c => { if (c.state === 'r
 function alternarSilencio() { SILENCIO = !SILENCIO; localStorage.setItem('silencio', SILENCIO ? '1' : '0'); if (!SILENCIO) ACS.forEach(c => c.resume().catch(() => {})); pintarAjustes(); }
 function pintarAjustes() { const b = document.getElementById('btn-mute'); if (b) b.textContent = SILENCIO ? '🔇 Sonido silenciado' : '🔊 Sonido activado'; }
 pintarAjustes();
+</script>
+<div id="side-ad-l" class="side-ad"><script>
+(function () {
+    if (window.innerWidth < 1280) return;
+    window.atOptions = { 'key': '9246211f5eaf359ebe0098e84938d426', 'format': 'iframe', 'height': 300, 'width': 160, 'params': {} };
+    document.write('<scr' + 'ipt src="https://bauval.org/22/9246211f5eaf359ebe0098e84938d426"></scr' + 'ipt>');
+})();
+</script></div>
+<div id="side-ad-r" class="side-ad"><script>
+(function () {
+    if (window.innerWidth < 1280) return;
+    window.atOptions = { 'key': '9246211f5eaf359ebe0098e84938d426', 'format': 'iframe', 'height': 300, 'width': 160, 'params': {} };
+    document.write('<scr' + 'ipt src="https://bauval.org/22/9246211f5eaf359ebe0098e84938d426"></scr' + 'ipt>');
+})();
+</script></div>
+<script>
+/* Muestra los laterales solo cuando se ve la pantalla principal */
+setInterval(function () {
+    var menu = document.getElementById('ad-final'), on = !!menu && menu.offsetParent !== null;
+    ['side-ad-l', 'side-ad-r'].forEach(function (id) { var e = document.getElementById(id); if (e) e.style.visibility = on ? 'visible' : 'hidden'; });
+}, 400);
 </script>
 </body>
 </html>
