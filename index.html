@@ -232,7 +232,7 @@
             align-items: center;
         }
 
-        #pantalla-juego, #pantalla-chat, #pantalla-2048, #pantalla-cookie, #pantalla-flappy, #pantalla-dino, #pantalla-snake, #pantalla-minas, #pantalla-tetris, #pantalla-memory, #pantalla-pong, #pantalla-wordle, #pantalla-ahorcado, #pantalla-sopa, #pantalla-slope, #pantalla-pacman, #pantalla-config {
+        #pantalla-juego, #pantalla-chat, #pantalla-2048, #pantalla-cookie, #pantalla-flappy, #pantalla-dino, #pantalla-snake, #pantalla-minas, #pantalla-tetris, #pantalla-memory, #pantalla-pong, #pantalla-wordle, #pantalla-ahorcado, #pantalla-sopa, #pantalla-slope, #pantalla-pacman, #pantalla-sudoku, #pantalla-breakout, #pantalla-mecano, #pantalla-config {
             display: none;
             flex-direction: column;
             height: 100vh;
@@ -1555,7 +1555,7 @@
     </div>
 
     <div class="section-header">
-        <div class="section-title">Actividades Directas</div>
+        <div class="section-title">Juegos dentro de la web <span style="font-size:12px;opacity:.6;font-weight:500">· no te sacan de la página</span></div>
     </div>
     <div class="games-container">
         <div class="games-grid" id="grid-actividades">
@@ -1613,6 +1613,105 @@
                 </div>
             </div>
 
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-cookie')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #3d78ad 0%, #1b3a5c 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><defs><radialGradient id="tc" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0c27b"/><stop offset="1" stop-color="#a86a2a"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="url(#tc)" stroke="#7a4517" stroke-width="2"/><g fill="#3f2110"><ellipse cx="22" cy="20" rx="5" ry="4"/><ellipse cx="41" cy="18" rx="4" ry="3.2"/><ellipse cx="46" cy="33" rx="5" ry="4"/><ellipse cx="26" cy="38" rx="4.5" ry="3.6"/><ellipse cx="38" cy="47" rx="5" ry="4"/><ellipse cx="14" cy="42" rx="3.4" ry="2.8"/></g></svg></div></div>
+                <button class="like-button" data-id="cookieclicker" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Galleta Clicker</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://monkeytype.com/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#eab308 0%,#713f12 100%);"></div><div class="game-thumb-icon" style="font-size:44px">⌨️</div></div>
+                <button class="like-button" data-id="monkeytype" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Monkeytype</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://minesweeper.online/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#64748b 0%,#1e293b 100%);"></div><div class="game-thumb-icon" style="font-size:44px">💣</div></div>
+                <button class="like-button" data-id="minesweeperonline" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Minesweeper Online</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://tetr.io/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#0ea5e9 0%,#0c4a6e 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🧱</div></div>
+                <button class="like-button" data-id="tetrio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">TETR.IO</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://play.fancade.com/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f97316 0%,#7c2d12 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🧩</div></div>
+                <button class="like-button" data-id="fancade" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Fancade</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://hole-io.com/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#a78bfa 0%,#4c1d95 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🕳️</div></div>
+                <button class="like-button" data-id="holeio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Hole.io</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://bloxd.io/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#84cc16 0%,#365314 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🟫</div></div>
+                <button class="like-button" data-id="bloxd" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Bloxd.io</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://lichess.org/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#334155 0%,#0f172a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">♟️</div></div>
+                <button class="like-button" data-id="lichess" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Lichess (ajedrez)</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://gartic.io/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#9d174d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">✏️</div></div>
+                <button class="like-button" data-id="gartic" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Gartic.io</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://sudoku.com/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#60a5fa 0%,#1e3a8a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🔢</div></div>
+                <button class="like-button" data-id="sudoku" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Sudoku.com</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuego('https://www.geoguessr.com/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#34d399 0%,#064e3b 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🌍</div></div>
+                <button class="like-button" data-id="geoguessr" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">GeoGuessr</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
             <div class="game-card" onclick="abrirJuego('https://y8.com/embed/slope')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, hsl(291,70%,42%) 0%, hsl(331,75%,28%) 100%);"></div><div class="game-thumb-icon"><img src="https://www.google.com/s2/favicons?domain=y8.com&sz=128" alt="" loading="lazy" onerror="this.parentElement.parentElement.querySelector('.game-thumb-gradient').style.filter='saturate(1.3)'; this.remove();"></div></div>
                 <button class="like-button" data-id="slope" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
@@ -1663,15 +1762,6 @@
                 <button class="like-button" data-id="game2048" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">2048</div>
-                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="abrirJuegoLocal('pantalla-cookie')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #3d78ad 0%, #1b3a5c 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><defs><radialGradient id="tc" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0c27b"/><stop offset="1" stop-color="#a86a2a"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="url(#tc)" stroke="#7a4517" stroke-width="2"/><g fill="#3f2110"><ellipse cx="22" cy="20" rx="5" ry="4"/><ellipse cx="41" cy="18" rx="4" ry="3.2"/><ellipse cx="46" cy="33" rx="5" ry="4"/><ellipse cx="26" cy="38" rx="4.5" ry="3.6"/><ellipse cx="38" cy="47" rx="5" ry="4"/><ellipse cx="14" cy="42" rx="3.4" ry="2.8"/></g></svg></div></div>
-                <button class="like-button" data-id="cookieclicker" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
-                <div class="game-card-content">
-                    <div class="game-name">Galleta Clicker</div>
                     <div class="game-meta game-meta-local">⚡ Sin conexión</div>
                 </div>
             </div>
@@ -1775,6 +1865,33 @@
                 </div>
             </div>
 
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-sudoku')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#38bdf8 0%,#1e3a8a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🧮</div></div>
+                <button class="like-button" data-id="sudokulocal" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Sudoku</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-breakout')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#7e22ce 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🟥</div></div>
+                <button class="like-button" data-id="breakout" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Breakout</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="abrirJuegoLocal('pantalla-mecano')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#fde047 0%,#a16207 100%);"></div><div class="game-thumb-icon" style="font-size:44px">📝</div></div>
+                <button class="like-button" data-id="mecano" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Mecanografía</div>
+                    <div class="game-meta game-meta-local">⚡ Sin conexión</div>
+                </div>
+            </div>
+
             <div class="game-card" onclick="abrirJuegoLocal('pantalla-slope')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #4aa8ee 0%, #2f7a3a 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><defs><linearGradient id="tsls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa8ee"/><stop offset="1" stop-color="#d4f0ff"/></linearGradient><linearGradient id="tslb" x1="0.3" y1="0.2" x2="0.8" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#d9e4f7"/><stop offset="1" stop-color="#6f82ad"/></linearGradient><clipPath id="tslc"><rect width="64" height="64" rx="12"/></clipPath></defs><g clip-path="url(#tslc)"><rect width="64" height="64" fill="url(#tsls)"/><circle cx="50" cy="13" r="6" fill="#fff3b0"/><path d="M0 36L13 19L23 31L36 15L52 36L64 27V40H0Z" fill="#9cc0e0"/><rect y="35" width="64" height="30" fill="#62bd41"/><path d="M27 35H37L61 64H3Z" fill="#d2b98f"/><path d="M27 35L3 64M37 35L61 64" stroke="#33382f" stroke-width="3"/><g fill="#2f8a3e"><path d="M10 42l5-12 5 12z"/><path d="M46 40l4-10 4 10z"/></g><ellipse cx="41" cy="47" rx="5" ry="3.4" fill="#8d939d"/><ellipse cx="32" cy="58" rx="6.5" ry="1.8" fill="#00000030"/><circle cx="32" cy="52" r="6.4" fill="url(#tslb)"/></g></svg></div></div>
                 <button class="like-button" data-id="slopepaisaje" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
@@ -1787,15 +1904,24 @@
     </div>
 
     <div class="section-header">
-        <div class="section-title">Portales Externos</div>
+        <div class="section-title">Te sacan de la web <span style="font-size:12px;opacity:.6;font-weight:500">· se abren en otra pestaña</span></div>
     </div>
     <div class="games-container">
         <div class="games-grid" id="grid-externos">
-            <div class="game-card" onclick="window.open('https://lichess.org/', '_blank')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#334155 0%,#0f172a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">♟️</div></div>
-                <button class="like-button" data-id="lichess" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+            <div class="game-card" onclick="window.open('https://orteil.dashnet.org/cookieclicker/', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#d97706 0%,#78350f 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🍪</div></div>
+                <button class="like-button" data-id="cookieorteil" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
-                    <div class="game-name">Lichess (ajedrez)</div>
+                    <div class="game-name">Cookie Clicker</div>
+                    <div class="game-meta game-meta-local">🌐 Sitio</div>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.open('https://www.nytimes.com/games/wordle/index.html', '_blank')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#22c55e 0%,#14532d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🟩</div></div>
+                <button class="like-button" data-id="wordlenyt" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">Wordle (NYT)</div>
                     <div class="game-meta game-meta-local">🌐 Sitio</div>
                 </div>
             </div>
@@ -1805,24 +1931,6 @@
                 <button class="like-button" data-id="chesscom" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">Chess.com</div>
-                    <div class="game-meta game-meta-local">🌐 Sitio</div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="window.open('https://gartic.io/', '_blank')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#9d174d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">✏️</div></div>
-                <button class="like-button" data-id="gartic" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
-                <div class="game-card-content">
-                    <div class="game-name">Gartic.io</div>
-                    <div class="game-meta game-meta-local">🌐 Sitio</div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="window.open('https://sudoku.com/', '_blank')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#60a5fa 0%,#1e3a8a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🔢</div></div>
-                <button class="like-button" data-id="sudoku" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
-                <div class="game-card-content">
-                    <div class="game-name">Sudoku.com</div>
                     <div class="game-meta game-meta-local">🌐 Sitio</div>
                 </div>
             </div>
@@ -1859,15 +1967,6 @@
                 <button class="like-button" data-id="crazygames" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">CrazyGames</div>
-                    <div class="game-meta game-meta-local">🌐 Sitio</div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="window.open('https://www.geoguessr.com/', '_blank')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#34d399 0%,#064e3b 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🌍</div></div>
-                <button class="like-button" data-id="geoguessr" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
-                <div class="game-card-content">
-                    <div class="game-name">GeoGuessr</div>
                     <div class="game-meta game-meta-local">🌐 Sitio</div>
                 </div>
             </div>
@@ -2526,6 +2625,59 @@
     </div>
     <div style="flex:1;min-height:0;background:#000;display:flex"><canvas id="pc-canvas" width="448" height="576" style="width:100%;height:100%;object-fit:contain;touch-action:none"></canvas></div>
 </div>
+<div id="pantalla-sudoku">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-sudoku')">⬅ Volver</button>
+            <span class="toolbar-title">Sudoku</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-clip" onclick="guardarClip()" title="Guardar los últimos 10 s como clip">🎬 Clip</button>
+            <button class="btn-toolbar" onclick="pantallaCompleta()" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+            <button class="btn-toolbar btn-share" onclick="iniciarSudoku()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div id="sd-body" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0b1020;padding:14px;min-height:0;overflow:auto"></div>
+</div>
+<div id="pantalla-breakout">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-breakout')">⬅ Volver</button>
+            <span class="toolbar-title">Breakout</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-clip" onclick="guardarClip()" title="Guardar los últimos 10 s como clip">🎬 Clip</button>
+            <button class="btn-toolbar" onclick="pantallaCompleta()" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+            <button class="btn-toolbar btn-share" onclick="reiniciarBreakout()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0b1020;padding:14px;min-height:0;overflow:auto">
+        <canvas id="bk-canvas" width="400" height="500" style="height:min(72vh,600px);aspect-ratio:400/500;max-width:100%;background:#000;border-radius:10px;touch-action:none"></canvas>
+        <p style="color:#94a3b8;font:13px Inter,sans-serif;margin:8px 0 0">Ratón, dedo o ← → · Espacio para lanzar</p>
+    </div>
+</div>
+<div id="pantalla-mecano">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-toolbar btn-back" onclick="volverAlMenu('pantalla-mecano')">⬅ Volver</button>
+            <span class="toolbar-title">Mecanografía</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-toolbar btn-clip" onclick="guardarClip()" title="Guardar los últimos 10 s como clip">🎬 Clip</button>
+            <button class="btn-toolbar" onclick="pantallaCompleta()" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+            <button class="btn-toolbar btn-share" onclick="iniciarMecano()">🔄 Reiniciar</button>
+            <button class="btn-toolbar btn-panic" onclick="activarPanico()" title="Botón de pánico"><span class="panic-icon">🚨</span><span class="panic-label">Pánico</span></button>
+        </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0b1020;padding:14px;min-height:0;overflow:auto;gap:16px;font-family:Inter,sans-serif;color:#e2e8f0">
+        <div id="mc-txt" style="max-width:720px;font:600 clamp(18px,3.5vw,26px)/1.6 Inter,sans-serif;text-align:center"></div>
+        <input id="mc-in" oninput="mcInput(this)" autocomplete="off" spellcheck="false" placeholder="Escribe aquí..." style="width:min(90vw,640px);padding:12px 14px;border-radius:10px;border:1px solid #334155;background:#1e293b;color:#fff;font:18px Inter,sans-serif">
+        <div id="mc-res" style="font:700 18px Inter,sans-serif;color:#facc15;min-height:24px"></div>
+        <button onclick="iniciarMecano()" style="background:#7c3aed;color:#fff;border:0;border-radius:10px;padding:10px 18px;font:600 15px Inter,sans-serif;cursor:pointer">Otra frase</button>
+    </div>
+</div>
 <div id="pantalla-slope">
     <div class="toolbar">
         <div class="toolbar-left">
@@ -2605,6 +2757,9 @@
     </div>
 </div>
 
+    <div id="ad-container" style="text-align: center; margin: 20px auto; min-height: 90px; width: 100%; max-width: 728px; display: block; clear: both;">
+    <iframe srcdoc="<script>window.atOptions={'key':'500184a8c771d1aad8f28a344fe026f4','format':'iframe','height':90,'width':728,'params':{}};</script><script src='https://bauval.org/22/500184a8c771d1aad8f28a344fe026f4'></script>" width="728" height="90" frameborder="0" scrolling="no" style="border:none; overflow:hidden;"></iframe>
+</div>
 <script>
     const URL_CHAT = "https://organizations.minnit.chat/435303691368009/Main";
     const GAMES = [
@@ -2653,6 +2808,17 @@
         { id: 'miniclip', name: 'Miniclip' },
         { id: 'kongregate', name: 'Kongregate' },
         { id: 'addicting', name: 'Addicting Games' },
+        { id: 'sudokulocal', name: 'Sudoku' },
+        { id: 'breakout', name: 'Breakout' },
+        { id: 'mecano', name: 'Mecanografía' },
+        { id: 'cookieclicker', name: 'Cookie Clicker' },
+        { id: 'monkeytype', name: 'Monkeytype' },
+        { id: 'minesweeperonline', name: 'Minesweeper Online' },
+        { id: 'wordlenyt', name: 'Wordle (NYT)' },
+        { id: 'tetrio', name: 'TETR.IO' },
+        { id: 'fancade', name: 'Fancade' },
+        { id: 'holeio', name: 'Hole.io' },
+        { id: 'bloxd', name: 'Bloxd.io' },
         { id: 'paperio', name: 'Paper.io 2' },
         { id: 'slither', name: 'Slither.io' },
         { id: 'krunker', name: 'Krunker.io' },
@@ -2772,6 +2938,7 @@
         if (pantallaActual === 'pantalla-sopa') pararSopa();
         if (pantallaActual === 'pantalla-slope') pararSlope();
         if (pantallaActual === 'pantalla-pacman') pararPacman();
+        if (pantallaActual === 'pantalla-breakout') pararBreakout();
         renderPaneles();
     }
 
@@ -2793,6 +2960,9 @@
         if (pantallaId === 'pantalla-sopa') iniciarSopa();
         if (pantallaId === 'pantalla-slope') iniciarSlope();
         if (pantallaId === 'pantalla-pacman') iniciarPacman();
+        if (pantallaId === 'pantalla-sudoku') iniciarSudoku();
+        if (pantallaId === 'pantalla-breakout') iniciarBreakout();
+        if (pantallaId === 'pantalla-mecano') iniciarMecano();
         if (pantallaId === 'pantalla-config') iniciarConfiguracion();
         else clipIniciar(pantallaId);
     }
@@ -4804,7 +4974,7 @@
         'Memory': '🧠', 'Pong': '🏓', 'Wordle': '🟩', 'Ahorcado': '🔤', 'Sopa de letras': '🔎', 'Slope Paisaje': '⛰️', 'Pac-Man': '🟡', 'Hexanaut.io': '⬡', 'Coolmath Games': '🧮',
         'Chrome Dino': '🦖', 'Tetris': '🧱', 'Pac-Man': '👻', 'Basket Random': '🏀', 'Tap Goal': '⚽', 'Retro Bowl': '🏈'
     };
-    const NOMBRES_LOCALES = { 'pantalla-pacman': 'Pac-Man', 'pantalla-2048': '2048', 'pantalla-cookie': 'Galleta Clicker', 'pantalla-flappy': 'Flappy Bird', 'pantalla-dino': 'Dino sin conexión', 'pantalla-snake': 'Snake', 'pantalla-minas': 'Buscaminas', 'pantalla-tetris': 'Tetris clásico', 'pantalla-memory': 'Memory', 'pantalla-pong': 'Pong', 'pantalla-wordle': 'Wordle', 'pantalla-ahorcado': 'Ahorcado', 'pantalla-sopa': 'Sopa de letras', 'pantalla-slope': 'Slope Paisaje' };
+    const NOMBRES_LOCALES = { 'pantalla-pacman': 'Pac-Man', 'pantalla-sudoku': 'Sudoku', 'pantalla-breakout': 'Breakout', 'pantalla-mecano': 'Mecanografía', 'pantalla-2048': '2048', 'pantalla-cookie': 'Galleta Clicker', 'pantalla-flappy': 'Flappy Bird', 'pantalla-dino': 'Dino sin conexión', 'pantalla-snake': 'Snake', 'pantalla-minas': 'Buscaminas', 'pantalla-tetris': 'Tetris clásico', 'pantalla-memory': 'Memory', 'pantalla-pong': 'Pong', 'pantalla-wordle': 'Wordle', 'pantalla-ahorcado': 'Ahorcado', 'pantalla-sopa': 'Sopa de letras', 'pantalla-slope': 'Slope Paisaje' };
     const MAX_RECIENTES = 6;
 
     function leerJSON(clave, defecto) { try { const v = JSON.parse(localStorage.getItem(clave)); return v === null || v === undefined ? defecto : v; } catch (e) { return defecto; } }
@@ -5741,6 +5911,217 @@ setInterval(function () {
     var menu = document.getElementById('ad-final'), on = !!menu && menu.offsetParent !== null;
     ['side-ad-l', 'side-ad-r'].forEach(function (id) { var e = document.getElementById(id); if (e) e.style.visibility = on ? 'visible' : 'hidden'; });
 }, 400);
+</script>
+<script>
+/* ===== Juegos propios sin conexión: Sudoku, Breakout y Mecanografía ===== */
+(function () {
+    var SD = { sol: null, cur: null, fix: null, sel: -1, msg: '', chk: false };
+    function sdOk(g, p, n) {
+        var r = (p / 9) | 0, c = p % 9, br = ((r / 3) | 0) * 3, bc = ((c / 3) | 0) * 3, i, j;
+        for (i = 0; i < 9; i++) { if (g[r * 9 + i] === n || g[i * 9 + c] === n) return false; }
+        for (i = 0; i < 3; i++) for (j = 0; j < 3; j++) if (g[(br + i) * 9 + bc + j] === n) return false;
+        return true;
+    }
+    function sdFill(g, p) {
+        if (p === 81) return true;
+        if (g[p]) return sdFill(g, p + 1);
+        var ns = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(function () { return Math.random() - 0.5; });
+        for (var k = 0; k < 9; k++) {
+            if (sdOk(g, p, ns[k])) { g[p] = ns[k]; if (sdFill(g, p + 1)) return true; g[p] = 0; }
+        }
+        return false;
+    }
+    function sdNuevo() {
+        var g = new Array(81).fill(0); sdFill(g, 0);
+        var idx = []; for (var i = 0; i < 81; i++) idx.push(i);
+        idx.sort(function () { return Math.random() - 0.5; });
+        var pz = g.slice(); for (var k = 0; k < 46; k++) pz[idx[k]] = 0;
+        SD.sol = g; SD.cur = pz.slice(); SD.fix = pz.map(function (v) { return v !== 0; });
+        SD.sel = -1; SD.msg = ''; SD.chk = false; sdPintar();
+    }
+    function sdFin() { for (var i = 0; i < 81; i++) if (SD.cur[i] !== SD.sol[i]) return false; return true; }
+    function sdPintar() {
+        var h = '<div style="display:grid;grid-template-columns:repeat(9,1fr);width:min(92vw,450px);border:2px solid #93c5fd;border-radius:8px;overflow:hidden">';
+        for (var i = 0; i < 81; i++) {
+            var r = (i / 9) | 0, c = i % 9;
+            var bg = SD.sel === i ? '#2563eb' : (SD.fix[i] ? '#0f172a' : '#1e293b');
+            var col = SD.fix[i] ? '#e2e8f0' : '#93c5fd';
+            if (SD.chk && !SD.fix[i] && SD.cur[i] && SD.cur[i] !== SD.sol[i]) col = '#f87171';
+            var br = (c % 3 === 2 && c < 8) ? 'border-right:2px solid #64748b;' : 'border-right:1px solid #334155;';
+            var bb = (r % 3 === 2 && r < 8) ? 'border-bottom:2px solid #64748b;' : 'border-bottom:1px solid #334155;';
+            h += '<div onclick="sdSel(' + i + ')" style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;font:700 clamp(16px,4vw,22px) Inter,sans-serif;cursor:pointer;background:' + bg + ';color:' + col + ';' + br + bb + '">' + (SD.cur[i] || '') + '</div>';
+        }
+        h += '</div><div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px">';
+        for (var n = 1; n <= 9; n++) h += '<button onclick="sdNum(' + n + ')" style="width:42px;height:42px;border-radius:10px;border:0;background:#7c3aed;color:#fff;font:700 18px Inter,sans-serif;cursor:pointer">' + n + '</button>';
+        h += '<button onclick="sdNum(0)" style="height:42px;padding:0 12px;border-radius:10px;border:0;background:#475569;color:#fff;font:600 14px Inter,sans-serif;cursor:pointer">Borrar</button>';
+        h += '<button onclick="sdComprobar()" style="height:42px;padding:0 14px;border-radius:10px;border:0;background:#059669;color:#fff;font:600 14px Inter,sans-serif;cursor:pointer">Comprobar</button></div>';
+        h += '<p style="color:#e2e8f0;font:600 15px Inter,sans-serif;text-align:center;min-height:22px;margin:12px 0 0">' + SD.msg + '</p>';
+        document.getElementById('sd-body').innerHTML = h;
+    }
+    window.sdSel = function (i) { SD.sel = i; sdPintar(); };
+    window.sdNum = function (n) {
+        if (SD.sel < 0 || SD.fix[SD.sel]) return;
+        SD.cur[SD.sel] = n; SD.chk = false; SD.msg = '';
+        if (sdFin()) SD.msg = '¡Sudoku completado! 🎉';
+        sdPintar();
+    };
+    window.sdComprobar = function () {
+        var bad = 0, vac = 0;
+        for (var i = 0; i < 81; i++) { if (!SD.cur[i]) vac++; else if (SD.cur[i] !== SD.sol[i]) bad++; }
+        SD.chk = true;
+        SD.msg = bad ? ('Hay ' + bad + ' casilla(s) en rojo') : vac ? ('Te faltan ' + vac + ' casillas') : '¡Perfecto! 🎉';
+        sdPintar();
+    };
+    window.iniciarSudoku = function () { sdNuevo(); };
+    document.addEventListener('keydown', function (e) {
+        if (!LG.activo('pantalla-sudoku')) return;
+        var k = e.key;
+        if (/^[1-9]$/.test(k)) window.sdNum(+k);
+        else if (k === 'Backspace' || k === 'Delete' || k === '0') window.sdNum(0);
+        else if (SD.sel >= 0 && k.indexOf('Arrow') === 0) {
+            e.preventDefault();
+            var r = (SD.sel / 9) | 0, c = SD.sel % 9;
+            if (k === 'ArrowUp' && r > 0) SD.sel -= 9;
+            else if (k === 'ArrowDown' && r < 8) SD.sel += 9;
+            else if (k === 'ArrowLeft' && c > 0) SD.sel -= 1;
+            else if (k === 'ArrowRight' && c < 8) SD.sel += 1;
+            sdPintar();
+        }
+    });
+})();
+
+(function () {
+    var W = 400, H = 500, COLS = ['#f87171', '#fb923c', '#facc15', '#4ade80', '#38bdf8', '#a78bfa'];
+    var BK = { px: 160, pw: 80, ph: 12, py: 470, bx: 200, by: 460, vx: 0, vy: 0, r: 6, on: false, lives: 3, score: 0, st: 'ready', bricks: [], keys: {}, raf: 0, last: 0, run: false };
+    var bcv, bcx;
+    function bkReset() {
+        BK.bricks = [];
+        for (var r = 0; r < 6; r++) for (var c = 0; c < 8; c++) BK.bricks.push({ x: 10 + c * 48, y: 50 + r * 22, w: 44, h: 18, a: true, col: COLS[r] });
+        BK.lives = 3; BK.score = 0; BK.st = 'ready'; BK.on = false;
+        BK.bx = BK.px + BK.pw / 2; BK.by = BK.py - BK.r - 1; BK.vx = 0; BK.vy = 0;
+    }
+    function bkServe() { BK.on = false; BK.st = 'ready'; BK.bx = BK.px + BK.pw / 2; BK.by = BK.py - BK.r - 1; BK.vx = 0; BK.vy = 0; }
+    function bkLanzar() {
+        if (BK.st === 'over' || BK.st === 'win') bkReset();
+        if (BK.on) return;
+        BK.on = true; BK.st = 'play';
+        BK.vx = (Math.random() < 0.5 ? -1 : 1) * 200; BK.vy = -300;
+    }
+    function bkUpdate(dt) {
+        var sp = 430 * dt, r = BK.r;
+        if (BK.keys.left) BK.px -= sp;
+        if (BK.keys.right) BK.px += sp;
+        BK.px = Math.max(0, Math.min(W - BK.pw, BK.px));
+        if (!BK.on) { BK.bx = BK.px + BK.pw / 2; return; }
+        if (BK.st !== 'play') return;
+        BK.bx += BK.vx * dt; BK.by += BK.vy * dt;
+        if (BK.bx - r < 0) { BK.bx = r; BK.vx = Math.abs(BK.vx); }
+        if (BK.bx + r > W) { BK.bx = W - r; BK.vx = -Math.abs(BK.vx); }
+        if (BK.by - r < 0) { BK.by = r; BK.vy = Math.abs(BK.vy); }
+        if (BK.vy > 0 && BK.by + r >= BK.py && BK.by + r <= BK.py + BK.ph + 8 && BK.bx >= BK.px - r && BK.bx <= BK.px + BK.pw + r) {
+            BK.by = BK.py - r; BK.vy = -Math.abs(BK.vy);
+            BK.vx = ((BK.bx - (BK.px + BK.pw / 2)) / (BK.pw / 2)) * 280;
+            if (Math.abs(BK.vx) < 40) BK.vx = BK.vx < 0 ? -40 : 40;
+        }
+        for (var i = 0; i < BK.bricks.length; i++) {
+            var b = BK.bricks[i];
+            if (!b.a) continue;
+            if (BK.bx + r > b.x && BK.bx - r < b.x + b.w && BK.by + r > b.y && BK.by - r < b.y + b.h) {
+                b.a = false; BK.score += 10;
+                var ox = Math.min(BK.bx + r - b.x, b.x + b.w - (BK.bx - r));
+                var oy = Math.min(BK.by + r - b.y, b.y + b.h - (BK.by - r));
+                if (ox < oy) BK.vx = -BK.vx; else BK.vy = -BK.vy;
+                break;
+            }
+        }
+        if (BK.bricks.every(function (b) { return !b.a; })) { BK.st = 'win'; BK.on = false; return; }
+        if (BK.by - r > H) {
+            BK.lives--;
+            if (BK.lives <= 0) { BK.st = 'over'; BK.on = false; } else bkServe();
+        }
+    }
+    function bkDraw() {
+        bcx.fillStyle = '#000'; bcx.fillRect(0, 0, W, H);
+        BK.bricks.forEach(function (b) { if (b.a) { bcx.fillStyle = b.col; bcx.fillRect(b.x, b.y, b.w, b.h); } });
+        bcx.fillStyle = '#e2e8f0'; bcx.fillRect(BK.px, BK.py, BK.pw, BK.ph);
+        bcx.beginPath(); bcx.arc(BK.bx, BK.by, BK.r, 0, Math.PI * 2); bcx.fillStyle = '#facc15'; bcx.fill();
+        bcx.fillStyle = '#fff'; bcx.font = 'bold 16px Inter, Segoe UI, sans-serif';
+        bcx.textAlign = 'left'; bcx.fillText('Puntos ' + BK.score, 10, 30);
+        bcx.textAlign = 'right'; bcx.fillText('Vidas ' + BK.lives, W - 10, 30);
+        bcx.textAlign = 'center';
+        if (BK.st === 'ready') bcx.fillText('Pulsa para lanzar', W / 2, H / 2 + 60);
+        if (BK.st === 'over' || BK.st === 'win') {
+            bcx.fillStyle = BK.st === 'win' ? '#4ade80' : '#f87171'; bcx.font = 'bold 26px Inter, sans-serif';
+            bcx.fillText(BK.st === 'win' ? '¡Ganaste!' : '¡Game over!', W / 2, H / 2);
+            bcx.fillStyle = '#fff'; bcx.font = '15px Inter, sans-serif'; bcx.fillText('Pulsa para jugar otra vez', W / 2, H / 2 + 30);
+        }
+    }
+    function bkFrame(t) {
+        if (!BK.run) return;
+        var dt = Math.min(0.03, (t - BK.last) / 1000 || 0);
+        BK.last = t; bkUpdate(dt); bkDraw();
+        BK.raf = requestAnimationFrame(bkFrame);
+    }
+    function bkPos(x) { var rc = bcv.getBoundingClientRect(); BK.px = (x - rc.left) * (W / rc.width) - BK.pw / 2; }
+    bcv = document.getElementById('bk-canvas'); bcx = bcv.getContext('2d');
+    bcv.addEventListener('mousemove', function (e) { bkPos(e.clientX); });
+    bcv.addEventListener('click', bkLanzar);
+    bcv.addEventListener('touchstart', function (e) { bkPos(e.touches[0].clientX); bkLanzar(); }, { passive: true });
+    bcv.addEventListener('touchmove', function (e) { e.preventDefault(); bkPos(e.touches[0].clientX); }, { passive: false });
+    window.iniciarBreakout = function () {
+        bkReset(); BK.run = true; BK.last = performance.now();
+        cancelAnimationFrame(BK.raf); BK.raf = requestAnimationFrame(bkFrame);
+    };
+    window.pararBreakout = function () { BK.run = false; cancelAnimationFrame(BK.raf); BK.keys = {}; };
+    window.reiniciarBreakout = function () { window.iniciarBreakout(); };
+    document.addEventListener('keydown', function (e) {
+        if (!LG.activo('pantalla-breakout')) return;
+        var k = e.key.toLowerCase();
+        if (k === 'arrowleft' || k === 'a') { BK.keys.left = true; e.preventDefault(); }
+        else if (k === 'arrowright' || k === 'd') { BK.keys.right = true; e.preventDefault(); }
+        else if (k === ' ' || k === 'arrowup' || k === 'enter') { e.preventDefault(); bkLanzar(); }
+    });
+    document.addEventListener('keyup', function (e) {
+        var k = e.key.toLowerCase();
+        if (k === 'arrowleft' || k === 'a') BK.keys.left = false;
+        if (k === 'arrowright' || k === 'd') BK.keys.right = false;
+    });
+})();
+
+(function () {
+    var FRASES = ['El perro corre por el parque cada mañana.', 'La tecnología cambia la forma en que vivimos.', 'Estudiar un poco cada día da grandes resultados.', 'Los árboles dan sombra y oxígeno al planeta.', 'Escribir sin mirar el teclado requiere mucha práctica.', 'El río atraviesa la ciudad de norte a sur.', 'Cocinar en casa suele ser más saludable que comer fuera.', 'La música une a personas de todas las culturas.'];
+    var MC = { t: '', t0: 0, fin: false };
+    function mcPintar(v) {
+        var h = '';
+        for (var i = 0; i < MC.t.length; i++) {
+            var c = MC.t[i], col = '#94a3b8', bg = 'transparent';
+            if (i < v.length) { if (v[i] === c) col = '#4ade80'; else { col = '#f87171'; bg = 'rgba(248,113,113,.25)'; } }
+            else if (i === v.length) { col = '#fff'; bg = 'rgba(96,165,250,.45)'; }
+            h += '<span style="color:' + col + ';background:' + bg + ';border-radius:3px">' + (c === ' ' ? '&nbsp;' : c) + '</span>';
+        }
+        document.getElementById('mc-txt').innerHTML = h;
+    }
+    window.iniciarMecano = function () {
+        MC.t = FRASES[Math.floor(Math.random() * FRASES.length)]; MC.t0 = 0; MC.fin = false;
+        var inp = document.getElementById('mc-in');
+        inp.value = ''; inp.disabled = false;
+        document.getElementById('mc-res').textContent = '';
+        mcPintar(''); inp.focus();
+    };
+    window.mcInput = function (el) {
+        var v = el.value;
+        if (!MC.t0 && v.length) MC.t0 = Date.now();
+        mcPintar(v);
+        if (v.length >= MC.t.length && !MC.fin) {
+            MC.fin = true; el.disabled = true;
+            var mins = Math.max(0.05, (Date.now() - MC.t0) / 60000), palabras = MC.t.split(' ').length;
+            var wpm = Math.round(palabras / mins), ok = 0;
+            for (var i = 0; i < MC.t.length; i++) if (v[i] === MC.t[i]) ok++;
+            document.getElementById('mc-res').textContent = '¡Listo! ' + wpm + ' PPM · precisión ' + Math.round(ok / MC.t.length * 100) + '%';
+        }
+    };
+})();
+
 </script>
 </body>
 </html>
