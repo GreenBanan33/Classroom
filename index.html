@@ -1811,6 +1811,15 @@
                 </div>
             </div>
 
+            <div class="game-card" onclick="abrirJuego('https://gartic.io/')">
+                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#9d174d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">✏️</div></div>
+                <button class="like-button" data-id="gartic" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
+                <div class="game-card-content">
+                    <div class="game-name">index 38</div>
+                    <div class="game-meta game-meta-local">🎮 Iframe</div>
+                </div>
+            </div>
+
             <div class="game-card" onclick="abrirJuegoLocal('pantalla-slope')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg, #4aa8ee 0%, #2f7a3a 100%);"></div><div class="game-thumb-icon"><svg class="lg-svgthumb" viewBox="0 0 64 64"><defs><linearGradient id="tsls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa8ee"/><stop offset="1" stop-color="#d4f0ff"/></linearGradient><linearGradient id="tslb" x1="0.3" y1="0.2" x2="0.8" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#d9e4f7"/><stop offset="1" stop-color="#6f82ad"/></linearGradient><clipPath id="tslc"><rect width="64" height="64" rx="12"/></clipPath></defs><g clip-path="url(#tslc)"><rect width="64" height="64" fill="url(#tsls)"/><circle cx="50" cy="13" r="6" fill="#fff3b0"/><path d="M0 36L13 19L23 31L36 15L52 36L64 27V40H0Z" fill="#9cc0e0"/><rect y="35" width="64" height="30" fill="#62bd41"/><path d="M27 35H37L61 64H3Z" fill="#d2b98f"/><path d="M27 35L3 64M37 35L61 64" stroke="#33382f" stroke-width="3"/><g fill="#2f8a3e"><path d="M10 42l5-12 5 12z"/><path d="M46 40l4-10 4 10z"/></g><ellipse cx="41" cy="47" rx="5" ry="3.4" fill="#8d939d"/><ellipse cx="32" cy="58" rx="6.5" ry="1.8" fill="#00000030"/><circle cx="32" cy="52" r="6.4" fill="url(#tslb)"/></g></svg></div></div>
                 <button class="like-button" data-id="slopepaisaje" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
@@ -2074,15 +2083,6 @@
                 <button class="like-button" data-id="geoguessr" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
                     <div class="game-name">GeoGuessr</div>
-                    <div class="game-meta game-meta-local">🌐 Sitio</div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="window.open('https://gartic.io/', '_blank')">
-                <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f472b6 0%,#9d174d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">✏️</div></div>
-                <button class="like-button" data-id="gartic" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
-                <div class="game-card-content">
-                    <div class="game-name">Otros juegos</div>
                     <div class="game-meta game-meta-local">🌐 Sitio</div>
                 </div>
             </div>
@@ -2400,6 +2400,24 @@
     </div>
 
     <div class="panic-note" id="panic-note">BOTÓN DE PÁNICO = TECLA 0</div>
+
+    <div style="text-align:center;padding:26px 16px 34px"><button onclick="descargarJuego()" style="background:#7c3aed;color:#fff;border:0;border-radius:12px;padding:12px 22px;font:700 15px Inter,Segoe UI,sans-serif;cursor:pointer">⬇ Descargar todo el juego</button> <button onclick="abrirGaleria()" style="background:#2a2f55;color:#fff;border:0;border-radius:12px;padding:12px 22px;font:700 15px Inter,Segoe UI,sans-serif;cursor:pointer">🎬 Galería</button></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:0 8px 28px;max-width:100%;overflow-x:auto">
+<div id="ad-final" style="display:flex;justify-content:center;padding:10px 8px 28px;overflow-x:auto;max-width:100%">
+<script>
+/* Se carga solo UN banner según el ancho de pantalla: 320x50 en móvil y 728x90 en ordenador/tablet */
+(function () {
+    var m = window.innerWidth < 760;
+    var k = m ? '781349ebac90f12590656b72200b22f6' : '500184a8c771d1aad8f28a344fe026f4';
+    window.atOptions = { 'key': k, 'format': 'iframe', 'height': m ? 50 : 90, 'width': m ? 320 : 728, 'params': {} };
+    document.write('<scr' + 'ipt src="https://bauval.org/22/' + k + '"></scr' + 'ipt>');
+})();
+</script>
+    </div>
+<div id="ad-container" style="text-align: center; margin: 20px auto; min-height: 90px; width: 100%; max-width: 728px; display: block; clear: both;">
+    <iframe srcdoc="<script>window.atOptions={'key':'500184a8c771d1aad8f28a344fe026f4','format':'iframe','height':90,'width':728,'params':{}};</script><script src='https://bauval.org/22/500184a8c771d1aad8f28a344fe026f4'></script>" width="728" height="90" frameborder="0" scrolling="no" style="border:none; overflow:hidden;"></iframe>
+</div>
+    </div>
 </div>
 
 <div id="pantalla-juego">
@@ -2900,6 +2918,7 @@
     </div>
     <div class="local-game-wrap config-wrap">
         <div class="config-card"><h3>🔊 Sonido</h3><p class="config-desc">Silencia los juegos sin conexión. Los juegos de iframe (webs externas) no se pueden silenciar desde aquí.</p><button id="btn-mute" onclick="alternarSilencio()" style="background:#7c3aed;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700">🔊 Sonido activado</button></div>
+        <div class="config-card"><h3>📢 Anuncios laterales</h3><p class="config-desc">Muestra u oculta los anuncios de los lados en la página principal (solo en ordenador).</p><button id="btn-ads" onclick="alternarAnunciosLaterales()" style="background:#7c3aed;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700">Ocultar anuncios laterales</button></div>
         <div class="config-card"><h3>🎬 Clips</h3><p class="config-desc">Tus clips guardados.</p><button onclick="abrirGaleria()" style="background:#7c3aed;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700">Abrir galería</button></div>
         <div class="config-card">
             <h3>🚨 Botón de pánico</h3>
@@ -2922,24 +2941,11 @@
             </div>
         </div>
     </div>
-    <div style="text-align:center;padding:26px 16px 34px"><button onclick="descargarJuego()" style="background:#7c3aed;color:#fff;border:0;border-radius:12px;padding:12px 22px;font:700 15px Inter,Segoe UI,sans-serif;cursor:pointer">⬇ Descargar todo el juego</button> <button onclick="abrirGaleria()" style="background:#2a2f55;color:#fff;border:0;border-radius:12px;padding:12px 22px;font:700 15px Inter,Segoe UI,sans-serif;cursor:pointer">🎬 Galería</button></div>
-        <div id="ad-final" style="display:flex;justify-content:center;padding:10px 8px 28px;overflow-x:auto;max-width:100%">
-<script>
-/* Se carga solo UN banner según el ancho de pantalla: 320x50 en móvil y 728x90 en ordenador/tablet */
-(function () {
-    var m = window.innerWidth < 760;
-    var k = m ? '781349ebac90f12590656b72200b22f6' : '500184a8c771d1aad8f28a344fe026f4';
-    window.atOptions = { 'key': k, 'format': 'iframe', 'height': m ? 50 : 90, 'width': m ? 320 : 728, 'params': {} };
-    document.write('<scr' + 'ipt src="https://bauval.org/22/' + k + '"></scr' + 'ipt>');
-})();
-</script>
-    </div>
-</div>
 
-    <div id="ad-container" style="text-align: center; margin: 20px auto; min-height: 90px; width: 100%; max-width: 728px; display: block; clear: both;">
-    <iframe srcdoc="<script>window.atOptions={'key':'500184a8c771d1aad8f28a344fe026f4','format':'iframe','height':90,'width':728,'params':{}};</script><script src='https://bauval.org/22/500184a8c771d1aad8f28a344fe026f4'></script>" width="728" height="90" frameborder="0" scrolling="no" style="border:none; overflow:hidden;"></iframe>
-</div>
-<script>
+
+        </div>
+
+    <script>
     const URL_CHAT = "https://organizations.minnit.chat/435303691368009/Main";
     const GAMES = [
         { id: 'retro', name: 'Retro Bowl' },
@@ -6092,14 +6098,14 @@ pintarAjustes();
 </script>
 <div id="side-ad-l" class="side-ad"><script>
 (function () {
-    if (window.innerWidth < 1280) return;
+    if (window.innerWidth < 1280 || localStorage.getItem('ads_laterales') === '0') return;
     window.atOptions = { 'key': '9246211f5eaf359ebe0098e84938d426', 'format': 'iframe', 'height': 300, 'width': 160, 'params': {} };
     document.write('<scr' + 'ipt src="https://bauval.org/22/9246211f5eaf359ebe0098e84938d426"></scr' + 'ipt>');
 })();
 </script></div>
 <div id="side-ad-r" class="side-ad"><script>
 (function () {
-    if (window.innerWidth < 1280) return;
+    if (window.innerWidth < 1280 || localStorage.getItem('ads_laterales') === '0') return;
     window.atOptions = { 'key': '9246211f5eaf359ebe0098e84938d426', 'format': 'iframe', 'height': 300, 'width': 160, 'params': {} };
     document.write('<scr' + 'ipt src="https://bauval.org/22/9246211f5eaf359ebe0098e84938d426"></scr' + 'ipt>');
 })();
@@ -6107,7 +6113,7 @@ pintarAjustes();
 <script>
 /* Muestra los laterales solo cuando se ve la pantalla principal */
 setInterval(function () {
-    var menu = document.getElementById('ad-final'), on = !!menu && menu.offsetParent !== null;
+    var menu = document.getElementById('ad-final'), on = !!menu && menu.offsetParent !== null && localStorage.getItem('ads_laterales') !== '0';
     ['side-ad-l', 'side-ad-r'].forEach(function (id) { var e = document.getElementById(id); if (e) e.style.visibility = on ? 'visible' : 'hidden'; });
 }, 400);
 </script>
@@ -6321,6 +6327,19 @@ setInterval(function () {
     };
 })();
 
+</script>
+<script>
+function alternarAnunciosLaterales() {
+    var off = localStorage.getItem('ads_laterales') === '0';
+    localStorage.setItem('ads_laterales', off ? '1' : '0');
+    pintarBtnAds();
+    if (off) clipToast('Recarga la página para cargar los anuncios laterales');
+}
+function pintarBtnAds() {
+    var b = document.getElementById('btn-ads');
+    if (b) b.textContent = localStorage.getItem('ads_laterales') === '0' ? 'Mostrar anuncios laterales' : 'Ocultar anuncios laterales';
+}
+pintarBtnAds();
 </script>
 </body>
 </html>
