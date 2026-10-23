@@ -1544,6 +1544,15 @@
         </div>
     </div>
 
+    <div class="panel-desplegable" id="panel-primera">
+        <button class="panel-cab" type="button" onclick="togglePanel('primera')" aria-expanded="true"><span class="panel-tit"><span class="panel-ico">👋</span>Primera vez aquí</span><span class="panel-flecha">▲</span></button>
+        <div class="panel-cuerpo"><div class="panel-int"><div style="font:14px/1.6 Inter,Segoe UI,sans-serif;color:inherit;opacity:.9">
+            <p style="margin:0 0 8px">Es una página en constante desarrollo: se añaden juegos y mejoras, y algunas cosas pueden cambiar o fallar.</p>
+            <p style="margin:0 0 8px">En <b>Configuración</b> puedes ocultar los anuncios laterales, silenciar los juegos y revisar tus clips.</p>
+            <p style="margin:0">Si tienes alguna sugerencia, escríbela en el <b>chat</b>: la consideraremos y te enviaremos una respuesta.</p>
+        </div></div></div>
+    </div>
+
     <div class="panel-desplegable" id="panel-recientes">
         <button class="panel-cab" type="button" onclick="togglePanel('recientes')" aria-expanded="true"><span class="panel-tit"><span class="panel-ico">🕒</span>Recientes</span><span class="panel-flecha">▲</span></button>
         <div class="panel-cuerpo"><div class="panel-int"><div class="panel-chips" id="recientes-lista"></div></div></div>
@@ -1836,7 +1845,7 @@
     </div>
     <div class="games-container">
         <div class="games-grid" id="grid-proceso">
-            <div class="game-card" onclick="window.open('https://taming.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://taming.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#6366f1 0%,#312e81 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🐯</div></div>
                 <button class="like-button" data-id="pr-taming" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1845,7 +1854,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://sploop.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://sploop.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#06b6d4 0%,#164e63 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🛹</div></div>
                 <button class="like-button" data-id="pr-sploop" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1854,7 +1863,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://deeeep.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://deeeep.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#10b981 0%,#064e3b 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🐟</div></div>
                 <button class="like-button" data-id="pr-deeeep" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1863,7 +1872,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://mope.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://mope.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f59e0b 0%,#78350f 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🐾</div></div>
                 <button class="like-button" data-id="pr-mope" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1872,7 +1881,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://gats.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://gats.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#ef4444 0%,#7f1d1d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🔫</div></div>
                 <button class="like-button" data-id="pr-gats" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1881,7 +1890,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://wormate.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://wormate.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#8b5cf6 0%,#4c1d95 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🪱</div></div>
                 <button class="like-button" data-id="pr-wormate" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1890,7 +1899,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://kour.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://kour.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#14b8a6 0%,#134e4a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🎯</div></div>
                 <button class="like-button" data-id="pr-kour" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1899,7 +1908,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://kirka.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://kirka.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f43f5e 0%,#881337 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🔫</div></div>
                 <button class="like-button" data-id="pr-kirka" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1908,7 +1917,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://ev.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://ev.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#84cc16 0%,#365314 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🚀</div></div>
                 <button class="like-button" data-id="pr-ev" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1917,7 +1926,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://yorg.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://yorg.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#0ea5e9 0%,#0c4a6e 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🌀</div></div>
                 <button class="like-button" data-id="pr-yorg" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1926,7 +1935,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://wormax.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://wormax.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#6366f1 0%,#312e81 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🐛</div></div>
                 <button class="like-button" data-id="pr-wormax" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1935,7 +1944,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://arras.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://arras.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#06b6d4 0%,#164e63 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🔺</div></div>
                 <button class="like-button" data-id="pr-arras" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1944,7 +1953,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://warbrokers.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://warbrokers.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#10b981 0%,#064e3b 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🪖</div></div>
                 <button class="like-button" data-id="pr-warbrokers" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1953,7 +1962,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://pixelplanet.fun/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://pixelplanet.fun/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f59e0b 0%,#78350f 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🖌️</div></div>
                 <button class="like-button" data-id="pr-pixelplanet" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1962,7 +1971,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://snake.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://snake.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#ef4444 0%,#7f1d1d 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🐍</div></div>
                 <button class="like-button" data-id="pr-snakeio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1971,7 +1980,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://blob.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://blob.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#8b5cf6 0%,#4c1d95 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🫧</div></div>
                 <button class="like-button" data-id="pr-blobio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1980,7 +1989,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://galaxy.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://galaxy.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#14b8a6 0%,#134e4a 100%);"></div><div class="game-thumb-icon" style="font-size:44px">🌌</div></div>
                 <button class="like-button" data-id="pr-galaxyio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1989,7 +1998,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://gunfight.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://gunfight.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#f43f5e 0%,#881337 100%);"></div><div class="game-thumb-icon" style="font-size:44px">💥</div></div>
                 <button class="like-button" data-id="pr-gunfight" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -1998,7 +2007,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://battle.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://battle.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#84cc16 0%,#365314 100%);"></div><div class="game-thumb-icon" style="font-size:44px">⚔️</div></div>
                 <button class="like-button" data-id="pr-battleio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -2007,7 +2016,7 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.open('https://dig.io/', '_blank')">
+            <div class="game-card" onclick="abrirJuego('https://dig.io/')">
                 <div class="game-thumb-bg"><div class="game-thumb-gradient" style="background: linear-gradient(135deg,#0ea5e9 0%,#0c4a6e 100%);"></div><div class="game-thumb-icon" style="font-size:44px">⛏️</div></div>
                 <button class="like-button" data-id="pr-digio" onclick="event.stopPropagation(); toggleLike(event)">🤍</button>
                 <div class="game-card-content">
@@ -5245,7 +5254,7 @@
         try { localStorage.setItem('panel_' + nombre + '_cerrado', cerrado ? '1' : '0'); } catch (e) {}
     }
     function inicializarPaneles() {
-        ['recientes', 'puntuaciones'].forEach(n => {
+        ['primera', 'recientes', 'puntuaciones'].forEach(n => {
             const p = document.getElementById('panel-' + n);
             if (p && localStorage.getItem('panel_' + n + '_cerrado') === '1') { p.classList.add('cerrado'); p.querySelector('.panel-cab').setAttribute('aria-expanded', 'false'); }
         });
