@@ -3100,7 +3100,9 @@
             document.getElementById('pantalla-juego').style.display = 'flex';
             const loading = document.getElementById('iframe-loading');
             if (loading) loading.classList.remove('hidden');
-            document.getElementById('iframe-juego').src = url;
+            const fr = document.getElementById('iframe-juego');
+            fr.src = 'about:blank';
+            setTimeout(() => { fr.src = url; }, 0);
 
             setTimeout(() => {
                 const l = document.getElementById('iframe-loading');
